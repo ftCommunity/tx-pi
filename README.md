@@ -26,11 +26,12 @@ countersunk.
 
 ## Software setup
 
-Get the latest [Raspbian Jessie Lite](https://www.raspberrypi.org/downloads/raspbian/) and install it onto SD card. Boot your PI with it and do three things using raspi-config:
+Get the latest [Raspbian Jessie Lite](https://www.raspberrypi.org/downloads/raspbian/) and install it onto SD card. Boot your PI with it and do a few things using raspi-config:
 
   - Enable networking so the Pi can access the internet
   - Set the hostname to tx-pi
   - expand the file system (under advanced options)
+  - disable "wait for network" boot option
 
 Now download the [setup script](https://raw.githubusercontent.com/harbaum/tx-pi/master/setup/tx-pi-setup.sh) onto your PI and run it. It will
 download and install the display drivers as well as majaor parts of
