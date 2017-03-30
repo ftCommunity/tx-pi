@@ -1,7 +1,7 @@
 # TX-PI - A Raspberry PI setup for fischertechnik
 
 This repository contains the basic requirements to make a Raspberry Pi
-mechanically and software compatible with the [community firmware
+hardware and software compatible with the [community firmware
 for the fischertechnik TXT](http://cfw.ftcommunity.de/).
 
 <img src="https://raw.githubusercontent.com/harbaum/tx-pi/master/images/display32_1.jpg" alt="TX-PI" width="400" style="width: 400px;"/>
@@ -12,6 +12,7 @@ You'll need:
 
   - a Raspberry Pi 2 or 3
   - a Waveshare 3.2" LCD touchscreen (either V3 or V4)
+  - a micro SD card with at least 4GB space
 
 ## Hardware setup
 
@@ -25,10 +26,11 @@ countersunk.
 
 ## Software setup
 
-Get the latest [Raspbian Jessie Lite](https://www.raspberrypi.org/downloads/raspbian/) and install it onto SD card. Boot your PI with it and do two things:
+Get the latest [Raspbian Jessie Lite](https://www.raspberrypi.org/downloads/raspbian/) and install it onto SD card. Boot your PI with it and do three things using raspi-config:
 
   - Enable networking so the Pi can access the internet
   - Set the hostname to tx-pi
+  - expand the file system (under advanced options)
 
 Now download the [setup script](https://raw.githubusercontent.com/harbaum/tx-pi/master/setup/tx-pi-setup.sh) onto your PI and run it. It will
 download and install the display drivers as well as majaor parts of
@@ -36,5 +38,8 @@ the community firmware.
 
 During display driver installation the pi will reboot and you'll have to start
 the script a second time to allow it to finish the setup.
+
+The script then runs quite some time (> 2h) as it builds opencv2 for
+python3 which is not available from the repositories.
 
 This is a work in progress. Some parts aren't working by now.
