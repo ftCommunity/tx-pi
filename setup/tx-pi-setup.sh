@@ -49,7 +49,7 @@ apt-get update
 # X11
 apt-get -y install --no-install-recommends xserver-xorg xinit xserver-xorg-video-fbdev xserver-xorg-legacy
 # python and pyqt
-apt-get -y install --no-install-recommends python3-pyqt4 python3 python3-pip python3-numpy python3-dev cmake
+apt-get -y install --no-install-recommends python3-pyqt4 python3 python3-pip python3-numpy python3-dev cmake python3-serial
 # misc tools
 apt-get -y install i2c-tools lighttpd git subversion ntpdate
 
