@@ -218,22 +218,38 @@ cd /opt/ftc/apps/system
 svn export $TSVNBASE"/touchui/apps/system/power"
 
 # adjust lighttpd config
-sed -i 's,^\(server.document-root *=\).*,\1'\ \"/var/www\"',' /etc/lighttpd/lighttpd.conf
-sed -i 's,^\(server.username *=\).*,\1'\ \"ftc\"',' /etc/lighttpd/lighttpd.conf
-sed -i 's,^\(server.groupname *=\).*,\1'\ \"ftc\"',' /etc/lighttpd/lighttpd.conf
+cat <<EOF > /etc/lighttpd/lighttpd.conf
+server.modules = (
+        "mod_access",
+        "mod_alias",
+        "mod_redirect"
+)
 
-# enable ssi
-if ! grep -q mod_ssi /etc/lighttpd/lighttpd.conf; then
-cat <<EOF >> /etc/lighttpd/lighttpd.conf
+server.document-root        = "/var/www"
+server.upload-dirs          = ( "/var/cache/lighttpd/uploads" )
+server.errorlog             = "/var/log/lighttpd/error.log"
+server.pid-file             = "/var/run/lighttpd.pid"
+server.username             = "ftc"
+server.groupname            = "ftc"
+server.port                 = 80
+
+
+index-file.names            = ( "index.php", "index.html", "index.lighttpd.html" )
+url.access-deny             = ( "~", ".inc" )
+static-file.exclude-extensions = ( ".php", ".pl", ".fcgi" )
+
+compress.cache-dir          = "/var/cache/lighttpd/compress/"
+compress.filetype           = ( "application/javascript", "text/css", "text/html", "text/plain" )
+
+# default listening port for IPv6 falls back to the IPv4 port
+
+include_shell "/usr/share/lighttpd/use-ipv6.pl " + server.port
+include_shell "/usr/share/lighttpd/create-mime.assign.pl"
+include_shell "/usr/share/lighttpd/include-conf-enabled.pl"
 
 server.modules += ( "mod_ssi" )
 ssi.extension = ( ".html" )
-EOF
-fi
 
-# enable cgi
-if ! grep -q mod_cgi /etc/lighttpd/lighttpd.conf; then
-cat <<EOF >> /etc/lighttpd/lighttpd.conf
 server.modules += ( "mod_cgi" )
 
 \$HTTP["url"] =~ "^/cgi-bin/" {
@@ -244,8 +260,7 @@ cgi.assign      = (
        ".py"  => "/usr/bin/python3"
 )
 EOF
-fi
-    
+
 # fetch www pages
 echo "Populating /var/www ..."
 cd /var
@@ -256,6 +271,7 @@ svn export $SVNROOT"/var/www"
 chown -R ftc:ftc /var/www/*
 chown -R ftc:ftc /var/log/lighttpd
 chown -R ftc:ftc /var/run/lighttpd
+chown -R ftc:ftc /var/cache/lighttpd
 
 #mkdir /opt/ftc/apps/user
 #chown -R ftc:ftc /opt/ftc/apps/user
