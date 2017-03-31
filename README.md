@@ -29,12 +29,14 @@ countersunk.
 Get the latest [Raspbian Jessie Lite](https://www.raspberrypi.org/downloads/raspbian/) and install it onto SD card. Boot your PI with it and do a few things using raspi-config:
 
   - Enable networking so the Pi can access the internet
+    - If you need to use WiFi, see [this article](https://thepihut.com/blogs/raspberry-pi-tutorials/83502916-how-to-setup-wifi-on-raspbian-jessie-lite) on how to set up
   - Set the hostname to tx-pi
-  - expand the file system (under advanced options)
-  - disable "wait for network" boot option
+  - Expand the file system (under advanced options)
+  - Disable "wait for network" boot option
+  - You might also want to enable ssh for easier acces to your tx-pi later
 
-Now download the [setup script](https://raw.githubusercontent.com/harbaum/tx-pi/master/setup/tx-pi-setup.sh) onto your PI and run it. It will
-download and install the display drivers as well as majaor parts of
+Now download the [setup script](https://raw.githubusercontent.com/harbaum/tx-pi/master/setup/tx-pi-setup.sh) onto your PI (at this point, you might be happy to have *ssh*, or more precise, *scp* available) and run it as *sudo*. It will
+download and install the display drivers as well as major parts of
 the community firmware.
 
 During display driver installation the pi will reboot and you'll have to start
