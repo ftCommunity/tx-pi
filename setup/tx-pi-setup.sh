@@ -49,7 +49,7 @@ apt-get update
 # X11
 apt-get -y install --no-install-recommends xserver-xorg xinit xserver-xorg-video-fbdev xserver-xorg-legacy
 # python and pyqt
-apt-get -y install --no-install-recommends python3-pyqt4 python3 python3-pip
+apt-get -y install --no-install-recommends python3-pyqt4 python3 python3-pip python3-numpy python3-dev cmake
 # misc tools
 apt-get -y install i2c-tools lighttpd git subversion ntpdate
 
@@ -72,6 +72,27 @@ if [ ! -f /boot/overlays/waveshare32b-overlay.dtb ]; then
     ./LCD32-show
     # the pi will reboot
 fi
+
+# some additionl python stuff
+pip3 install semantic_version
+
+# opencv is not directly available so we need to build it
+# TODO: build debian packages!
+cd /root
+git clone https://github.com/Itseez/opencv.git
+git clone https://github.com/Itseez/opencv_contrib.git
+cd opencv
+mkdir build
+cd build
+cmake -D CMAKE_BUILD_TYPE=RELEASE \
+      -D CMAKE_INSTALL_PREFIX=/usr/local \
+      -D INSTALL_C_EXAMPLES=OFF \
+      -D INSTALL_PYTHON_EXAMPLES=OFF \
+      -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib/modules \
+      -D BUILD_EXAMPLES=OFF ..
+make -j4
+make install
+ldconfig
 
 # ----------------------- user setup ---------------------
 # create ftc user
@@ -123,7 +144,6 @@ WantedBy=multi-user.target
 EOF
 
 systemctl daemon-reload
-# systemctl start launcher
 systemctl enable launcher
 
 # allow any user to start xs
@@ -165,6 +185,21 @@ iface wlan0 inet dhcp
 iface lo inet loopback
 EOF
 chmod 666 /etc/network/interfaces
+
+# set timezone to germany
+echo "Europe/Berlin" > /etc/timezone
+
+# set firmware version
+cd /etc
+wget -N $GITROOT/etc/fw-ver.txt
+
+# set various udev rules to give ftc user access to
+# hardware
+cd /etc/udev/rules.d
+wget -N $GITROOT/etc/udev/rules.d/40-btsmart.rules
+wget -N $GITROOT/etc/udev/rules.d/40-robolt.rules
+wget -N $GITROOT/etc/udev/rules.d/40-wedo.rules
+wget -N $GITROOT/etc/udev/rules.d/60-i2c-tools.rules
 
 # get /opt/ftc
 echo "Populating /opt/ftc ..."
