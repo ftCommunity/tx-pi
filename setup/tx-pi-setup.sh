@@ -49,13 +49,14 @@ apt-get update
 # X11
 apt-get -y install --no-install-recommends xserver-xorg xinit xserver-xorg-video-fbdev xserver-xorg-legacy
 # python and pyqt
-apt-get -y install --no-install-recommends python3-pyqt4 python3 python3-pip python3-numpy python3-dev cmake python3-serial
+apt-get -y install --no-install-recommends python3-pyqt4 python3 python3-pip python3-numpy python3-dev cmake python3-serial python3-pexpect
 # misc tools
 apt-get -y install i2c-tools lighttpd git subversion ntpdate
 
 # some additionl python stuff
 pip3 install semantic_version
 pip3 install websockets
+pip3 install pyserial
 
 # ---------------------- display setup ----------------------
 # check if waveshare driver is installed
@@ -75,6 +76,16 @@ fi
 
 # some additionl python stuff
 pip3 install semantic_version
+
+# create locales
+cat <<EOF > /etc/locale.gen
+# locales supported by CFW 
+en_US.UTF-8 UTF-8
+de_DE.UTF-8 UTF-8
+nl_NL.UTF-8 UTF-8
+fr_FR.UTF-8 UTF-8
+EOF
+locale-gen
 
 # opencv is not directly available so we need to build it
 # TODO: build debian packages!
@@ -100,14 +111,20 @@ groupadd ftc
 useradd -g ftc -m ftc
 usermod -a -G video ftc
 usermod -a -G tty ftc
-
+usermod -a -G dialout ftc
+usermod -a -G input ftc
 echo "ftc:ftc" | chpasswd
 
 # special ftc permissions
 cd /etc/sudoers.d
 wget -N $GITROOT/etc/sudoers.d/shutdown
 chmod 0440 /etc/sudoers.d/shutdown
-wget -N $GITROOT/etc/sudoers.d/bluetooth
+cat <<EOF > /etc/sudoers.d/bluetooth
+## Permissions for ftc access to programs required
+## for bluetooth setup
+
+ftc     ALL = NOPASSWD: /usr/bin/hcitool, /etc/init.d/bluetooth, /usr//bin/pkill -SIGINT hcitool
+EOF
 chmod 0440 /etc/sudoers.d/bluetooth
 cat <<EOF > /etc/sudoers.d/wifi
 ## Permissions for ftc access to programs required
