@@ -15,12 +15,9 @@
 # - adjust font size
 # - add screen calibration tool
 # - adjust timezone
-# - fix web upload
 # - fix wlan/eth
 #   - don't wait for eth0
-#   - start wpa_supplicant (through interfaces entry)
 #   - control regular dhcpcd
-#   - check dhcp settings in network app
 # much much more ...
 
 # to be run on plain jessie-lite
@@ -74,9 +71,6 @@ if [ ! -f /boot/overlays/waveshare32b-overlay.dtb ]; then
     # the pi will reboot
 fi
 
-# some additionl python stuff
-pip3 install semantic_version
-
 # create locales
 cat <<EOF > /etc/locale.gen
 # locales supported by CFW 
@@ -87,23 +81,16 @@ fr_FR.UTF-8 UTF-8
 EOF
 locale-gen
 
-# opencv is not directly available so we need to build it
-# TODO: build debian packages!
-cd /root
-git clone https://github.com/Itseez/opencv.git
-git clone https://github.com/Itseez/opencv_contrib.git
-cd opencv
-mkdir build
-cd build
-cmake -D CMAKE_BUILD_TYPE=RELEASE \
-      -D CMAKE_INSTALL_PREFIX=/usr/local \
-      -D INSTALL_C_EXAMPLES=OFF \
-      -D INSTALL_PYTHON_EXAMPLES=OFF \
-      -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib/modules \
-      -D BUILD_EXAMPLES=OFF ..
-make -j4
-make install
-ldconfig
+# fetch bluez with extended lescan patch
+wget https://github.com/harbaum/tx-pi/raw/master/packages/bluez_5.23-2-xlescan_armhf.deb
+dpkg -i bluez_5.23-2-xlescan_armhf.deb
+
+# fetch precompiled opencv and its dependencies
+# we might build our own package to get rid of these dependencies,
+# especially gtk
+apt-get install libjasper1 libgtk2.0-0 libavcodec56 libavformat56 libswscale3
+wget https://github.com/jabelone/OpenCV-for-Pi/raw/master/latest-OpenCV.deb
+dpkg -i latest-OpenCV.deb
 
 # ----------------------- user setup ---------------------
 # create ftc user
