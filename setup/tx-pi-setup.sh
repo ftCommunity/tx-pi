@@ -214,7 +214,18 @@ cd /opt/ftc
 # just fetch a copy of ftrobopy to make some programs happy
 wget -N https://raw.githubusercontent.com/ftrobopy/ftrobopy/master/ftrobopy.py
 
-# remove usedless ftgui
+# adjust font sizes/styles from qtembedded to x11
+STYLE=/opt/ftc/themes/default/style.qss
+# remove all "bold"
+sed -i 's/^\(\s*font:\)\s*bold/\1/' $STYLE
+# and scale some fonts
+for i in 24:23 28:24 32:24; do
+    from=`echo $i | cut -d':' -f1`
+    to=`echo $i | cut -d':' -f2`
+    sed -i "s/^\(\s*font:\)\s*${from}px/\1 ${to}px/" $STYLE
+done
+
+# remove useless ftgui
 rm -rf /opt/ftc/apps/system/ftgui
 
 # add power tool from touchui
@@ -276,9 +287,6 @@ chown -R ftc:ftc /var/www/*
 chown -R ftc:ftc /var/log/lighttpd
 chown -R ftc:ftc /var/run/lighttpd
 chown -R ftc:ftc /var/cache/lighttpd
-
-#mkdir /opt/ftc/apps/user
-#chown -R ftc:ftc /opt/ftc/apps/user
 
 mkdir /home/ftc/apps
 chown -R ftc:ftc /home/ftc/apps
