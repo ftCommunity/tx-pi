@@ -15,12 +15,9 @@
 # - adjust font size
 # - add screen calibration tool
 # - adjust timezone
-# - fix web upload
 # - fix wlan/eth
 #   - don't wait for eth0
-#   - start wpa_supplicant (through interfaces entry)
 #   - control regular dhcpcd
-#   - check dhcp settings in network app
 # much much more ...
 
 # to be run on plain jessie-lite
@@ -49,13 +46,14 @@ apt-get update
 # X11
 apt-get -y install --no-install-recommends xserver-xorg xinit xserver-xorg-video-fbdev xserver-xorg-legacy
 # python and pyqt
-apt-get -y install --no-install-recommends python3-pyqt4 python3 python3-pip python3-numpy python3-dev cmake python3-serial
+apt-get -y install --no-install-recommends python3-pyqt4 python3 python3-pip python3-numpy python3-dev cmake python3-serial python3-pexpect
 # misc tools
 apt-get -y install i2c-tools lighttpd git subversion ntpdate
 
 # some additionl python stuff
 pip3 install semantic_version
 pip3 install websockets
+pip3 install pyserial
 
 # ---------------------- display setup ----------------------
 # check if waveshare driver is installed
@@ -73,26 +71,26 @@ if [ ! -f /boot/overlays/waveshare32b-overlay.dtb ]; then
     # the pi will reboot
 fi
 
-# some additionl python stuff
-pip3 install semantic_version
+# create locales
+cat <<EOF > /etc/locale.gen
+# locales supported by CFW 
+en_US.UTF-8 UTF-8
+de_DE.UTF-8 UTF-8
+nl_NL.UTF-8 UTF-8
+fr_FR.UTF-8 UTF-8
+EOF
+locale-gen
 
-# opencv is not directly available so we need to build it
-# TODO: build debian packages!
-cd /root
-git clone https://github.com/Itseez/opencv.git
-git clone https://github.com/Itseez/opencv_contrib.git
-cd opencv
-mkdir build
-cd build
-cmake -D CMAKE_BUILD_TYPE=RELEASE \
-      -D CMAKE_INSTALL_PREFIX=/usr/local \
-      -D INSTALL_C_EXAMPLES=OFF \
-      -D INSTALL_PYTHON_EXAMPLES=OFF \
-      -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib/modules \
-      -D BUILD_EXAMPLES=OFF ..
-make -j4
-make install
-ldconfig
+# fetch bluez with extended lescan patch
+wget https://github.com/harbaum/tx-pi/raw/master/packages/bluez_5.23-2-xlescan_armhf.deb
+dpkg -i bluez_5.23-2-xlescan_armhf.deb
+
+# fetch precompiled opencv and its dependencies
+# we might build our own package to get rid of these dependencies,
+# especially gtk
+apt-get install libjasper1 libgtk2.0-0 libavcodec56 libavformat56 libswscale3
+wget https://github.com/jabelone/OpenCV-for-Pi/raw/master/latest-OpenCV.deb
+dpkg -i latest-OpenCV.deb
 
 # ----------------------- user setup ---------------------
 # create ftc user
@@ -100,14 +98,20 @@ groupadd ftc
 useradd -g ftc -m ftc
 usermod -a -G video ftc
 usermod -a -G tty ftc
-
+usermod -a -G dialout ftc
+usermod -a -G input ftc
 echo "ftc:ftc" | chpasswd
 
 # special ftc permissions
 cd /etc/sudoers.d
 wget -N $GITROOT/etc/sudoers.d/shutdown
 chmod 0440 /etc/sudoers.d/shutdown
-wget -N $GITROOT/etc/sudoers.d/bluetooth
+cat <<EOF > /etc/sudoers.d/bluetooth
+## Permissions for ftc access to programs required
+## for bluetooth setup
+
+ftc     ALL = NOPASSWD: /usr/bin/hcitool, /etc/init.d/bluetooth, /usr//bin/pkill -SIGINT hcitool
+EOF
 chmod 0440 /etc/sudoers.d/bluetooth
 cat <<EOF > /etc/sudoers.d/wifi
 ## Permissions for ftc access to programs required
