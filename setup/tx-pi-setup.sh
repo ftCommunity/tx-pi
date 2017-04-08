@@ -83,7 +83,7 @@ locale-gen
 
 # fetch bluez hcitool with extended lescan patch
 wget https://github.com/harbaum/tx-pi/raw/master/setup/hcitool-xlescan.tgz
-tar cvfz hcitool-xlescan.tgz -C /usr/bin
+tar xvfz hcitool-xlescan.tgz -C /usr/bin
 
 # fetch precompiled opencv and its dependencies
 # we might build our own package to get rid of these dependencies,
