@@ -42,7 +42,6 @@ the community firmware.
 During display driver installation the pi will reboot and you'll have to start
 the script a second time to allow it to finish the setup.
 
-The script then runs quite some time (> 2h) as it builds opencv2 for
-python3 which is not available from the repositories.
+The script then runs some time, but building of opencv2 for python3 is no longer necessary. Pre-built packages for opencv2 and bluez will be downloaded from this repository.
 
 This is a work in progress. Some parts aren't working by now.
