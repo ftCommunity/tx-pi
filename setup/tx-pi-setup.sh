@@ -88,7 +88,7 @@ tar xvfz hcitool-xlescan.tgz -C /usr/bin
 # fetch precompiled opencv and its dependencies
 # we might build our own package to get rid of these dependencies,
 # especially gtk
-apt-get install libjasper1 libgtk2.0-0 libavcodec56 libavformat56 libswscale3
+apt-get -y install libjasper1 libgtk2.0-0 libavcodec56 libavformat56 libswscale3
 wget https://github.com/jabelone/OpenCV-for-Pi/raw/master/latest-OpenCV.deb
 dpkg -i latest-OpenCV.deb
 
