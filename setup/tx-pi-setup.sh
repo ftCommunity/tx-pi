@@ -81,9 +81,9 @@ fr_FR.UTF-8 UTF-8
 EOF
 locale-gen
 
-# fetch bluez with extended lescan patch
-wget https://github.com/harbaum/tx-pi/raw/master/packages/bluez_5.23-2-xlescan_armhf.deb
-dpkg -i bluez_5.23-2-xlescan_armhf.deb
+# fetch bluez hcitool with extended lescan patch
+wget https://github.com/harbaum/tx-pi/raw/master/setup/hcitool-xlescan.tgz
+tar cvfz hcitool-xlescan.tgz -C /usr/bin
 
 # fetch precompiled opencv and its dependencies
 # we might build our own package to get rid of these dependencies,
