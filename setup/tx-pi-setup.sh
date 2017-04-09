@@ -92,6 +92,10 @@ apt-get -y install libjasper1 libgtk2.0-0 libavcodec56 libavformat56 libswscale3
 wget https://github.com/jabelone/OpenCV-for-Pi/raw/master/latest-OpenCV.deb
 dpkg -i latest-OpenCV.deb
 
+apt-get -y install libzbar0 python3-pil 
+apt-get install --no-install-recommends libzbar-dev
+pip3 install zbarlight
+
 # ----------------------- user setup ---------------------
 # create ftc user
 groupadd ftc
