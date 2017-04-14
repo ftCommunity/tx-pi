@@ -30,8 +30,14 @@ make python
 #udev rules
 cp udev/fischertechnik.rules /etc/udev/rules.d/
 
-# clean up
+# python3 compatibility 'patch'
 cd ..
+wget https://github.com/PeterDHabermehl/libroboint-py3/raw/master/robointerface.py
+wget https://github.com/PeterDHabermehl/libroboint-py3/raw/master/robointerface.pyc
+mv robointerface.py /usr/local/lib/python3.4/dist-packages/
+mv robointerface.pyc /usr/local/lib/python3.4/dist-packages/
+
+# clean up
 rm -f $LIBFILE
 rm -fr $IDIR
 
