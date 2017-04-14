@@ -84,6 +84,7 @@ locale-gen
 # fetch bluez hcitool with extended lescan patch
 wget https://github.com/harbaum/tx-pi/raw/master/setup/hcitool-xlescan.tgz
 tar xvfz hcitool-xlescan.tgz -C /usr/bin
+rm -f hcitool-xlescan.tgz
 
 # fetch precompiled opencv and its dependencies
 # we might build our own package to get rid of these dependencies,
@@ -91,6 +92,7 @@ tar xvfz hcitool-xlescan.tgz -C /usr/bin
 apt-get -y install libjasper1 libgtk2.0-0 libavcodec56 libavformat56 libswscale3
 wget https://github.com/jabelone/OpenCV-for-Pi/raw/master/latest-OpenCV.deb
 dpkg -i latest-OpenCV.deb
+rm -f latest-OpenCV.deb
 
 apt-get -y install libzbar0 python3-pil 
 apt-get install --no-install-recommends libzbar-dev
