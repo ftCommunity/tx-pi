@@ -231,6 +231,12 @@ for i in 24:23 28:24 32:24; do
     sed -i "s/^\(\s*font:\)\s*${from}px/\1 ${to}px/" $STYLE
 done
 
+# install libroboint
+wget https://github.com/harbaum/tx-pi/raw/master/setup/libroboint-inst.sh
+chmod a+x libroboint-inst.sh
+./libroboint-inst.sh
+rm -f libroboint-inst.sh
+
 # remove useless ftgui
 rm -rf /opt/ftc/apps/system/ftgui
 
