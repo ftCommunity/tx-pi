@@ -81,16 +81,20 @@ fr_FR.UTF-8 UTF-8
 EOF
 locale-gen
 
-# fetch bluez with extended lescan patch
-wget https://github.com/harbaum/tx-pi/raw/master/packages/bluez_5.23-2-xlescan_armhf.deb
-dpkg -i bluez_5.23-2-xlescan_armhf.deb
+# fetch bluez hcitool with extended lescan patch
+wget https://github.com/harbaum/tx-pi/raw/master/setup/hcitool-xlescan.tgz
+tar xvfz hcitool-xlescan.tgz -C /usr/bin
 
 # fetch precompiled opencv and its dependencies
 # we might build our own package to get rid of these dependencies,
 # especially gtk
-apt-get install libjasper1 libgtk2.0-0 libavcodec56 libavformat56 libswscale3
+apt-get -y install libjasper1 libgtk2.0-0 libavcodec56 libavformat56 libswscale3
 wget https://github.com/jabelone/OpenCV-for-Pi/raw/master/latest-OpenCV.deb
 dpkg -i latest-OpenCV.deb
+
+apt-get -y install libzbar0 python3-pil 
+apt-get install --no-install-recommends libzbar-dev
+pip3 install zbarlight
 
 # ----------------------- user setup ---------------------
 # create ftc user
@@ -214,7 +218,18 @@ cd /opt/ftc
 # just fetch a copy of ftrobopy to make some programs happy
 wget -N https://raw.githubusercontent.com/ftrobopy/ftrobopy/master/ftrobopy.py
 
-# remove usedless ftgui
+# adjust font sizes/styles from qtembedded to x11
+STYLE=/opt/ftc/themes/default/style.qss
+# remove all "bold"
+sed -i 's/^\(\s*font:\)\s*bold/\1/' $STYLE
+# and scale some fonts
+for i in 24:23 28:24 32:24; do
+    from=`echo $i | cut -d':' -f1`
+    to=`echo $i | cut -d':' -f2`
+    sed -i "s/^\(\s*font:\)\s*${from}px/\1 ${to}px/" $STYLE
+done
+
+# remove useless ftgui
 rm -rf /opt/ftc/apps/system/ftgui
 
 # add power tool from touchui
@@ -276,9 +291,6 @@ chown -R ftc:ftc /var/www/*
 chown -R ftc:ftc /var/log/lighttpd
 chown -R ftc:ftc /var/run/lighttpd
 chown -R ftc:ftc /var/cache/lighttpd
-
-#mkdir /opt/ftc/apps/user
-#chown -R ftc:ftc /opt/ftc/apps/user
 
 mkdir /home/ftc/apps
 chown -R ftc:ftc /home/ftc/apps
