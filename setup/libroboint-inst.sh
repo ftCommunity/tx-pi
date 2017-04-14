@@ -1,0 +1,40 @@
+#!/bin/bash
+
+LIBURL=https://github.com/nxdefiant/libroboint/archive/
+LIBFILE=0.5.3.zip
+IDIR=libroboint-0.5.3
+
+echo "====================================================="
+echo "       downloading and building of libroboint "
+echo "====================================================="
+
+# download libroboint sources
+wget $LIBURL$LIBFILE
+unzip $LIBFILE
+
+# install libusb-dev
+apt-get install libusb-dev
+
+# build
+cd $IDIR
+cmake .
+make
+make doc
+
+# install
+make install
+
+# install python
+make python
+
+#udev rules
+cp udev/fischertechnik.rules /etc/udev/rules.d/
+
+# clean up
+cd ..
+rm -f $LIBFILE
+rm -fr $IDIR
+
+echo "====================================================="
+echo "                libroboint finished"
+echo "====================================================="
