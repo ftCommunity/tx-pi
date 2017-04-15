@@ -44,4 +44,6 @@ the script a second time to allow it to finish the setup.
 
 The script then runs some time, but building of opencv2 for python3 is no longer necessary. Pre-built packages for opencv2 and bluez will be downloaded from this repository.
 
+[libroboint](https://defiant.homedns.org/~erik/ft/libft/) for C and Python will be built during the install process. Libroboint Python3 support is experimental. Anyway TX-PI now can control ft Robo Interface and Robo I/O Extention, especially in combination with TouchUI under Python3.
+
 This is a work in progress. Some parts aren't working by now.
