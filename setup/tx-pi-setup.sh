@@ -184,7 +184,7 @@ for f in /dev/input/by-id/*-mouse; do
     ## Check if the glob gets expanded to existing files.
     ## If not, f here will be exactly the pattern above
     ## and the exists test will evaluate to false.
-    if [ -e "$f" ]; then
+    if [ -e "\$f" ]; then
         CUROPT=
     else
         CUROPT=-nocursor
@@ -194,7 +194,7 @@ for f in /dev/input/by-id/*-mouse; do
     break
 done
 
-exec /usr/bin/X -s 0 dpms $CUROPT -nolisten tcp "$@"
+exec /usr/bin/X -s 0 dpms \$CUROPT -nolisten tcp "\$@"
 EOF
 
 # allow user to modify locale and network settings
