@@ -12,7 +12,6 @@
 #    disable wait for network
 
 # TODO
-# - adjust font size
 # - add screen calibration tool
 # - adjust timezone
 # - fix wlan/eth
@@ -180,7 +179,22 @@ EOF
 # hide cursor and disable screensaver
 cat <<EOF > /etc/X11/xinit/xserverrc
 #!/bin/sh
-exec /usr/bin/X -s 0 dpms -nocursor -nolisten tcp "\$@"
+for f in /dev/input/by-id/*-mouse; do
+
+    ## Check if the glob gets expanded to existing files.
+    ## If not, f here will be exactly the pattern above
+    ## and the exists test will evaluate to false.
+    if [ -e "$f" ]; then
+        CUROPT=
+    else
+        CUROPT=-nocursor
+    fi
+
+    ## This is all we needed to know, so we can break after the first iteration
+    break
+done
+
+exec /usr/bin/X -s 0 dpms $CUROPT -nolisten tcp "$@"
 EOF
 
 # allow user to modify locale and network settings
