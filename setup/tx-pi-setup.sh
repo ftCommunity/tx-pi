@@ -72,7 +72,7 @@ fi
 
 # usbmount config
 cd /etc/usbmount
-wget https://raw.githubusercontent.com/ftCommunity/ftcommunity-TXT/3de48278d1260c48a0a20b07a35d14572c6248d3/board/fischertechnik/TXT/rootfs/etc/usbmount/usbmount.conf
+wget -N https://raw.githubusercontent.com/ftCommunity/ftcommunity-TXT/3de48278d1260c48a0a20b07a35d14572c6248d3/board/fischertechnik/TXT/rootfs/etc/usbmount/usbmount.conf
 
 # create locales
 cat <<EOF > /etc/locale.gen
@@ -86,7 +86,7 @@ locale-gen
 update-locale --no-checks LANG="de_DE.UTF-8"
 
 # fetch bluez hcitool with extended lescan patch
-wget https://github.com/harbaum/tx-pi/raw/master/setup/hcitool-xlescan.tgz
+wget -N https://github.com/harbaum/tx-pi/raw/master/setup/hcitool-xlescan.tgz
 tar xvfz hcitool-xlescan.tgz -C /usr/bin
 rm -f hcitool-xlescan.tgz
 
@@ -94,7 +94,7 @@ rm -f hcitool-xlescan.tgz
 # we might build our own package to get rid of these dependencies,
 # especially gtk
 apt-get -y install libjasper1 libgtk2.0-0 libavcodec56 libavformat56 libswscale3
-wget https://github.com/jabelone/OpenCV-for-Pi/raw/master/latest-OpenCV.deb
+wget -N https://github.com/jabelone/OpenCV-for-Pi/raw/master/latest-OpenCV.deb
 dpkg -i latest-OpenCV.deb
 rm -f latest-OpenCV.deb
 
@@ -251,7 +251,7 @@ for i in 24:23 28:24 32:24; do
 done
 
 # install libroboint
-wget https://github.com/harbaum/tx-pi/raw/master/setup/libroboint-inst.sh
+wget -N https://github.com/harbaum/tx-pi/raw/master/setup/libroboint-inst.sh
 chmod a+x libroboint-inst.sh
 ./libroboint-inst.sh
 rm -f libroboint-inst.sh
