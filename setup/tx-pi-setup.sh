@@ -48,7 +48,7 @@ apt-get -y install --no-install-recommends xserver-xorg xinit xserver-xorg-video
 # python and pyqt
 apt-get -y install --no-install-recommends python3-pyqt4 python3 python3-pip python3-numpy python3-dev cmake python3-serial python3-pexpect
 # misc tools
-apt-get -y install i2c-tools lighttpd git subversion ntpdate
+apt-get -y install i2c-tools lighttpd git subversion ntpdate usbmount
 
 # some additionl python stuff
 pip3 install semantic_version
@@ -71,6 +71,10 @@ if [ ! -f /boot/overlays/waveshare32b-overlay.dtb ]; then
     # the pi will reboot
 fi
 
+# usbmount config
+cd /etc/usbmount
+wget https://raw.githubusercontent.com/ftCommunity/ftcommunity-TXT/3de48278d1260c48a0a20b07a35d14572c6248d3/board/fischertechnik/TXT/rootfs/etc/usbmount/usbmount.conf
+
 # create locales
 cat <<EOF > /etc/locale.gen
 # locales supported by CFW 
@@ -80,6 +84,7 @@ nl_NL.UTF-8 UTF-8
 fr_FR.UTF-8 UTF-8
 EOF
 locale-gen
+update-locale --no-checks LANG="de_DE.UTF-8"
 
 # fetch bluez hcitool with extended lescan patch
 wget https://github.com/harbaum/tx-pi/raw/master/setup/hcitool-xlescan.tgz
@@ -94,8 +99,8 @@ wget https://github.com/jabelone/OpenCV-for-Pi/raw/master/latest-OpenCV.deb
 dpkg -i latest-OpenCV.deb
 rm -f latest-OpenCV.deb
 
-apt-get -y install libzbar0 python3-pil 
-apt-get install --no-install-recommends libzbar-dev
+apt-get -y install --no-install-recommends libzbar0 python3-pil 
+apt-get -y install --no-install-recommends libzbar-dev
 pip3 install zbarlight
 
 # ----------------------- user setup ---------------------
