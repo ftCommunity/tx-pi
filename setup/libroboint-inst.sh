@@ -9,7 +9,7 @@ echo "       downloading and building of libroboint "
 echo "====================================================="
 
 # download libroboint sources
-wget $LIBURL$LIBFILE
+wget -N $LIBURL$LIBFILE
 unzip $LIBFILE
 
 # install libusb-dev
@@ -33,7 +33,7 @@ cp udev/fischertechnik.rules /etc/udev/rules.d/
 # python3 compatibility 'patch'
 # .pyc was temporarily disabled since it's not working
 cd ..
-wget https://github.com/PeterDHabermehl/libroboint-py3/raw/master/robointerface.py
+wget -N https://github.com/PeterDHabermehl/libroboint-py3/raw/master/robointerface.py
 #wget https://github.com/PeterDHabermehl/libroboint-py3/raw/master/robointerface.pyc
 mv robointerface.py /usr/local/lib/python3.4/dist-packages/
 #mv robointerface.pyc /usr/local/lib/python3.4/dist-packages/
