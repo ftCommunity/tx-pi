@@ -44,7 +44,7 @@ fi
 apt-get update
 
 # X11
-apt-get -y install --no-install-recommends xserver-xorg xinit xserver-xorg-video-fbdev xserver-xorg-legacy
+apt-get -y install --no-install-recommends xserver-xorg xinit xserver-xorg-video-fbdev xserver-xorg-legacy unclutter
 # python and pyqt
 apt-get -y install --no-install-recommends python3-pyqt4 python3 python3-pip python3-numpy python3-dev cmake python3-serial python3-pexpect
 # misc tools
@@ -198,6 +198,7 @@ for f in /dev/input/by-id/*-mouse; do
         CUROPT=
         # run framebuffer copy tool in background
         /usr/bin/fbc &
+        sh -c 'sleep 2; unclutter -display :0 -idle 1 -root' &
     else
         CUROPT=-nocursor
     fi
@@ -324,6 +325,10 @@ echo "Populating /var/www ..."
 cd /var
 rm -rf www
 svn export $SVNROOT"/var/www"
+
+# make sure fbgrab is there to take screenshots
+apt-get -y install --no-install-recommends fbgrab
+sed -i 's.fbgrab.fbgrab -d /dev/fb1.' /var/www/screenshot.py
 
 # adjust file ownership for changed www user name
 chown -R ftc:ftc /var/www/*
