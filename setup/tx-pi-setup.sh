@@ -27,6 +27,7 @@ GITROOT=$GITBASE"board/fischertechnik/TXT/rootfs"
 SVNBASE="https://github.com/ftCommunity/ftcommunity-TXT.git/trunk/"
 SVNROOT=$SVNBASE"board/fischertechnik/TXT/rootfs"
 TSVNBASE="https://github.com/harbaum/TouchUI.git/trunk/"
+LOCALGIT="https://github.com/harbaum/tx-pi/raw/master/setup"
 
 # Things you may do:
 # set a root password
@@ -86,7 +87,7 @@ locale-gen
 update-locale --no-checks LANG="de_DE.UTF-8"
 
 # fetch bluez hcitool with extended lescan patch
-wget -N https://github.com/harbaum/tx-pi/raw/master/setup/hcitool-xlescan.tgz
+wget -N $LOCALGIT/hcitool-xlescan.tgz
 tar xvfz hcitool-xlescan.tgz -C /usr/bin
 rm -f hcitool-xlescan.tgz
 
@@ -176,6 +177,15 @@ Option "SwapAxes" "0"
 EndSection
 EOF
 
+# install framebuffer copy tool
+wget -N $LOCALGIT/fbc.tgz
+tar xvfz fbc.tgz
+cd fbc
+make
+cp fbc /usr/bin/
+cd ..
+rm -rf fbc.tgz fbc
+
 # hide cursor and disable screensaver
 cat <<EOF > /etc/X11/xinit/xserverrc
 #!/bin/sh
@@ -186,6 +196,8 @@ for f in /dev/input/by-id/*-mouse; do
     ## and the exists test will evaluate to false.
     if [ -e "\$f" ]; then
         CUROPT=
+        # run framebuffer copy tool in background
+        /usr/bin/fbc &
     else
         CUROPT=-nocursor
     fi
@@ -251,7 +263,7 @@ for i in 24:23 28:24 32:24; do
 done
 
 # install libroboint
-wget -N https://github.com/harbaum/tx-pi/raw/master/setup/libroboint-inst.sh
+wget -N $LOCALGIT/libroboint-inst.sh
 chmod a+x libroboint-inst.sh
 ./libroboint-inst.sh
 rm -f libroboint-inst.sh
