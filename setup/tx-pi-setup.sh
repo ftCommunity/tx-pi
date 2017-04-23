@@ -330,6 +330,9 @@ svn export $SVNROOT"/var/www"
 apt-get -y install --no-install-recommends fbgrab
 sed -i 's.fbgrab.fbgrab -d /dev/fb1.' /var/www/screenshot.py
 
+# fbgrab needs netpbm to generate png files
+apt-get -y install netpbm
+
 # adjust file ownership for changed www user name
 chown -R ftc:ftc /var/www/*
 chown -R ftc:ftc /var/log/lighttpd
