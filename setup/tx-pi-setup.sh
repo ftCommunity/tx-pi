@@ -131,6 +131,13 @@ ftc     ALL = NOPASSWD: /sbin/wpa_cli
 EOF
 chmod 0440 /etc/sudoers.d/wifi
 
+cat <<EOF > /etc/sudoers.d/network
+## Permissions for ftc access to programs required
+## for network setup
+ftc     ALL = NOPASSWD: /etc/init.d/networking, /sbin/ifup, /sbin/ifdown
+EOF
+chmod 0440 /etc/sudoers.d/network
+
 # ----------------------- display setup ---------------------
 
 # disable fbturbo/enable ordinary fbdev
