@@ -23,6 +23,7 @@ make doc
 
 # install
 make install
+ldconfig
 
 # install python
 make python
