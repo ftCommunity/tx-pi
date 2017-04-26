@@ -284,10 +284,21 @@ cd /opt/ftc/apps/system
 svn export $TSVNBASE"/touchui/apps/system/power"
 
 # add robolt support
+# robolt udev rules have already been installed from the main repository
+cd /root
 git clone https://github.com/ftCommunity/python-robolt.git
 cd python-robolt
-# robolt rules have already been installed from the main repository
 python3 ./setup.py install
+cd ..
+rm -rf python-robolt
+
+# add wedo support
+# wedo udev rules have already been installed from the main repository
+cd /root
+git clone https://github.com/gbin/WeDoMore.git
+cd WeDoMore
+python3 ./setup.py install
+rm -rf WeDoMore
 
 # adjust lighttpd config
 cat <<EOF > /etc/lighttpd/lighttpd.conf
