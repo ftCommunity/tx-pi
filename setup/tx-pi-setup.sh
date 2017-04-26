@@ -283,6 +283,12 @@ rm -rf /opt/ftc/apps/system/ftgui
 cd /opt/ftc/apps/system
 svn export $TSVNBASE"/touchui/apps/system/power"
 
+# add robolt support
+git clone https://github.com/ftCommunity/python-robolt.git
+cd python-robolt
+# robolt rules have already been installed from the main repository
+python3 ./setup.py install
+
 # adjust lighttpd config
 cat <<EOF > /etc/lighttpd/lighttpd.conf
 server.modules = (
