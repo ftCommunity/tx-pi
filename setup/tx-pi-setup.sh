@@ -75,6 +75,9 @@ fi
 cd /etc/usbmount
 wget -N https://raw.githubusercontent.com/ftCommunity/ftcommunity-TXT/3de48278d1260c48a0a20b07a35d14572c6248d3/board/fischertechnik/TXT/rootfs/etc/usbmount/usbmount.conf
 
+# create file indicating that this is a tx-pi setup
+touch /etc/tx-pi
+
 # create locales
 cat <<EOF > /etc/locale.gen
 # locales supported by CFW 
@@ -367,7 +370,13 @@ echo "Populating /var/www ..."
 cd /var
 rm -rf www
 svn export $SVNROOT"/var/www"
+touch /var/www/tx-pi
 
+cd /var/www
+for i in /var/www/*.html /var/www/*.py; do 
+    sed -i 's.<div class="outline"><font color="red">fischer</font><font color="#046ab4">technik</font>\&nbsp;<font color="#fcce04">TXT</font></div>.<div class="outline"><font color="red">ft</font><font color="#046ab4">community</font>\&nbsp;<font color="#fcce04">TX-PI</font></div>.' $i
+done
+    
 # make sure fbgrab is there to take screenshots
 apt-get -y install --no-install-recommends fbgrab
 sed -i 's.fbgrab.fbgrab -d /dev/fb1.' /var/www/screenshot.py
