@@ -1,7 +1,7 @@
 # ft PiPower
 
 This is a design for a very cheap and simple power adapter. It converts
-the ~9V typically used with fischertechnik models to the 5V required by
+the approx. 9V DC typically used with fischertechnik models to the 5V required by
 the raspberry pi.
 
 ![PiPower in use](https://raw.githubusercontent.com/harbaum/tx-pi/master/images/pipower_use.jpg)
