@@ -14,6 +14,8 @@ You'll need:
   - a Waveshare 3.2" LCD touchscreen (either V3 or V4)
   - a micro SD card with at least 8GB space
 
+Optionally build the [PiPower](https://github.com/harbaum/tx-pi/tree/master/pipower) to supply the Pi from fischertechnik power sources.
+
 ## Hardware setup
 
 The case consists of four parts. A bottom and top part for each the
