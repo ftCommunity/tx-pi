@@ -75,6 +75,9 @@ fi
 cd /etc/usbmount
 wget -N https://raw.githubusercontent.com/ftCommunity/ftcommunity-TXT/3de48278d1260c48a0a20b07a35d14572c6248d3/board/fischertechnik/TXT/rootfs/etc/usbmount/usbmount.conf
 
+# create file indicating that this is a tx-pi setup
+touch /etc/tx-pi
+
 # create locales
 cat <<EOF > /etc/locale.gen
 # locales supported by CFW 
@@ -111,6 +114,7 @@ usermod -a -G video ftc
 usermod -a -G tty ftc
 usermod -a -G dialout ftc
 usermod -a -G input ftc
+usermod -a -G gpio ftc
 echo "ftc:ftc" | chpasswd
 
 # special ftc permissions
@@ -121,7 +125,7 @@ cat <<EOF > /etc/sudoers.d/bluetooth
 ## Permissions for ftc access to programs required
 ## for bluetooth setup
 
-ftc     ALL = NOPASSWD: /usr/bin/hcitool, /etc/init.d/bluetooth, /usr//bin/pkill -SIGINT hcitool
+ftc     ALL = NOPASSWD: /usr/bin/hcitool, /etc/init.d/bluetooth, /usr/bin/pkill -SIGINT hcitool
 EOF
 chmod 0440 /etc/sudoers.d/bluetooth
 cat <<EOF > /etc/sudoers.d/wifi
@@ -137,6 +141,13 @@ cat <<EOF > /etc/sudoers.d/network
 ftc     ALL = NOPASSWD: /etc/init.d/networking, /sbin/ifup, /sbin/ifdown
 EOF
 chmod 0440 /etc/sudoers.d/network
+
+cat <<EOF > /etc/sudoers.d/ft_bt_remote_server
+## Permissions for ftc access to programs required
+## for BT Control Set server setup
+ftc     ALL = NOPASSWD: /usr/bin/ft_bt_remote_start.sh, /usr/bin/ft_bt_remote_server, /usr/bin/pkill -SIGINT ft_bt_remote_server
+EOF
+chmod 0440 /etc/sudoers.d/ft_bt_remote_server
 
 # ----------------------- display setup ---------------------
 
@@ -246,7 +257,7 @@ wget -N $GITROOT/etc/fw-ver.txt
 # hardware
 cd /etc/udev/rules.d
 wget -N $GITROOT/etc/udev/rules.d/40-btsmart.rules
-wget -N $GITROOT/etc/udev/rules.d/40-robolt.rules
+wget -N $GITROOT/etc/udev/rules.d/40-ft_legacy_interfaces.rules
 wget -N $GITROOT/etc/udev/rules.d/40-wedo.rules
 wget -N $GITROOT/etc/udev/rules.d/60-i2c-tools.rules
 
@@ -300,6 +311,16 @@ cd WeDoMore
 python3 ./setup.py install
 rm -rf WeDoMore
 
+# install the BT Control Set server
+apt-get -y install --no-install-recommends libbluetooth-dev
+cd /root
+git clone https://github.com/ftCommunity/ft_bt_remote_server.git
+cd ft_bt_remote_server
+make
+make install
+cd ..
+rm -rf ft_bt_remote_server
+
 # adjust lighttpd config
 cat <<EOF > /etc/lighttpd/lighttpd.conf
 server.modules = (
@@ -349,7 +370,13 @@ echo "Populating /var/www ..."
 cd /var
 rm -rf www
 svn export $SVNROOT"/var/www"
+touch /var/www/tx-pi
 
+cd /var/www
+for i in /var/www/*.html /var/www/*.py; do 
+    sed -i 's.<div class="outline"><font color="red">fischer</font><font color="#046ab4">technik</font>\&nbsp;<font color="#fcce04">TXT</font></div>.<div class="outline"><font color="red">ft</font><font color="#046ab4">community</font>\&nbsp;<font color="#fcce04">TX-PI</font></div>.' $i
+done
+    
 # make sure fbgrab is there to take screenshots
 apt-get -y install --no-install-recommends fbgrab
 sed -i 's.fbgrab.fbgrab -d /dev/fb1.' /var/www/screenshot.py
