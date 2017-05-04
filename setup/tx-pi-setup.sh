@@ -321,6 +321,27 @@ make install
 cd ..
 rm -rf ft_bt_remote_server
 
+# build and install i2c-tiny-usb kernel module
+apt-get install raspberrypi-kernel-headers
+wget -N https://raw.githubusercontent.com/notro/rpi-source/master/rpi-source -O /usr/bin/rpi-source
+chmod +x /usr/bin/rpi-source
+/usr/bin/rpi-source -q --tag-update
+apt-get install bc
+rpi-source
+
+mkdir i2c-tiny-usb
+echo -e "obj-m += i2c-tiny-usb.o" > Makefile
+echo -e "\nall:" >> Makefile
+echo -e "\tmake -C /lib/modules/\$(shell uname -r)/build M=\$(PWD) modules" >> Makefile
+echo -e "\ninstall:" >> Makefile
+echo -e "\tmake -C /lib/modules/\$(shell uname -r)/build M=\$(PWD) modules_install" >> Makefile
+echo -e "\nclean:" >> Makefile
+echo -e "\tmake -C /lib/modules/\$(shell uname -r)/build M=\$(PWD) clean" >> Makefile
+cp ~/linux/drivers/i2c/busses/i2c-tiny-usb.c .
+make
+make install
+depmod -a
+
 # adjust lighttpd config
 cat <<EOF > /etc/lighttpd/lighttpd.conf
 server.modules = (
