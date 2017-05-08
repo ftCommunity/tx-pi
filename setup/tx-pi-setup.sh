@@ -48,7 +48,7 @@ apt-get -y install --no-install-recommends xserver-xorg xinit xserver-xorg-video
 # python and pyqt
 apt-get -y install --no-install-recommends python3-pyqt4 python3 python3-pip python3-numpy python3-dev cmake python3-serial python3-pexpect
 # misc tools
-apt-get -y install i2c-tools lighttpd git subversion ntpdate usbmount
+apt-get -y install i2c-tools python3-smbus lighttpd git subversion ntpdate usbmount
 
 # some additionl python stuff
 pip3 install semantic_version
@@ -115,6 +115,7 @@ usermod -a -G tty ftc
 usermod -a -G dialout ftc
 usermod -a -G input ftc
 usermod -a -G gpio ftc
+usermod -a -G i2c ftc
 echo "ftc:ftc" | chpasswd
 
 # special ftc permissions
