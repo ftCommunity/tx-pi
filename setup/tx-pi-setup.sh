@@ -257,8 +257,8 @@ wget -N $GITROOT/etc/fw-ver.txt
 # set various udev rules to give ftc user access to
 # hardware
 cd /etc/udev/rules.d
-wget -N $GITROOT/etc/udev/rules.d/40-ft_legacy_interfaces.rules
-wget -N $GITROOT/etc/udev/rules.d/40-wedo.rules
+wget -N $GITROOT/etc/udev/rules.d/40-fischertechnik_interfaces.rules
+wget -N $GITROOT/etc/udev/rules.d/40-lego_interfaces.rules
 wget -N $GITROOT/etc/udev/rules.d/60-i2c-tools.rules
 
 # get /opt/ftc
