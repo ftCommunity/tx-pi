@@ -89,6 +89,9 @@ EOF
 locale-gen
 update-locale --no-checks LANG="de_DE.UTF-8"
 
+# install bluetooth tools required for e.g. bnep
+apt-get -y install --no-install-recommends bluez-tools
+
 # fetch bluez hcitool with extended lescan patch
 wget -N $LOCALGIT/hcitool-xlescan.tgz
 tar xvfz hcitool-xlescan.tgz -C /usr/bin
