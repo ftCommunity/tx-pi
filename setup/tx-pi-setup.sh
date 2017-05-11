@@ -208,6 +208,11 @@ cp fbc /usr/bin/
 cd ..
 rm -rf fbc.tgz fbc
 
+# install vnc server
+apt-get -y install x11vnc
+# xyz
+# x11vnc -display :0 -usepw -listen IP_of_pi -allow allowed_ip_address
+
 # hide cursor and disable screensaver
 cat <<EOF > /etc/X11/xinit/xserverrc
 #!/bin/sh
@@ -228,6 +233,8 @@ for f in /dev/input/by-id/*-mouse; do
     ## This is all we needed to know, so we can break after the first iteration
     break
 done
+
+sh -c 'sleep 2; x11vnc -display :0' &
 
 exec /usr/bin/X -s 0 dpms \$CUROPT -nolisten tcp "\$@"
 EOF
@@ -402,7 +409,13 @@ for i in /var/www/*.html /var/www/*.py; do
     sed -i 's.<div class="outline"><font color="red">fischer</font><font color="#046ab4">technik</font>\&nbsp;<font color="#fcce04">TXT</font></div>.<div class="outline"><font color="red">ft</font><font color="#046ab4">community</font>\&nbsp;<font color="#fcce04">TX-PI</font></div>.' $i
     sed -i 's.<title>fischertechnik TXT community firmware</title>.<title>ftcommunity TX-PI</title>.' $i
 done
-    
+
+# Install novnc
+cd /var/www
+wget -N $LOCALGIT/novnc.tgz
+tar xvfz novnc.tgz
+rm novnc.tgz
+
 # make sure fbgrab is there to take screenshots
 apt-get -y install --no-install-recommends fbgrab
 sed -i 's.fbgrab.fbgrab -d /dev/fb1.' /var/www/screenshot.py
