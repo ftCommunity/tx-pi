@@ -408,6 +408,9 @@ for i in /var/www/*.html /var/www/*.py; do
     sed -i 's.<title>fischertechnik TXT community firmware</title>.<title>ftcommunity TX-PI</title>.' $i
 done
 
+# add novnc link to index page
+sed -i 's#<center><a href="https://github.com/ftCommunity/ftcommunity-TXT" target="ft-community">community edition</a></center>#<center><a href="https://github.com/ftCommunity/ftcommunity-TXT" target="ft-community">ftcommunity</a> - <a href="/remote">VNC</a></center>#' /var/www/index.html
+
 # Install novnc ...
 cd /var/www
 wget -N $LOCALGIT/novnc.tgz
