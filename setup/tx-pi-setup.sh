@@ -232,7 +232,7 @@ for f in /dev/input/by-id/*-mouse; do
     break
 done
 
-sh -c 'sleep 2; x11vnc -display :0' &
+sh -c 'sleep 2; x11vnc -display :0 -forever' &
 
 exec /usr/bin/X -s 0 dpms \$CUROPT -nolisten tcp "\$@"
 EOF
