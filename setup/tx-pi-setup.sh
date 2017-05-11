@@ -210,8 +210,6 @@ rm -rf fbc.tgz fbc
 
 # install vnc server
 apt-get -y install x11vnc
-# xyz
-# x11vnc -display :0 -usepw -listen IP_of_pi -allow allowed_ip_address
 
 # hide cursor and disable screensaver
 cat <<EOF > /etc/X11/xinit/xserverrc
@@ -410,11 +408,17 @@ for i in /var/www/*.html /var/www/*.py; do
     sed -i 's.<title>fischertechnik TXT community firmware</title>.<title>ftcommunity TX-PI</title>.' $i
 done
 
-# Install novnc
+# Install novnc ...
 cd /var/www
 wget -N $LOCALGIT/novnc.tgz
 tar xvfz novnc.tgz
 rm novnc.tgz
+
+# ... and websockify for novnc
+cd /opt/ftc
+wget -N $LOCALGIT/websockify.tgz
+tar xvfz websockify.tgz
+rm websockify.tgz
 
 # make sure fbgrab is there to take screenshots
 apt-get -y install --no-install-recommends fbgrab
