@@ -396,9 +396,11 @@ rm -rf www
 svn export $SVNROOT"/var/www"
 touch /var/www/tx-pi
 
+# convert most "fischertechnik TXT" texts to "ftcommunity TX-PI"
 cd /var/www
 for i in /var/www/*.html /var/www/*.py; do 
     sed -i 's.<div class="outline"><font color="red">fischer</font><font color="#046ab4">technik</font>\&nbsp;<font color="#fcce04">TXT</font></div>.<div class="outline"><font color="red">ft</font><font color="#046ab4">community</font>\&nbsp;<font color="#fcce04">TX-PI</font></div>.' $i
+    sed -i 's.<title>fischertechnik TXT community firmware</title>.<title>ftcommunity TX-PI</title>.' $i
 done
     
 # make sure fbgrab is there to take screenshots
