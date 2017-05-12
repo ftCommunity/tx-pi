@@ -439,6 +439,14 @@ chown -R ftc:ftc /var/cache/lighttpd
 mkdir /home/ftc/apps
 chown -R ftc:ftc /home/ftc/apps
 
+# disable the TXTs default touchscreen timeout as the waveshare isn't half
+# as bad as the TXTs one
+cat <<EOF > /home/ftc/.launcher.config 
+[view]
+min_click_time = 0
+EOF
+chown ftc:ftc /home/ftc/.launcher.config 
+
 /etc/init.d/lighttpd restart
 
 echo "rebooting ..."
