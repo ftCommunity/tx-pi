@@ -142,7 +142,7 @@ chmod 0440 /etc/sudoers.d/wifi
 cat <<EOF > /etc/sudoers.d/network
 ## Permissions for ftc access to programs required
 ## for network setup
-ftc     ALL = NOPASSWD: /etc/init.d/networking, /sbin/ifup, /sbin/ifdown
+ftc     ALL = NOPASSWD: /usr/bin/netreq, /etc/init.d/networking, /sbin/ifup, /sbin/ifdown
 EOF
 chmod 0440 /etc/sudoers.d/network
 
@@ -328,6 +328,35 @@ make
 make install
 cd ..
 rm -rf ft_bt_remote_server
+
+# install netreq
+apt-get -y install --no-install-recommends libnetfilter-queue-dev
+cd /root
+svn export $SVNBASE"/package/netreq"
+cd netreq
+make
+make install
+cd ..
+rm -rf netreq
+
+# setup filter rules, the tx-pi always allows ssh
+cat <<EOF > /etc/systemd/system/netreq.service
+[Unit]
+Description=Network requester
+
+[Service]
+Type=oneshot
+ExecStart=/sbin/iptables -A INPUT -i lo -j ACCEPT
+ExecStart=/sbin/iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+ExecStart=/sbin/iptables -A INPUT -p tcp -m state --state NEW -j NFQUEUE --queue-num 1
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+systemctl daemon-reload
+systemctl enable netreq
+
 
 # build and install i2c-tiny-usb kernel module
 apt-get install raspberrypi-kernel-headers
