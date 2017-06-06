@@ -339,16 +339,18 @@ make install
 cd ..
 rm -rf netreq
 
-# setup filter rules, the tx-pi always allows ssh
+cat <<EOF > /etc/netreq_permissions
+# netreq permissions
+EOF
+chmod og+rw /etc/netreq_permissions
+
 cat <<EOF > /etc/systemd/system/netreq.service
 [Unit]
 Description=Network requester
 
 [Service]
 Type=oneshot
-ExecStart=/sbin/iptables -A INPUT -i lo -j ACCEPT
-ExecStart=/sbin/iptables -A INPUT -p tcp --dport 22 -j ACCEPT
-ExecStart=/sbin/iptables -A INPUT -p tcp -m state --state NEW -j NFQUEUE --queue-num 1
+ExecStart=/usr/bin/netreq_setup.sh
 
 [Install]
 WantedBy=multi-user.target
