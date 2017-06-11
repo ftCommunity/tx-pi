@@ -369,6 +369,7 @@ apt-get install bc
 rpi-source
 
 mkdir i2c-tiny-usb
+cd i2c-tiny-usb
 echo -e "obj-m += i2c-tiny-usb.o" > Makefile
 echo -e "\nall:" >> Makefile
 echo -e "\tmake -C /lib/modules/\$(shell uname -r)/build M=\$(PWD) modules" >> Makefile
