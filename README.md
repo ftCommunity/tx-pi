@@ -40,13 +40,15 @@ Get the latest [Raspbian Jessie Lite](https://www.raspberrypi.org/downloads/rasp
     
 Step by Step installation of the setup script:
  
-  - After reboot, it is recommended to update the raspi now, because the display driver may cause problems after updates. In case your display does not work after reboot, you can try removing the statement: dtoverlay=ads7846 from the LCD-show32.txt-90 config file (in /LCD-show/boot) (see Waveshare Wiki: http://www.waveshare.com/wiki/3.2inch_RPi_LCD_(B))
-    sudo apt-get update 
-  - Now download and start the [setup script] onto your PI (at this point, you might be happy to have *ssh*, or more precise, *scp* available) and run it as *sudo*. It will download and install the display drivers as well as major parts of the community firmware.:
-  cd..
-  sudo wget https://raw.githubusercontent.com/harbaum/tx-pi/master/setup/tx-pi-setup.sh
-  sudo chmod +x ./tx_pi_setup.sh
-  sudo ./tx_pi_setup.sh
+  - After reboot, it is recommended to update the raspi now, because the display driver may cause problems after updates. 
+  In case your display does not work after reboot, you can try removing the statement: dtoverlay=ads7846 from the LCD-show32.txt-90 config file (in /LCD-show/boot) (see Waveshare Wiki: http://www.waveshare.com/wiki/3.2inch_RPi_LCD_(B))
+  - sudo apt-get update
+  
+  Now download and start the [setup script] onto your PI (at this point, you might be happy to have *ssh*, or more precise, *scp* available) and run it as *sudo*. It will download and install the display drivers as well as major parts of the community firmware.
+  - cd..
+  - sudo wget https://raw.githubusercontent.com/harbaum/tx-pi/master/setup/tx-pi-setup.sh
+  - sudo chmod +x ./tx_pi_setup.sh
+  - sudo ./tx_pi_setup.sh
 
 During display driver installation the pi will reboot and you'll have to start
 the script a second time to allow it to finish the setup.
