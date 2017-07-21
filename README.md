@@ -50,8 +50,8 @@ Step by Step installation of the setup script:
   Now download and start the [setup script](https://raw.githubusercontent.com/harbaum/tx-pi/master/setup/tx-pi-setup.sh) onto your PI (at this point, you might be happy to have *ssh*, or more precise, *scp* available) and run it as *sudo*. It will download and install the display drivers as well as major parts of the community firmware.
   - cd..
   - sudo wget https://raw.githubusercontent.com/harbaum/tx-pi/master/setup/tx-pi-setup.sh
-  - sudo chmod +x ./tx_pi_setup.sh
-  - sudo ./tx_pi_setup.sh
+  - sudo chmod +x ./tx-pi-setup.sh
+  - sudo ./tx-pi-setup.sh
 
 During display driver installation the pi will reboot and you'll have to start
 the script a second time to allow it to finish the setup.
