@@ -28,7 +28,7 @@ countersunk.
 
 ## Software setup
 
-Get the latest [Raspbian Jessie Lite](https://www.raspberrypi.org/downloads/raspbian/) and install it onto SD card. Boot your PI with it and do a few things using raspi-config:
+Get the latest [Raspbian Jessie Lite](http://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2017-07-05/) and install it onto SD card. Boot your PI with it and do a few things using raspi-config:
 
   - Enable networking so the Pi can access the internet
     - If you need to use WiFi, see [this article](https://thepihut.com/blogs/raspberry-pi-tutorials/83502916-how-to-setup-wifi-on-raspbian-jessie-lite) on how to set up
