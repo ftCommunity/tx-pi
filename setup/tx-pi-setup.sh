@@ -64,8 +64,8 @@ if [ ! -f /boot/overlays/waveshare32b-overlay.dtb ]; then
     echo "= YOU NEED TO RESTART THIS SCRIPT ONCE THE PI HAS REBOOTED ="
     echo "============================================================"
     cd
-    wget -N http://www.waveshare.com/w/upload/7/74/LCD-show-170309.tar.gz
-    tar xvfz LCD-show-170309.tar.gz
+    wget -N www.waveshare.com/w/upload/0/00/LCD-show-170703.tar.gz
+    tar xvfz LCD-show-170703.tar.gz
     cd LCD-show
     ./LCD32-show
     # the pi will reboot
