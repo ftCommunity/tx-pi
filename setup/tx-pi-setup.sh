@@ -479,6 +479,10 @@ min_click_time = 0
 EOF
 chown ftc:ftc /home/ftc/.launcher.config 
 
+# remove cfw display configuration app since it does not work here...
+rm -fr /opt/ftc/apps/system/display/
+# 
+
 /etc/init.d/lighttpd restart
 
 echo "rebooting ..."
