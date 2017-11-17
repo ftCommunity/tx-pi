@@ -34,6 +34,7 @@ cp udev/fischertechnik.rules /etc/udev/rules.d/
 # python3 compatibility 'patch'
 cd ..
 wget -N https://github.com/PeterDHabermehl/libroboint-py3/raw/master/robointerface.py
+cp robointerface.py /usr/local/lib/python3.5/dist-packages/
 mv robointerface.py /usr/local/lib/python3.4/dist-packages/
 
 
