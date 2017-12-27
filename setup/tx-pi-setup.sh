@@ -29,6 +29,8 @@ SVNROOT=$SVNBASE"board/fischertechnik/TXT/rootfs"
 TSVNBASE="https://github.com/harbaum/TouchUI.git/trunk/"
 LOCALGIT="https://github.com/harbaum/tx-pi/raw/master/setup"
 
+FTDDIRECT="ftduino_direct-1.0.5"
+
 # Things you may do:
 # set a root password
 # enable root ssh login
@@ -290,10 +292,21 @@ for i in 24:23 28:24 32:24; do
 done
 
 # install libroboint
+echo "Installing libroboint"
 wget -N $LOCALGIT/libroboint-inst.sh
 chmod a+x libroboint-inst.sh
 ./libroboint-inst.sh
 rm -f libroboint-inst.sh
+
+# and ftduino_direct
+echo "Installing ftduino_direct.py"
+wget -N https://github.com/PeterDHabermehl/ftduino_direct/raw/master/$FTDDIRECT.tar.gz
+tar -xzvf $FTDDIRECT.tar.gz 
+cd $FTDDIRECT
+sudo python3 ./setup.py install
+cd ..
+sudo rm -fr $FTDDIRECT $FTDDIRECT.tar.gz
+
 
 # remove useless ftgui
 rm -rf /opt/ftc/apps/system/ftgui
