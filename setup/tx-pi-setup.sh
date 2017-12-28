@@ -36,6 +36,23 @@ FTDDIRECT="ftduino_direct-1.0.5"
 # enable root ssh login
 # apt-get install emacs-nox
 
+# default lcd is 3.2 inch
+LCD=LCD32
+
+# check if user gave a parameter
+if [ "$#" -gt 0 ]; then
+    # todo: Allow for other types as well
+    if [ "$1" == "LCD35" ]; then
+	echo "Setup for 3.5 inch screen"
+	LCD=$1
+    else
+	echo "Unknown parameter \"$1\""
+	echo "Allowed parameters:"
+	echo "LCD35    - create 3.5\" setup (instead of 3.2\")" 
+	exit -1
+    fi
+fi
+
 if [ "$HOSTNAME" != tx-pi ]; then
     echo "Make sure your R-Pi has been setup completely and is named tx-pi"
     exit -1
@@ -59,7 +76,7 @@ sudo pip3 install --upgrade pyserial
 
 # ---------------------- display setup ----------------------
 # check if waveshare driver is installed
-if [ ! -f /boot/overlays/waveshare32b-overlay.dtb ]; then
+if [ ! -f /boot/overlays/waveshare*-overlay.dtb ]; then
     echo "============================================================"
     echo "============== SCREEN DRIVER INSTALLATION =================="
     echo "============================================================"
@@ -69,7 +86,7 @@ if [ ! -f /boot/overlays/waveshare32b-overlay.dtb ]; then
     wget -N http://www.waveshare.com/w/upload/0/00/LCD-show-170703.tar.gz
     tar xvfz LCD-show-170703.tar.gz
     cd LCD-show
-    ./LCD32-show
+    ./$LCD-show 270
     # the pi will reboot
 fi
 
@@ -189,17 +206,19 @@ systemctl enable launcher
 sed -i 's,^\(allowed_users=\).*,\1'\anybody',' /etc/X11/Xwrapper.config
 
 # rotate display
-sed -i 's,^\(dtoverlay=waveshare32b.rotate=\).*,\1'\0',' /boot/config.txt
-
+# Not needed anymore since the LCD-show setup is called with "270" parameter 
+#sed -i 's,^\(dtoverlay=waveshare32b.rotate=\).*,\1'\0',' /boot/config.txt
+    
 # rotate touchscreen 
-cat <<EOF > /usr/share/X11/xorg.conf.d/99-calibration.conf
-Section "InputClass"
-Identifier "calibration"
-MatchProduct "ADS7846 Touchscreen"
-Option "Calibration" "200 3900 200 3900"
-Option "SwapAxes" "0"
-EndSection
-EOF
+# Not needed anymore since the LCD-show setup is called with "270" parameter 
+#cat <<EOF > /usr/share/X11/xorg.conf.d/99-calibration.conf
+#Section "InputClass"
+#Identifier "calibration"
+#MatchProduct "ADS7846 Touchscreen"
+#Option "Calibration" "200 3900 200 3900"
+#Option "SwapAxes" "0"
+#EndSection
+#EOF
 
 # install framebuffer copy tool
 wget -N $LOCALGIT/fbc.tgz
