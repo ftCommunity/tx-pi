@@ -128,11 +128,15 @@ apt-get -y install --no-install-recommends libzbar0 python3-pil
 apt-get -y install --no-install-recommends libzbar-dev
 pip3 install zbarlight
 
+# system wide mpg123 overrides the included mpg123 of some apps
+apt-get -y install --no-install-recommends mpg123
+
 # ----------------------- user setup ---------------------
 # create ftc user
 groupadd ftc
 useradd -g ftc -m ftc
 usermod -a -G video ftc
+usermod -a -G audio ftc
 usermod -a -G tty ftc
 usermod -a -G dialout ftc
 usermod -a -G input ftc
