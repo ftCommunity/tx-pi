@@ -53,7 +53,7 @@ Step by Step installation of the setup script:
   Now download and start the [setup script](https://raw.githubusercontent.com/harbaum/tx-pi/master/setup/tx-pi-setup.sh) onto your PI (at this point, you might be happy to have *ssh* available) and run it as *sudo*. It will download and install the display drivers as well as major parts of the community firmware.
   You might log in as user "pi", since the TX-Pi default user "ftc" has no sudo rights by default.
   
-  - ssh pi@<ip address of the TX-Pi>
+  - ssh pi@"ip address of the TX-Pi"
   
   Then via ssh:  
   - cd..
