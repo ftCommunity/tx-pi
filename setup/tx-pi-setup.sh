@@ -67,6 +67,9 @@ apt-get upgrade
 apt-get -y install --no-install-recommends xserver-xorg xinit xserver-xorg-video-fbdev xserver-xorg-legacy unclutter
 # python and pyqt
 apt-get -y install --no-install-recommends python3-pyqt4 python3 python3-pip python3-numpy python3-dev cmake python3-serial python3-pexpect
+# python RPi GPIO access
+apt-get install -y python3-rpi.gpio
+apt-get install -y python-rpi.gpio
 # misc tools
 apt-get -y install i2c-tools python3-smbus lighttpd git subversion ntpdate usbmount
 
