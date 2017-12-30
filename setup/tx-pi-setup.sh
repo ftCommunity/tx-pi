@@ -329,7 +329,7 @@ cd $FTDDIRECT
 sudo python3 ./setup.py install
 cd ..
 sudo rm -fr $FTDDIRECT $FTDDIRECT.tar.gz
-
+sudo rm -fr /opt/ftc/ftduino_direct.py
 
 # remove useless ftgui
 rm -rf /opt/ftc/apps/system/ftgui
