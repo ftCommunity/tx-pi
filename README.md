@@ -26,7 +26,7 @@ using ordinary fischertechnik parts.
 differs between V3 and V4. The required screws are M2.5 * 12mm
 countersunk.
 
-## Software setup
+## Operating system setup
 
 Get the latest [Raspbian Jessie Lite](http://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2017-07-05/) and install it onto SD card. Boot your PI with it and do a few things using raspi-config:
 
@@ -46,18 +46,35 @@ Step by Step installation of the setup script:
   
   In case your display does not work after reboot, you can try removing the statement: dtoverlay=ads7846 from the LCD-show32.txt-90 config file (in /LCD-show/boot) (see Waveshare Wiki: http://www.waveshare.com/wiki/3.2inch_RPi_LCD_(B))
   
+  At this point you've finished the preparation of the RPi operating system.
+
+## TX-Pi software setup
   
-  Now download and start the [setup script](https://raw.githubusercontent.com/harbaum/tx-pi/master/setup/tx-pi-setup.sh) onto your PI (at this point, you might be happy to have *ssh*, or more precise, *scp* available) and run it as *sudo*. It will download and install the display drivers as well as major parts of the community firmware.
+  Now download and start the [setup script](https://raw.githubusercontent.com/harbaum/tx-pi/master/setup/tx-pi-setup.sh) onto your PI (at this point, you might be happy to have *ssh* available) and run it as *sudo*. It will download and install the display drivers as well as major parts of the community firmware.
+  You might log in as user "pi", since the TX-Pi default user "ftc" has no sudo rights by default.
+  
+  - ssh pi@<ip address of the TX-Pi>
+  
+  Then via ssh:  
   - cd..
   - sudo wget https://raw.githubusercontent.com/harbaum/tx-pi/master/setup/tx-pi-setup.sh
   - sudo chmod +x ./tx-pi-setup.sh
   - sudo ./tx-pi-setup.sh
 
-During display driver installation the pi will reboot and you'll have to start
-the script a second time to allow it to finish the setup.
+During display driver installation the pi will reboot (at that point, the ssh connection will be closed) and you'll have to start
+the script a second time to allow it to finish the setup:
+
+  - ssh pi@<ip address of the TX-Pi>
+  
+  Then via ssh:  
+  - cd..
+  - sudo ./tx-pi-setup.sh
 
 The script then runs some time, but building of opencv2 for python3 is no longer necessary. Pre-built packages for opencv2 and bluez will be downloaded from this repository.
 
 [libroboint](https://defiant.homedns.org/~erik/ft/libft/) for C and Python will be built during the install process. Libroboint Python3 support is experimental. Anyway TX-PI now can control ft Robo Interface and Robo I/O Extention, especially in combination with TouchUI under Python3.
+Additionally, the python library of [ftduino_direct](https://github.com/PeterDHabermehl/ftduino_direct) will be installed to the TX-Pi, in case you would like to use the ftduino as I/O hardware extension to your TX-Pi.
+
+*If you want to update your TX-Pi, just repeat the steps described under "TX-Pi software setup"*
 
 This is a work in progress. Some parts aren't working by now.
