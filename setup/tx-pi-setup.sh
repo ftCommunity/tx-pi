@@ -61,6 +61,7 @@ fi
 # ----------------------- package installation ---------------------
 
 apt-get update
+apt-get upgrade
 
 # X11
 apt-get -y install --no-install-recommends xserver-xorg xinit xserver-xorg-video-fbdev xserver-xorg-legacy unclutter
