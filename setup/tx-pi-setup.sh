@@ -80,19 +80,30 @@ sudo pip3 install --upgrade pyserial
 
 # ---------------------- display setup ----------------------
 # check if waveshare driver is installed
-if [ ! -f /boot/overlays/waveshare*-overlay.dtb ]; then
-    echo "============================================================"
-    echo "============== SCREEN DRIVER INSTALLATION =================="
-    echo "============================================================"
-    echo "= YOU NEED TO RESTART THIS SCRIPT ONCE THE PI HAS REBOOTED ="
-    echo "============================================================"
-    cd
-    wget -N http://www.waveshare.com/w/upload/0/00/LCD-show-170703.tar.gz
-    tar xvfz LCD-show-170703.tar.gz
-    cd LCD-show
-    ./$LCD-show 270
-    # the pi will reboot
-fi
+#if [ ! -f /boot/overlays/waveshare*-overlay.dtb ]; then
+echo "============================================================"
+echo "============== SCREEN DRIVER INSTALLATION =================="
+echo "============================================================"
+#    echo "= YOU NEED TO RESTART THIS SCRIPT ONCE THE PI HAS REBOOTED ="
+#    echo "============================================================"
+cd
+wget -N http://www.waveshare.com/w/upload/0/00/LCD-show-170703.tar.gz
+tar xvfz LCD-show-170703.tar.gz
+# supress automatic reboot after installation
+sed -i "s/sudo reboot/#sudo reboot/g" LCD-show/$LCD-show
+sed -i "s/\"reboot now\"/\"not rebooting yet\"/g" LCD-show/$LCD-show
+cd LCD-show
+./$LCD-show 270
+# the pi will not reboot
+# fi
+
+# TODO:
+# in /boot/config.txt for at least LCD35 and LCD35B set spi speed to 40Mhz like so:
+# dtoverlay=waveshare35a:rotate=180 ->
+# dtoverlay=waveshare35a:rotate=180,speed=40000000
+
+# TODO1:
+# adjust screen rotation
 
 # usbmount config
 cd /etc/usbmount
