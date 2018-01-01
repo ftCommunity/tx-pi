@@ -8,8 +8,7 @@
 # raspi-config
 #    hostname tx-pi
 #    enable ssh
-#    expand filesystem
-#    disable wait for network
+#    optional disable wait for network
 
 # TODO
 # - add screen calibration tool
@@ -31,13 +30,9 @@ LOCALGIT="https://github.com/harbaum/tx-pi/raw/master/setup"
 
 FTDDIRECT="ftduino_direct-1.0.5"
 
-# Things you may do:
-# set a root password
-# enable root ssh login
-# apt-get install emacs-nox
-
 # default lcd is 3.2 inch
 LCD=LCD32
+ORIENTATION=90
 
 # check if user gave a parameter
 if [ "$#" -gt 0 ]; then
@@ -79,13 +74,9 @@ pip3 install websockets
 sudo pip3 install --upgrade pyserial
 
 # ---------------------- display setup ----------------------
-# check if waveshare driver is installed
-#if [ ! -f /boot/overlays/waveshare*-overlay.dtb ]; then
 echo "============================================================"
 echo "============== SCREEN DRIVER INSTALLATION =================="
 echo "============================================================"
-#    echo "= YOU NEED TO RESTART THIS SCRIPT ONCE THE PI HAS REBOOTED ="
-#    echo "============================================================"
 cd
 wget -N http://www.waveshare.com/w/upload/0/00/LCD-show-170703.tar.gz
 tar xvfz LCD-show-170703.tar.gz
@@ -93,9 +84,7 @@ tar xvfz LCD-show-170703.tar.gz
 sed -i "s/sudo reboot/#sudo reboot/g" LCD-show/$LCD-show
 sed -i "s/\"reboot now\"/\"not rebooting yet\"/g" LCD-show/$LCD-show
 cd LCD-show
-./$LCD-show 270
-# the pi will not reboot
-# fi
+./$LCD-show $ORIENTATION
 
 # TODO:
 # in /boot/config.txt for at least LCD35 and LCD35B set spi speed to 40Mhz like so:
@@ -223,21 +212,6 @@ systemctl enable launcher
 
 # allow any user to start xs
 sed -i 's,^\(allowed_users=\).*,\1'\anybody',' /etc/X11/Xwrapper.config
-
-# rotate display
-# Not needed anymore since the LCD-show setup is called with "270" parameter 
-#sed -i 's,^\(dtoverlay=waveshare32b.rotate=\).*,\1'\0',' /boot/config.txt
-    
-# rotate touchscreen 
-# Not needed anymore since the LCD-show setup is called with "270" parameter 
-#cat <<EOF > /usr/share/X11/xorg.conf.d/99-calibration.conf
-#Section "InputClass"
-#Identifier "calibration"
-#MatchProduct "ADS7846 Touchscreen"
-#Option "Calibration" "200 3900 200 3900"
-#Option "SwapAxes" "0"
-#EndSection
-#EOF
 
 # install framebuffer copy tool
 wget -N $LOCALGIT/fbc.tgz
