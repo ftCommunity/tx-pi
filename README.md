@@ -64,7 +64,7 @@ Step by Step installation of the setup script:
 During display driver installation the pi will reboot (at that point, the ssh connection will be closed) and you'll have to start
 the script a second time to allow it to finish the setup:
 
-  - ssh pi@<ip address of the TX-Pi>
+  - ssh pi@"ip address of the TX-Pi"
   
   Then via ssh:  
   - cd..
