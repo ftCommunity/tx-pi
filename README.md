@@ -10,7 +10,7 @@ for the fischertechnik TXT](http://cfw.ftcommunity.de/).
 
 You'll need:
 
-  - a Raspberry Pi 2 or 3
+  - a Raspberry Pi B+, 2 or 3
   - a Waveshare 3.2" LCD touchscreen (either V3 or V4)
   - a micro SD card with at least 8GB space
 
@@ -28,53 +28,78 @@ countersunk.
 
 ## Operating system setup
 
-Get the latest [Raspbian Jessie Lite](http://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2017-07-05/) and install it onto SD card. Boot your PI with it and do a few things using raspi-config:
+The entire installtion consists of three main steps:
 
-  - Enable networking so the Pi can access the internet
-    - If you need to use WiFi, see [this article](https://thepihut.com/blogs/raspberry-pi-tutorials/83502916-how-to-setup-wifi-on-raspbian-jessie-lite) on how to set up
-  - Set the hostname to tx-pi
-  - Expand the file system (under advanced options)
-  - Disable "wait for network" boot option
-  - It is recommended to also enable ssh for easier acces to your tx-pi later
-  - Reboot after your changes
-    
-Step by Step installation of the setup script:
- 
-  After reboot, it is recommended to update the raspi now, because the display driver may cause problems after updates.
-  - sudo apt-get update
-  - sudo apt-get upgrade
-  
-  In case your display does not work after reboot, you can try removing the statement: dtoverlay=ads7846 from the LCD-show32.txt-90 config file (in /LCD-show/boot) (see Waveshare Wiki: http://www.waveshare.com/wiki/3.2inch_RPi_LCD_(B))
-  
-  At this point you've finished the preparation of the RPi operating system.
+  1. Installing a standard raspbian operating system imade on an SD card
+  2. Doing some minor manual preparations
+  3. Run a script that will do all the tx-pi specific modifications
 
-## TX-Pi software setup
-  
-  Now download and start the [setup script](https://raw.githubusercontent.com/harbaum/tx-pi/master/setup/tx-pi-setup.sh) onto your PI (at this point, you might be happy to have *ssh* available) and run it as *sudo*. It will download and install the display drivers as well as major parts of the community firmware.
-  You might log in as user "pi", since the TX-Pi default user "ftc" has no sudo rights by default.
-  
-  - ssh pi@"ip address of the TX-Pi"
-  
-  Then via ssh:  
-  - cd..
-  - sudo wget https://raw.githubusercontent.com/harbaum/tx-pi/master/setup/tx-pi-setup.sh
-  - sudo chmod +x ./tx-pi-setup.sh
-  - sudo ./tx-pi-setup.sh
+### Step 1: Install Raspbian on SD card
 
-During display driver installation the pi will reboot (at that point, the ssh connection will be closed) and you'll have to start
-the script a second time to allow it to finish the setup:
+Get am SD card image of [Raspbian Jessie
+Lite](http://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2017-07-05/)
+and install it onto SD card. More information on installinf rasbian on
+an SD card can be found
+[here](https://www.raspberrypi.org/documentation/installation/installing-images/README.md).
 
-  - ssh pi@"ip address of the TX-Pi"
-  
-  Then via ssh:  
-  - cd..
-  - sudo ./tx-pi-setup.sh
+Insert the SD card into your Pi and boot it. Unless you are very
+familiar with the Pi and are able to do a headless setup you should
+have a keyboard and HDMI display connected to the Pi. The Pi should be
+connected via ethernet to your home network.
 
-The script then runs some time, but building of opencv2 for python3 is no longer necessary. Pre-built packages for opencv2 and bluez will be downloaded from this repository.
+### Step 2: Do some manual preparations
 
-[libroboint](https://defiant.homedns.org/~erik/ft/libft/) for C and Python will be built during the install process. Libroboint Python3 support is experimental. Anyway TX-PI now can control ft Robo Interface and Robo I/O Extention, especially in combination with TouchUI under Python3.
-Additionally, the python library of [ftduino_direct](https://github.com/PeterDHabermehl/ftduino_direct) will be installed to the TX-Pi, in case you would like to use the ftduino as I/O hardware extension to your TX-Pi.
+Now log into your pi using the keyboard and the screen. The login is "pi" and the password
+is "raspberry" as with any raspian installation.
 
-*If you want to update your TX-Pi, just repeat the steps described under "TX-Pi software setup"*
+Later we'll need the IP address of the Pi. In order to obtain it type ```ifconfig eth0``` and
+memorize the address show after ```inet address:```. You'll need this address later.
 
-This is a work in progress. Some parts aren't working by now.
+Now start the raspi-config tool by typing ```sudo raspi-config``` and
+perform the following things:
+
+  1. Change the hostname to ```tx-pi```
+  2. Disable "wait for network" in the ```Boot Options```
+  3. Enable SSH under ```Interfacing Options```
+
+Leave the raspi-config tool and shutdown the Pi by typing ```sudo
+shutdown -h now```. You don't necessarily need the keyboard and HDMI
+display anymore and you might remove it. Instead connect the small 3.2
+inch LCD if you haven't yet done so.
+
+Start your Pi again.
+
+### Step 3: The TX-Pi setup
+
+The last step is done remotely from a PC. Log into your Pi via SSH
+using either a tool like ```putty``` on a windows PC or ```ssh```
+under Linux. Use the IP address you've obtained in step 2. Again use
+the login ```pi``` and the password ```raspberry```.
+
+Now download the setup script by typing:
+
+```
+wget https://raw.githubusercontent.com/harbaum/tx-pi/master/setup/tx-pi-setup.sh
+```
+
+and make the script executable by typing
+```
+chmod +x ./tx-pi-setup.sh
+```
+
+Finally run the script by typing
+```
+sudo ./tx-pi-setup.sh
+```
+
+This will now take several hours and download and install a lot of
+programs from the internet onto your Pi. Once the installation is done
+your Pi will automatically reboot and it will boot into the user
+interface of the [fischertechnik community
+firmware](http://cfw.ftcommunity.de/)..
+
+## Disclaimer
+
+This is a work in progress. Some parts aren't working by now and some may
+be broken. But the project is progressing fast and most functionality is
+working.
