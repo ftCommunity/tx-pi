@@ -64,7 +64,7 @@ inch LCD if you haven't yet done so.
 
 Start your Pi again.
 
-### Step 3: The TX-Pi setup
+## Step 3: The TX-Pi setup
 
 Again log into your Pi and once more use use the login ```pi``` and
 the password ```raspberry```.
