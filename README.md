@@ -6,7 +6,7 @@ for the fischertechnik TXT](http://cfw.ftcommunity.de/).
 
 <img src="https://raw.githubusercontent.com/harbaum/tx-pi/master/images/display32_1.jpg" alt="TX-PI" width="400" style="width: 400px;"/>
 
-# Getting started
+# Requirements
 
 You'll need:
 
@@ -16,7 +16,7 @@ You'll need:
 
 Optionally build the [PiPower](https://github.com/harbaum/tx-pi/tree/master/pipower) to supply the Pi from fischertechnik power sources.
 
-## Hardware setup
+# Hardware setup
 
 The case consists of four parts. A bottom and top part for each the
 Pi itself and the display. Both parts can be connected to each other
@@ -26,15 +26,15 @@ using ordinary fischertechnik parts.
 differs between V3 and V4. The required screws are M2.5 * 12mm
 countersunk.
 
-## Operating system setup
+# Software setup
 
-The entire installtion consists of three main steps:
+The entire installation consists of three main steps:
 
   1. Installing a standard raspbian operating system imade on an SD card
   2. Doing some minor manual preparations
   3. Run a script that will do all the tx-pi specific modifications
 
-### Step 1: Install Raspbian on SD card
+## Step 1: Install Raspbian on SD card
 
 Get am SD card image of [Raspbian Jessie
 Lite](http://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2017-07-05/)
@@ -44,23 +44,18 @@ an SD card can be found
 
 Insert the SD card into your Pi and boot it. Unless you are very
 familiar with the Pi and are able to do a headless setup you should
-have a keyboard and HDMI display connected to the Pi. The Pi should be
-connected via ethernet to your home network.
+have a keyboard and HDMI display connected to the Pi.
 
-### Step 2: Do some manual preparations
+## Step 2: Do some manual preparations
 
-Now log into your pi using the keyboard and the screen. The login is "pi" and the password
-is "raspberry" as with any raspian installation.
+Now log into your pi using the keyboard and the screen. The login is
+"pi" and the password is "raspberry" as with any raspian installation.
 
-Later we'll need the IP address of the Pi. In order to obtain it type ```ifconfig eth0``` and
-memorize the address show after ```inet address:```. You'll need this address later.
-
-Now start the raspi-config tool by typing ```sudo raspi-config``` and
+Start the raspi-config tool by typing ```sudo raspi-config``` and
 perform the following things:
 
   1. Change the hostname to ```tx-pi```
   2. Disable "wait for network" in the ```Boot Options```
-  3. Enable SSH under ```Interfacing Options```
 
 Leave the raspi-config tool and shutdown the Pi by typing ```sudo
 shutdown -h now```. You don't necessarily need the keyboard and HDMI
@@ -71,10 +66,8 @@ Start your Pi again.
 
 ### Step 3: The TX-Pi setup
 
-The last step is done remotely from a PC. Log into your Pi via SSH
-using either a tool like ```putty``` on a windows PC or ```ssh```
-under Linux. Use the IP address you've obtained in step 2. Again use
-the login ```pi``` and the password ```raspberry```.
+Again log into your Pi and once more use use the login ```pi``` and
+the password ```raspberry```.
 
 Now download the setup script by typing:
 
@@ -82,14 +75,9 @@ Now download the setup script by typing:
 wget https://raw.githubusercontent.com/harbaum/tx-pi/master/setup/tx-pi-setup.sh
 ```
 
-and make the script executable by typing
+and run the script by typing
 ```
-chmod +x ./tx-pi-setup.sh
-```
-
-Finally run the script by typing
-```
-sudo ./tx-pi-setup.sh
+sudo bash ./tx-pi-setup.sh
 ```
 
 This will now take several hours and download and install a lot of
