@@ -71,7 +71,7 @@ apt-get -y install i2c-tools python3-smbus lighttpd git subversion ntpdate usbmo
 # some additionl python stuff
 pip3 install semantic_version
 pip3 install websockets
-sudo pip3 install --upgrade pyserial
+pip3 install --upgrade pyserial
 
 # ---------------------- display setup ----------------------
 echo "============================================================"
