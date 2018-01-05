@@ -14,33 +14,32 @@ You'll need:
   - a Waveshare 3.2" LCD touchscreen (either V3 or V4)
   - a micro SD card with at least 8GB space
 
-Optionally build the [PiPower](https://github.com/harbaum/tx-pi/tree/master/pipower) to supply the Pi from fischertechnik power sources.
+Optionally you might use matching [ft compatible cases](https://www.thingiverse.com/thing:2217355) and the [PiPower](https://github.com/harbaum/tx-pi/tree/master/pipower) to supply the Pi from fischertechnik power sources.
 
 # Hardware setup
 
-The case consists of four parts. A bottom and top part for each the
-Pi itself and the display. Both parts can be connected to each other
+The case consists of four parts. A [bottom](https://www.thingiverse.com/thing:2217355) and [top](https://www.thingiverse.com/thing:2228623) part for Pi and a [bottom](https://www.thingiverse.com/thing:2228649) and [top](https://www.thingiverse.com/thing:2228655) part for the 
+display. Both parts can be connected to each other
 using ordinary fischertechnik parts.
 
-3D print the four case parts. The connector height of the display
-differs between V3 and V4. The required screws are M2.5 * 12mm
-countersunk.
+The connector height of the display differs between V3 and V4 and the V3 display needs a [higher bottom part](ps://www.thingiverse.com/thing:2228635).
+
+The required screws are M2.5 * 12mm countersunk.
 
 # Software setup
 
 The entire installation consists of three main steps:
 
-  1. Installing a standard raspbian operating system imade on an SD card
-  2. Doing some minor manual preparations
+  1. Install a standard raspbian operating system image onto SD card
+  2. Do some minor manual preparations
   3. Run a script that will do all the tx-pi specific modifications
 
-## Step 1: Install Raspbian on SD card
+## Step 1: Install Raspbian onto SD card
 
-Get am SD card image of [Raspbian Jessie
+Get an SD card image of [Raspbian Jessie
 Lite](http://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2017-07-05/)
-and install it onto SD card. More information on installinf rasbian on
-an SD card can be found
-[here](https://www.raspberrypi.org/documentation/installation/installing-images/README.md).
+and install it onto SD card. More information on installing rasbian on
+SD card can be found [here](https://www.raspberrypi.org/documentation/installation/installing-images/README.md).
 
 Insert the SD card into your Pi and boot it. Unless you are very
 familiar with the Pi and are able to do a headless setup you should
@@ -64,7 +63,7 @@ inch LCD if you haven't yet done so.
 
 Start your Pi again.
 
-## Step 3: The TX-Pi setup
+## Step 3: Run the TX-Pi setup
 
 Again log into your Pi and once more use use the login ```pi``` and
 the password ```raspberry```.
