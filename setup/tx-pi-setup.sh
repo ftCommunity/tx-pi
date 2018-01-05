@@ -67,8 +67,10 @@ apt-get install -y python3-rpi.gpio
 apt-get install -y python-rpi.gpio
 # misc tools
 apt-get -y install i2c-tools python3-smbus lighttpd git subversion ntpdate usbmount
+# avrdude
+apt-get -y install avrdude
 
-# some additionl python stuff
+# some additional python stuff
 pip3 install semantic_version
 pip3 install websockets
 pip3 install --upgrade pyserial
