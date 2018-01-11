@@ -143,8 +143,6 @@ in a rather poor redraw performance. This can be increased by setting
 the SPI clock to a higher value. E.g. to set it to 40Mhz change the line
 in /boot/config.txt:
 ```
-sudo bash ./tx-pi-setup.sh LCD35B
-```
 dtoverlay=waveshare35a:rotate=180,speed=40000000
 ```
 
