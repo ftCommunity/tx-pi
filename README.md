@@ -4,7 +4,7 @@ This repository contains the basic requirements to make a Raspberry Pi
 hardware and software compatible with the [community firmware
 for the fischertechnik TXT](http://cfw.ftcommunity.de/).
 
-<img src="https://raw.githubusercontent.com/harbaum/tx-pi/master/images/tx-pi-xl+ftduino.jpg" alt="TX-PI" width="400" style="width: 400px;"/>
+<img src="https://raw.githubusercontent.com/harbaum/tx-pi/master/images/tx-pi-xl+ftduino.jpg" alt="TX-PI"/>
 
 # Features and Highlights
 
