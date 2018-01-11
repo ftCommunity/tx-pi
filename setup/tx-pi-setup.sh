@@ -38,12 +38,16 @@ ORIENTATION=90
 if [ "$#" -gt 0 ]; then
     # todo: Allow for other types as well
     if [ "$1" == "LCD35" ]; then
-	echo "Setup for 3.5 inch screen"
+	echo "Setup for waveshare 3.5 inch (A) screen"
+	LCD=$1
+    elif [ "$1" == "LCD35B" ]; then
+	echo "Setup for waveshare 3.5 inch (B) IPS screen"
 	LCD=$1
     else
 	echo "Unknown parameter \"$1\""
 	echo "Allowed parameters:"
 	echo "LCD35    - create 3.5\" setup (instead of 3.2\")" 
+	echo "LCD35B   - create 3.5\" IPS setup)" 
 	exit -1
     fi
 fi

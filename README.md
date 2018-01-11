@@ -6,12 +6,42 @@ for the fischertechnik TXT](http://cfw.ftcommunity.de/).
 
 <img src="https://raw.githubusercontent.com/harbaum/tx-pi/master/images/display32_1.jpg" alt="TX-PI" width="400" style="width: 400px;"/>
 
+# Features and Highlights
+
+  - Runs on any Raspberry Pi
+  - User friendly touchscreen GUI for small add-on screens
+    - Waveshare 3.2" and 3.5" tested
+    - Screen mirroring onto the "big screen" for demos and bigger audiences
+    - Automatic detection and unsage of keyboards and mice
+  - System tools for network configuration etc
+  - Support for various USB or Bluetooth attached fischertechnik interfaces
+    - Robo Interface
+    - Robo I/O extension
+    - Robo LT
+    - BT Smart Controller
+    - BT Remote Control Receiver and Sender
+    - fischertechnik 3D printer
+    - ftDuino
+    - Lego WeDo 1.0
+    - Lego WeDo 2.0
+  - Integrated app store for the ft community firmware
+
+# Videos and more information
+
+See the TX-Pi in action at:
+  - [TX-Pi and ftDuino with startIDE](https://www.youtube.com/watch?v=IHZensWPgkA)
+  - [TX-Pi and Robo I/O extension](https://www.youtube.com/watch?v=PvvbSaEjqx4)
+  - [TX-Pi controlling an ft 3D printer](https://www.youtube.com/watch?v=7q1lq7Kb-jw)
+  - [Tx-Pi controlling the ft BT Smart Controller](https://www.youtube.com/watch?v=4NIjJu--a9E)
+
+There's also a [thread in the fischertechnik community forum](https://forum.ftcommunity.de/viewtopic.php?f=33&t=4198) about the TX-Pi.
+
 # Requirements
 
 You'll need:
 
   - a Raspberry Pi B+, 2 or 3
-  - a Waveshare 3.2" LCD touchscreen (either V3 or V4)
+  - a Waveshare 3.2" LCD touchscreen (either V3 or V4) (see below for 3.5" support)
   - a micro SD card with at least 8GB space
 
 Optionally you might use matching [ft compatible cases](https://www.thingiverse.com/thing:2217355) and the [PiPower](https://github.com/harbaum/tx-pi/tree/master/pipower) to supply the Pi from fischertechnik power sources.
@@ -85,7 +115,44 @@ your Pi will automatically reboot and it will boot into the user
 interface of the [fischertechnik community
 firmware](http://cfw.ftcommunity.de/)..
 
-## Disclaimer
+# Support for 3.5" screens
+
+The TX-Pi also supports the 3.5" TFT displays from Waveshare. To
+configure TX-Pi for one of these instead of the default 3.2" version
+the install script has to be invoked with a special option.
+
+If you use the regular (A) type display from waveshare:
+```
+sudo bash ./tx-pi-setup.sh LCD35
+```
+
+and if you have the IPS (B) type display:
+```
+sudo bash ./tx-pi-setup.sh LCD35B
+```
+
+The 3.5" display has a resolution of 320x480 pixel while the 3.2" display
+and the display of the fischertechnik TXT only provide 240x320 pixels. Thus
+some apps written for the TXT or the regular TX-Pi setup may look a little
+different. But due to the Qt framework most apps will just look fine.
+
+## Tweaking the display performance
+
+The 3.5" display are driven by a 16 MHz data clock by default which results
+in a rather poor redraw performance. This can be increased by setting
+the SPI clock to a higher value. E.g. to set it to 40Mhz change the line
+in /boot/config.txt:
+```
+sudo bash ./tx-pi-setup.sh LCD35B
+```
+dtoverlay=waveshare35a:rotate=180,speed=40000000
+```
+
+You can also change the screen orientation by changing the 
+```ORIENTATION``` value in line 35 of the ```tx-pi-setup.sh``` script
+before running it.
+
+# Disclaimer
 
 This is a work in progress. Some parts aren't working by now and some may
 be broken. But the project is progressing fast and most functionality is
