@@ -87,7 +87,7 @@ Now log into your pi using the keyboard and the screen. The login is
 Start the raspi-config tool by typing ```sudo raspi-config``` and
 perform the following things:
 
-  1. Change the hostname to ```tx-pi```
+  1. Change the hostname to ```tx-pi``` or something similar
   2. Disable "wait for network" in the ```Boot Options```
 
 Leave the raspi-config tool and shutdown the Pi by typing ```sudo
