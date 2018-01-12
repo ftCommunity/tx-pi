@@ -6,7 +6,7 @@
 # touch /boot/ssh
 # -> boot pi
 # raspi-config
-#    hostname tx-pi
+#    hostname tx-pi (not mandatory, choose the name as you like)
 #    enable ssh
 #    optional disable wait for network
 
@@ -52,10 +52,10 @@ if [ "$#" -gt 0 ]; then
     fi
 fi
 
-if [ "$HOSTNAME" != tx-pi ]; then
-    echo "Make sure your R-Pi has been setup completely and is named tx-pi"
-    exit -1
-fi
+# if [ "$HOSTNAME" != tx-pi ]; then
+#     echo "Make sure your R-Pi has been setup completely and is named tx-pi"
+#     exit -1
+# fi
 
 # ----------------------- package installation ---------------------
 
