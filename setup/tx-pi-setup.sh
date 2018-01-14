@@ -28,7 +28,7 @@ SVNROOT=$SVNBASE"board/fischertechnik/TXT/rootfs"
 TSVNBASE="https://github.com/harbaum/TouchUI.git/trunk/"
 LOCALGIT="https://github.com/harbaum/tx-pi/raw/master/setup"
 
-FTDDIRECT="ftduino_direct-1.0.6"
+FTDDIRECT="ftduino_direct-1.0.7"
 
 # default lcd is 3.2 inch
 LCD=LCD32
