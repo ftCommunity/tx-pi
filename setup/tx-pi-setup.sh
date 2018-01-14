@@ -288,6 +288,7 @@ cd /etc/udev/rules.d
 wget -N $GITROOT/etc/udev/rules.d/40-fischertechnik_interfaces.rules
 wget -N $GITROOT/etc/udev/rules.d/40-lego_interfaces.rules
 wget -N $GITROOT/etc/udev/rules.d/60-i2c-tools.rules
+wget -N $GITROOT/etc/udev/rules.d/99-USBasp.rules
 
 # get /opt/ftc
 echo "Populating /opt/ftc ..."
