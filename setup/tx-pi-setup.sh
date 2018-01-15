@@ -414,6 +414,11 @@ make
 make install
 depmod -a
 
+# disable any text output on the LCD
+cat <<EOF > /boot/cmdline.txt
+dwc_otg.lpm_enable=0 console=ttyAMA0,115200 root=/dev/mmcblk0p2 rootfstype=ext4 elevator=deadline rootwait logo.nologo quiet
+EOF
+
 # adjust lighttpd config
 cat <<EOF > /etc/lighttpd/lighttpd.conf
 server.modules = (
