@@ -204,7 +204,6 @@ EOF
 cat <<EOF > /etc/systemd/system/launcher.service
 [Unit]
 Description=Start Launcher
-After=plymouth-quit-wait.service
 
 [Service]
 ExecStart=/bin/su ftc -c "PYTHONPATH=/opt/ftc startx /opt/ftc/launcher.py"
