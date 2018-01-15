@@ -6,7 +6,7 @@
 # touch /boot/ssh
 # -> boot pi
 # raspi-config
-#    hostname tx-pi
+#    hostname tx-pi (not mandatory, choose the name as you like)
 #    enable ssh
 #    optional disable wait for network
 
@@ -28,7 +28,7 @@ SVNROOT=$SVNBASE"board/fischertechnik/TXT/rootfs"
 TSVNBASE="https://github.com/harbaum/TouchUI.git/trunk/"
 LOCALGIT="https://github.com/harbaum/tx-pi/raw/master/setup"
 
-FTDDIRECT="ftduino_direct-1.0.5"
+FTDDIRECT="ftduino_direct-1.0.8"
 
 # default lcd is 3.2 inch
 LCD=LCD32
@@ -52,10 +52,10 @@ if [ "$#" -gt 0 ]; then
     fi
 fi
 
-if [ "$HOSTNAME" != tx-pi ]; then
-    echo "Make sure your R-Pi has been setup completely and is named tx-pi"
-    exit -1
-fi
+# if [ "$HOSTNAME" != tx-pi ]; then
+#     echo "Make sure your R-Pi has been setup completely and is named tx-pi"
+#     exit -1
+# fi
 
 # ----------------------- package installation ---------------------
 
@@ -288,6 +288,7 @@ cd /etc/udev/rules.d
 wget -N $GITROOT/etc/udev/rules.d/40-fischertechnik_interfaces.rules
 wget -N $GITROOT/etc/udev/rules.d/40-lego_interfaces.rules
 wget -N $GITROOT/etc/udev/rules.d/60-i2c-tools.rules
+wget -N $GITROOT/etc/udev/rules.d/99-USBasp.rules
 
 # get /opt/ftc
 echo "Populating /opt/ftc ..."

@@ -87,7 +87,7 @@ Now log into your pi using the keyboard and the screen. The login is
 Start the raspi-config tool by typing ```sudo raspi-config``` and
 perform the following things:
 
-  1. Change the hostname to ```tx-pi```
+  1. Change the hostname to ```tx-pi``` or something similar
   2. Disable "wait for network" in the ```Boot Options```
 
 Leave the raspi-config tool and shutdown the Pi by typing ```sudo
@@ -102,7 +102,7 @@ Start your Pi again.
 Again log into your Pi and once more use use the login ```pi``` and
 the password ```raspberry```.
 
-Now download the setup script by typing:
+Now download the setup script by typing (see alternate URL below!):
 
 ```
 wget https://raw.githubusercontent.com/harbaum/tx-pi/master/setup/tx-pi-setup.sh
@@ -111,6 +111,18 @@ wget https://raw.githubusercontent.com/harbaum/tx-pi/master/setup/tx-pi-setup.sh
 and run the script by typing
 ```
 sudo bash ./tx-pi-setup.sh
+```
+
+To save some keystrokes, you might instead use the shortened URL, so the according commands would be:
+
+```
+wget goo.gl/VXvDML
+```
+
+and to run the script
+
+```
+sudo bash ./VXvDML
 ```
 
 This will now take several hours and download and install a lot of
