@@ -68,9 +68,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4"
-     inkscape:cx="108.64432"
-     inkscape:cy="183.57596"
+     inkscape:zoom="1.979899"
+     inkscape:cx="138.06924"
+     inkscape:cy="192.95347"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -92,7 +92,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -171,18 +171,31 @@
            id="path4236"
            d="m 186.35086,750.60789 12.19637,0 0,47.29659 -12.19637,0 0,-47.29659 z" />
       </g>
-      <text
+      <g
          transform="scale(0.8977415,1.1139064)"
-         sodipodi:linespacing="125%"
-         id="text4205"
-         y="770.97223"
-         x="29.588236"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:64.87837982px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';letter-spacing:5.19027042px;word-spacing:0px;fill:#ffc421;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-         xml:space="preserve"><tspan
-           y="770.97223"
-           x="29.588236"
-           id="tspan4207"
-           sodipodi:role="line">TX-PI</tspan></text>
+         id="text4205">
+        <path
+           d="m 29.905025,723.67564 43.590161,0 0,9.21856 -15.681053,0 0,38.07803 -12.196376,0 0,-38.07803 -15.712732,0 0,-9.21856 z"
+           style=""
+           id="path4158" />
+        <path
+           d="m 111.31472,746.83291 16.40967,24.13932 -12.70324,0 -11.05593,-16.15624 -10.960903,16.15624 -12.766595,0 16.409668,-24.13932 -15.77609,-23.15727 12.734916,0 10.359004,15.23755 10.32732,-15.23755 12.79827,0 -15.77609,23.15727 z"
+           style=""
+           id="path4160" />
+        <path
+           d="m 132.43948,747.68824 19.89434,0 0,9.21856 -19.89434,0 0,-9.21856 z"
+           style=""
+           id="path4162" />
+        <path
+           d="m 167.05945,723.67564 20.24281,0 q 9.02849,0 13.84368,4.02322 4.84687,3.99154 4.84687,11.4044 0,7.44454 -4.84687,11.46776 -4.81519,3.99154 -13.84368,3.99154 l -8.04644,0 0,16.40967 -12.19637,0 0,-47.29659 z m 12.19637,8.83841 0,13.2101 6.74761,0 q 3.54803,0 5.48045,-1.71066 1.93241,-1.74234 1.93241,-4.91023 0,-3.16789 -1.93241,-4.87855 -1.93242,-1.71066 -5.48045,-1.71066 l -6.74761,0 z"
+           style=""
+           id="path4164" />
+        <path
+           d="m 219.76805,723.67564 12.19638,0 0,47.29659 -12.19638,0 0,-47.29659 z"
+           style=""
+           id="path4166" />
+      </g>
     </g>
   </g>
 </svg>
