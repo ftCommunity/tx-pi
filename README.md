@@ -50,6 +50,9 @@ You'll need:
 
 Optionally you might use matching [ft compatible cases](https://www.thingiverse.com/thing:2217355) and the [PiPower](https://github.com/harbaum/tx-pi/tree/master/pipower) to supply the Pi from fischertechnik power sources.
 
+In case you do not want to use the 3D printed case, you might opt for a wide variety of standard RPi cases  suited for the LCD touchscreen. See the image below for how this might look like:
+<img src="https://raw.githubusercontent.com/harbaum/tx-pi/master/images/TX-Pi-light-small.jpg" alt="TX-PI in standard case"/>
+
 # Hardware setup
 
 The case consists of four parts. A [bottom](https://www.thingiverse.com/thing:2217355) and [top](https://www.thingiverse.com/thing:2228623) part for Pi and a [bottom](https://www.thingiverse.com/thing:2228649) and [top](https://www.thingiverse.com/thing:2228655) part for the 
