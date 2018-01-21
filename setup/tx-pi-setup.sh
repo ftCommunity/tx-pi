@@ -28,7 +28,7 @@ SVNROOT=$SVNBASE"board/fischertechnik/TXT/rootfs"
 TSVNBASE="https://github.com/harbaum/TouchUI.git/trunk/"
 LOCALGIT="https://github.com/harbaum/tx-pi/raw/master/setup"
 
-FTDDIRECT="ftduino_direct-1.0.6"
+FTDDIRECT="ftduino_direct-1.0.8"
 
 # default lcd is 3.2 inch
 LCD=LCD32
@@ -213,8 +213,38 @@ ExecStop=/usr/bin/killall xinit
 WantedBy=multi-user.target
 EOF
 
+# a simple boot splash
+wget -N $LOCALGIT/splash.png -O /etc/splash.png
+
+# install fbv viewer
+cd
+wget -N https://github.com/godspeed1989/fbv/archive/master.zip
+unzip -x master.zip
+cd fbv-master/
+FRAMEBUFFER=/dev/fb1 ./configure
+make
+make install
+cd ..
+rm -rf master.zip fbv-master
+
+# create a service to start fbv at startup
+cat <<EOF > /etc/systemd/system/splash.service
+[Unit]
+DefaultDependencies=no
+After=local-fs.target
+
+[Service]
+StandardInput=tty
+StandardOutput=tty
+ExecStart=/bin/sh -c "echo 'q' | fbv -e /etc/splash.png"
+
+[Install]
+WantedBy=sysinit.target
+EOF
+
 systemctl daemon-reload
 systemctl enable launcher
+systemctl enable splash
 
 # allow any user to start xs
 sed -i 's,^\(allowed_users=\).*,\1'\anybody',' /etc/X11/Xwrapper.config
@@ -413,6 +443,13 @@ cp ~/linux/drivers/i2c/busses/i2c-tiny-usb.c .
 make
 make install
 depmod -a
+
+# disable any text output on the LCD
+cat <<EOF > /boot/cmdline.txt
+dwc_otg.lpm_enable=0 console=ttyAMA0,115200 root=/dev/mmcblk0p2 rootfstype=ext4 elevator=deadline rootwait logo.nologo quiet
+EOF
+
+systemctl disable getty@tty1
 
 # adjust lighttpd config
 cat <<EOF > /etc/lighttpd/lighttpd.conf
