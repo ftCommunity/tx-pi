@@ -180,7 +180,7 @@ EOF
 chmod 0440 /etc/sudoers.d/network
 
 # force "don't wait for network"
-rm /etc/systemd/system/dhcpcd.service.d/wait.conf
+rm -f /etc/systemd/system/dhcpcd.service.d/wait.conf
 
 cat <<EOF > /etc/sudoers.d/ft_bt_remote_server
 ## Permissions for ftc access to programs required
