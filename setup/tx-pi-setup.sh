@@ -6,10 +6,9 @@
 # touch /boot/ssh
 # -> boot pi
 # raspi-config
-#    hostname tx-pi
+#    hostname tx-pi (not mandatory, choose the name as you like)
 #    enable ssh
-#    expand filesystem
-#    disable wait for network
+#    optional disable wait for network
 
 # TODO
 # - add screen calibration tool
@@ -29,47 +28,77 @@ SVNROOT=$SVNBASE"board/fischertechnik/TXT/rootfs"
 TSVNBASE="https://github.com/harbaum/TouchUI.git/trunk/"
 LOCALGIT="https://github.com/harbaum/tx-pi/raw/master/setup"
 
-# Things you may do:
-# set a root password
-# enable root ssh login
-# apt-get install emacs-nox
+FTDDIRECT="ftduino_direct-1.0.8"
 
-if [ "$HOSTNAME" != tx-pi ]; then
-    echo "Make sure your R-Pi has been setup completely and is named tx-pi"
-    exit -1
+# default lcd is 3.2 inch
+LCD=LCD32
+ORIENTATION=90
+
+# check if user gave a parameter
+if [ "$#" -gt 0 ]; then
+    # todo: Allow for other types as well
+    if [ "$1" == "LCD35" ]; then
+	echo "Setup for waveshare 3.5 inch (A) screen"
+	LCD=$1
+    elif [ "$1" == "LCD35B" ]; then
+	echo "Setup for waveshare 3.5 inch (B) IPS screen"
+	LCD=$1
+    else
+	echo "Unknown parameter \"$1\""
+	echo "Allowed parameters:"
+	echo "LCD35    - create 3.5\" setup (instead of 3.2\")" 
+	echo "LCD35B   - create 3.5\" IPS setup)" 
+	exit -1
+    fi
 fi
+
+# if [ "$HOSTNAME" != tx-pi ]; then
+#     echo "Make sure your R-Pi has been setup completely and is named tx-pi"
+#     exit -1
+# fi
 
 # ----------------------- package installation ---------------------
 
 apt-get update
+apt-get -y upgrade
 
 # X11
 apt-get -y install --no-install-recommends xserver-xorg xinit xserver-xorg-video-fbdev xserver-xorg-legacy unclutter
 # python and pyqt
 apt-get -y install --no-install-recommends python3-pyqt4 python3 python3-pip python3-numpy python3-dev cmake python3-serial python3-pexpect
+# python RPi GPIO access
+apt-get -y install -y python3-rpi.gpio
+apt-get -y install -y python-rpi.gpio
 # misc tools
 apt-get -y install i2c-tools python3-smbus lighttpd git subversion ntpdate usbmount
+# avrdude
+apt-get -y install avrdude
 
-# some additionl python stuff
+# some additional python stuff
 pip3 install semantic_version
 pip3 install websockets
-pip3 install pyserial
+pip3 install --upgrade pyserial
 
 # ---------------------- display setup ----------------------
-# check if waveshare driver is installed
-if [ ! -f /boot/overlays/waveshare32b-overlay.dtb ]; then
-    echo "============================================================"
-    echo "============== SCREEN DRIVER INSTALLATION =================="
-    echo "============================================================"
-    echo "= YOU NEED TO RESTART THIS SCRIPT ONCE THE PI HAS REBOOTED ="
-    echo "============================================================"
-    cd
-    wget -N http://www.waveshare.com/w/upload/0/00/LCD-show-170703.tar.gz
-    tar xvfz LCD-show-170703.tar.gz
-    cd LCD-show
-    ./LCD32-show
-    # the pi will reboot
-fi
+echo "============================================================"
+echo "============== SCREEN DRIVER INSTALLATION =================="
+echo "============================================================"
+cd
+wget -N http://www.waveshare.com/w/upload/0/00/LCD-show-170703.tar.gz
+tar xvfz LCD-show-170703.tar.gz
+# supress automatic reboot after installation
+sed -i "s/sudo reboot/#sudo reboot/g" LCD-show/$LCD-show
+sed -i "s/\"reboot now\"/\"not rebooting yet\"/g" LCD-show/$LCD-show
+cd LCD-show
+./$LCD-show $ORIENTATION
+
+# TODO:
+# in /boot/config.txt for at least LCD35 and LCD35B set spi speed to 40Mhz like so:
+# dtoverlay=waveshare35a:rotate=180 ->
+# dtoverlay=waveshare35a:rotate=180,speed=40000000
+
+# TODO1:
+# adjust screen rotation
 
 # usbmount config
 cd /etc/usbmount
@@ -109,11 +138,15 @@ apt-get -y install --no-install-recommends libzbar0 python3-pil
 apt-get -y install --no-install-recommends libzbar-dev
 pip3 install zbarlight
 
+# system wide mpg123 overrides the included mpg123 of some apps
+apt-get -y install --no-install-recommends mpg123
+
 # ----------------------- user setup ---------------------
 # create ftc user
 groupadd ftc
 useradd -g ftc -m ftc
 usermod -a -G video ftc
+usermod -a -G audio ftc
 usermod -a -G tty ftc
 usermod -a -G dialout ftc
 usermod -a -G input ftc
@@ -145,6 +178,9 @@ cat <<EOF > /etc/sudoers.d/network
 ftc     ALL = NOPASSWD: /usr/bin/netreq, /etc/init.d/networking, /sbin/ifup, /sbin/ifdown
 EOF
 chmod 0440 /etc/sudoers.d/network
+
+# force "don't wait for network"
+rm -f /etc/systemd/system/dhcpcd.service.d/wait.conf
 
 cat <<EOF > /etc/sudoers.d/ft_bt_remote_server
 ## Permissions for ftc access to programs required
@@ -180,24 +216,41 @@ ExecStop=/usr/bin/killall xinit
 WantedBy=multi-user.target
 EOF
 
+# a simple boot splash
+wget -N $LOCALGIT/splash.png -O /etc/splash.png
+
+# install fbv viewer
+cd
+wget -N https://github.com/godspeed1989/fbv/archive/master.zip
+unzip -x master.zip
+cd fbv-master/
+FRAMEBUFFER=/dev/fb1 ./configure
+make
+make install
+cd ..
+rm -rf master.zip fbv-master
+
+# create a service to start fbv at startup
+cat <<EOF > /etc/systemd/system/splash.service
+[Unit]
+DefaultDependencies=no
+After=local-fs.target
+
+[Service]
+StandardInput=tty
+StandardOutput=tty
+ExecStart=/bin/sh -c "echo 'q' | fbv -e /etc/splash.png"
+
+[Install]
+WantedBy=sysinit.target
+EOF
+
 systemctl daemon-reload
 systemctl enable launcher
+systemctl enable splash
 
 # allow any user to start xs
 sed -i 's,^\(allowed_users=\).*,\1'\anybody',' /etc/X11/Xwrapper.config
-
-# rotate display
-sed -i 's,^\(dtoverlay=waveshare32b.rotate=\).*,\1'\0',' /boot/config.txt
-
-# rotate touchscreen 
-cat <<EOF > /usr/share/X11/xorg.conf.d/99-calibration.conf
-Section "InputClass"
-Identifier "calibration"
-MatchProduct "ADS7846 Touchscreen"
-Option "Calibration" "200 3900 200 3900"
-Option "SwapAxes" "0"
-EndSection
-EOF
 
 # install framebuffer copy tool
 wget -N $LOCALGIT/fbc.tgz
@@ -268,6 +321,7 @@ cd /etc/udev/rules.d
 wget -N $GITROOT/etc/udev/rules.d/40-fischertechnik_interfaces.rules
 wget -N $GITROOT/etc/udev/rules.d/40-lego_interfaces.rules
 wget -N $GITROOT/etc/udev/rules.d/60-i2c-tools.rules
+wget -N $GITROOT/etc/udev/rules.d/99-USBasp.rules
 
 # get /opt/ftc
 echo "Populating /opt/ftc ..."
@@ -290,10 +344,21 @@ for i in 24:23 28:24 32:24; do
 done
 
 # install libroboint
+echo "Installing libroboint"
 wget -N $LOCALGIT/libroboint-inst.sh
 chmod a+x libroboint-inst.sh
 ./libroboint-inst.sh
 rm -f libroboint-inst.sh
+
+# and ftduino_direct
+echo "Installing ftduino_direct.py"
+wget -N https://github.com/PeterDHabermehl/ftduino_direct/raw/master/$FTDDIRECT.tar.gz
+tar -xzvf $FTDDIRECT.tar.gz 
+cd $FTDDIRECT
+sudo python3 ./setup.py install
+cd ..
+sudo rm -fr $FTDDIRECT $FTDDIRECT.tar.gz
+sudo rm -fr /opt/ftc/ftduino_direct.py
 
 # remove useless ftgui
 rm -rf /opt/ftc/apps/system/ftgui
@@ -361,11 +426,11 @@ systemctl enable netreq
 
 
 # build and install i2c-tiny-usb kernel module
-apt-get install raspberrypi-kernel-headers
+apt-get -y install raspberrypi-kernel-headers
 wget -N https://raw.githubusercontent.com/notro/rpi-source/master/rpi-source -O /usr/bin/rpi-source
 chmod +x /usr/bin/rpi-source
 /usr/bin/rpi-source -q --tag-update
-apt-get install bc
+apt-get -y install bc
 rpi-source
 
 mkdir i2c-tiny-usb
@@ -381,6 +446,13 @@ cp ~/linux/drivers/i2c/busses/i2c-tiny-usb.c .
 make
 make install
 depmod -a
+
+# disable any text output on the LCD
+cat <<EOF > /boot/cmdline.txt
+dwc_otg.lpm_enable=0 console=ttyAMA0,115200 root=/dev/mmcblk0p2 rootfstype=ext4 elevator=deadline rootwait logo.nologo quiet
+EOF
+
+systemctl disable getty@tty1
 
 # adjust lighttpd config
 cat <<EOF > /etc/lighttpd/lighttpd.conf
@@ -478,6 +550,11 @@ cat <<EOF > /home/ftc/.launcher.config
 min_click_time = 0
 EOF
 chown ftc:ftc /home/ftc/.launcher.config 
+
+# remove cfw display configuration app since it does not work here...
+rm -fr /opt/ftc/apps/system/display/
+
+# 
 
 /etc/init.d/lighttpd restart
 

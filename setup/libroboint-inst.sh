@@ -32,13 +32,11 @@ make python
 cp udev/fischertechnik.rules /etc/udev/rules.d/
 
 # python3 compatibility 'patch'
-# .pyc was temporarily disabled since it's not working
 cd ..
 wget -N https://github.com/PeterDHabermehl/libroboint-py3/raw/master/robointerface.py
-#wget https://github.com/PeterDHabermehl/libroboint-py3/raw/master/robointerface.pyc
+cp robointerface.py /usr/local/lib/python3.5/dist-packages/
 mv robointerface.py /usr/local/lib/python3.4/dist-packages/
-#mv robointerface.pyc /usr/local/lib/python3.4/dist-packages/
-rm -f /usr/local/lib/python3.4/dist-packages/robointerface.pyc
+
 
 # clean up
 rm -f $LIBFILE
