@@ -67,8 +67,8 @@ apt-get -y install --no-install-recommends xserver-xorg xinit xserver-xorg-video
 # python and pyqt
 apt-get -y install --no-install-recommends python3-pyqt4 python3 python3-pip python3-numpy python3-dev cmake python3-serial python3-pexpect
 # python RPi GPIO access
-apt-get install -y python3-rpi.gpio
-apt-get install -y python-rpi.gpio
+apt-get -y install -y python3-rpi.gpio
+apt-get -y install -y python-rpi.gpio
 # misc tools
 apt-get -y install i2c-tools python3-smbus lighttpd git subversion ntpdate usbmount
 # avrdude
@@ -178,6 +178,9 @@ cat <<EOF > /etc/sudoers.d/network
 ftc     ALL = NOPASSWD: /usr/bin/netreq, /etc/init.d/networking, /sbin/ifup, /sbin/ifdown
 EOF
 chmod 0440 /etc/sudoers.d/network
+
+# force "don't wait for network"
+rm -f /etc/systemd/system/dhcpcd.service.d/wait.conf
 
 cat <<EOF > /etc/sudoers.d/ft_bt_remote_server
 ## Permissions for ftc access to programs required
@@ -423,11 +426,11 @@ systemctl enable netreq
 
 
 # build and install i2c-tiny-usb kernel module
-apt-get install raspberrypi-kernel-headers
+apt-get -y install raspberrypi-kernel-headers
 wget -N https://raw.githubusercontent.com/notro/rpi-source/master/rpi-source -O /usr/bin/rpi-source
 chmod +x /usr/bin/rpi-source
 /usr/bin/rpi-source -q --tag-update
-apt-get install bc
+apt-get -y install bc
 rpi-source
 
 mkdir i2c-tiny-usb
@@ -550,6 +553,7 @@ chown ftc:ftc /home/ftc/.launcher.config
 
 # remove cfw display configuration app since it does not work here...
 rm -fr /opt/ftc/apps/system/display/
+
 # 
 
 /etc/init.d/lighttpd restart
