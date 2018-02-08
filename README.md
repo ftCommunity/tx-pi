@@ -94,9 +94,8 @@ perform the following things:
   2. Disable "wait for network" in the ```Boot Options```
 
 Leave the raspi-config tool and shutdown the Pi by typing ```sudo
-shutdown -h now```. You don't necessarily need the keyboard and HDMI
-display anymore and you might remove it. Instead connect the small 3.2
-inch LCD if you haven't yet done so.
+shutdown -h now```. Connect the small 3.2 inch LCD if you haven't yet
+done so.
 
 Start your Pi again.
 
@@ -122,6 +121,8 @@ your Pi will automatically reboot and it will boot into the user
 interface of the [fischertechnik community
 firmware](http://cfw.ftcommunity.de/)..
 
+<img src="https://raw.githubusercontent.com/harbaum/tx-pi/master/images/display32.png" alt="3.2 inch display"/>
+
 # Support for 3.5" screens
 
 The TX-Pi also supports the 3.5" TFT displays from Waveshare. To
@@ -142,6 +143,8 @@ The 3.5" display has a resolution of 320x480 pixel while the 3.2" display
 and the display of the fischertechnik TXT only provide 240x320 pixels. Thus
 some apps written for the TXT or the regular TX-Pi setup may look a little
 different. But due to the Qt framework most apps will just look fine.
+
+<img src="https://raw.githubusercontent.com/harbaum/tx-pi/master/images/display35.png" alt="3.5 inch display"/>
 
 ## Tweaking the display performance
 
