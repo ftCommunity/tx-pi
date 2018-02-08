@@ -220,6 +220,7 @@ EOF
 wget -N $LOCALGIT/splash.png -O /etc/splash.png
 
 # install fbv viewer
+apt-get install -y --no-install-recommends  libjpeg-dev
 cd
 wget -N https://github.com/godspeed1989/fbv/archive/master.zip
 unzip -x master.zip
