@@ -564,4 +564,5 @@ rm -fr /opt/ftc/apps/system/display/
 echo "rebooting ..."
 
 sync
-reboot
+sleep 30
+shutdown -r now
