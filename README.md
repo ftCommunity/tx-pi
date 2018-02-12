@@ -115,7 +115,7 @@ and run the script by typing
 sudo bash ./tx-pi-setup.sh
 ```
 
-This will now take several hours and download and install a lot of
+This will now take about one hour and download and install a lot of
 programs from the internet onto your Pi. Once the installation is done
 your Pi will automatically reboot and it will boot into the user
 interface of the [fischertechnik community
