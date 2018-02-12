@@ -157,6 +157,24 @@ You can also change the screen orientation by changing the
 ```ORIENTATION``` value in line 35 of the ```tx-pi-setup.sh``` script
 before running it.
 
+# Duplicating and distributing TX-Pi images
+
+The entire setup process takes some time and is rather complex. It's thus
+helpful to be able to copy and redistribute the result.
+
+The [PiShrink](https://github.com/harbaum/PiShrink) script allows you
+to create an installable SD card image from a working TX-Pi setup.
+
+```
+# read image from SD card reader
+sudo cp /dev/sdb tx-pi-fullsize.img
+# shrink image
+sudo ./pishrink.sh -c tx-pi-fullsize.img tx-pi.img
+```
+
+The resulting image ```tx-pi.img``` can be copied to another SD card and
+will resize itself on first boot and generate new SSH keys etc.
+
 # Disclaimer
 
 This is a work in progress. Some parts aren't working by now and some may
