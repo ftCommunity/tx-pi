@@ -220,6 +220,7 @@ EOF
 wget -N $LOCALGIT/splash.png -O /etc/splash.png
 
 # install fbv viewer
+apt-get install -y --no-install-recommends  libjpeg-dev
 cd
 wget -N https://github.com/godspeed1989/fbv/archive/master.zip
 unzip -x master.zip
@@ -528,14 +529,15 @@ tar xvfz websockify.tgz
 rm websockify.tgz
 
 # make sure fbgrab is there to take screenshots
-apt-get -y install --no-install-recommends fbgrab
+chown -R ftc:ftc /var/www
+apt-get -y install --no-install-recommends fbgrab Netpbm
 sed -i 's.fbgrab.fbgrab -d /dev/fb1.' /var/www/screenshot.py
 
 # fbgrab needs netpbm to generate png files
 apt-get -y install netpbm
 
 # adjust file ownership for changed www user name
-chown -R ftc:ftc /var/www/*
+chown -R ftc:ftc /var/www
 chown -R ftc:ftc /var/log/lighttpd
 chown -R ftc:ftc /var/run/lighttpd
 chown -R ftc:ftc /var/cache/lighttpd
