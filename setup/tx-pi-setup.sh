@@ -375,7 +375,7 @@ cd /opt/ftc/apps/system
 mkdir tscal
 cd tscal
 wget -N $LOCALGIT/tscal.zip
-unzip x tscal.zip
+unzip tscal.zip
 rm tscal.zip
 
 # add robolt support
