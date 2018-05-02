@@ -368,6 +368,16 @@ rm -rf /opt/ftc/apps/system/ftgui
 cd /opt/ftc/apps/system
 svn export $TSVNBASE"/touchui/apps/system/power"
 
+# add screen calibration tool
+apt-get -y install --no-install-recommends xinput-calibrator
+chmod og+rw /usr/share/X11/xorg.conf.d/99-calibration.conf
+cd /opt/ftc/apps/system
+mkdir tscal
+cd tscal
+wget -N $LOCALGIT/tscal.zip
+unzip x tscal.zip
+rm tscal.zip
+
 # add robolt support
 # robolt udev rules have already been installed from the main repository
 cd /root
