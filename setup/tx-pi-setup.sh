@@ -78,6 +78,7 @@ apt-get -y install avrdude
 pip3 install semantic_version
 pip3 install websockets
 pip3 install --upgrade pyserial
+pip3 install --upgrade setuptools
 
 # ---------------------- display setup ----------------------
 echo "============================================================"
