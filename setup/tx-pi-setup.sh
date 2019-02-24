@@ -90,6 +90,8 @@ apt-get -y install -y python-rpi.gpio
 apt-get -y install i2c-tools python3-smbus lighttpd git subversion ntpdate usbmount
 # avrdude
 apt-get -y install avrdude
+# Install Beautiful Soup 4.x
+apt-get install -y python3-bs4
 
 # some additional python stuff
 pip3 install semantic_version
