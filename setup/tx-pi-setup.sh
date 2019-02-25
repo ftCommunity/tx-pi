@@ -90,6 +90,8 @@ apt-get -y install -y python-rpi.gpio
 apt-get -y install i2c-tools python3-smbus lighttpd git subversion ntpdate usbmount
 # avrdude
 apt-get -y install avrdude
+# Install Beautiful Soup 4.x
+apt-get install -y python3-bs4
 
 # some additional python stuff
 pip3 install semantic_version
@@ -150,20 +152,22 @@ wget -N $LOCALGIT/hcitool-xlescan.tgz
 tar xvfz hcitool-xlescan.tgz -C /usr/bin
 rm -f hcitool-xlescan.tgz
 
-# fetch precompiled opencv and its dependencies
-# we might build our own package to get rid of these dependencies,
-# especially gtk
 if [ "$IS_STRETCH" = true ]; then
-   apt-get -y install libjasper1 libgtk2.0-0 libavcodec57 libavformat57 libswscale4
-   #TODO: "pip3 install opencv-python-headless" needs several other libs
-   # i.e. libatlas-base-dev gfortran etc.
+   apt-get -y install --no-install-recommends libatlas3-base libwebp6 libtiff5 libjasper1 libilmbase12 \
+                                              libopenexr22 libilmbase12 libgstreamer1.0-0 \
+                                              libavcodec57 libavformat57 libavutil55 libswscale4 \
+                                              libgtk-3-0 libpangocairo-1.0-0 libpango-1.0-0 libatk1.0-0 \
+                                              libcairo-gobject2 libcairo2 libgdk-pixbuf2.0-0
+   pip3 install opencv-python-headless
 else
+    # fetch precompiled opencv and its dependencies
+    # we might build our own package to get rid of these dependencies,
+    # especially gtk
     apt-get -y install libjasper1 libgtk2.0-0 libavcodec56 libavformat56 libswscale3
+    wget -N https://github.com/jabelone/OpenCV-for-Pi/raw/master/latest-OpenCV.deb
+    dpkg -i latest-OpenCV.deb
+    rm -f latest-OpenCV.deb
 fi
-
-wget -N https://github.com/jabelone/OpenCV-for-Pi/raw/master/latest-OpenCV.deb
-dpkg -i latest-OpenCV.deb
-rm -f latest-OpenCV.deb
 
 apt-get -y install --no-install-recommends libzbar0 python3-pil 
 apt-get -y install --no-install-recommends libzbar-dev
