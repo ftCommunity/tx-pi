@@ -18,8 +18,20 @@
 #   - control regular dhcpcd
 # much much more ...
 
-# to be run on plain jessie-lite
-echo "Setting up TX-PI on jessie lite ..."
+DEBUG=false
+
+#-- Handle Jessie (8.x) vs. Stretch (9.x)
+DEBIAN_VERSION=$( cat /etc/debian_version )
+IS_STRETCH=false
+if [ "${DEBIAN_VERSION:0:1}" = "9" ]; then
+    IS_STRETCH=true
+fi
+
+if [ "$IS_STRETCH" = true ]; then
+   echo "Setting up TX-PI on Stretch lite (EXPERIMENTAL!)"
+else
+    echo "Setting up TX-PI on Jessie lite"
+fi
 
 GITBASE="https://raw.githubusercontent.com/ftCommunity/ftcommunity-TXT/master/"
 GITROOT=$GITBASE"board/fischertechnik/TXT/rootfs"
@@ -27,6 +39,10 @@ SVNBASE="https://github.com/ftCommunity/ftcommunity-TXT.git/trunk/"
 SVNROOT=$SVNBASE"board/fischertechnik/TXT/rootfs"
 TSVNBASE="https://github.com/harbaum/TouchUI.git/trunk/"
 LOCALGIT="https://github.com/harbaum/tx-pi/raw/master/setup"
+
+LIB_ROBOINT_URL=https://github.com/nxdefiant/libroboint/archive/
+LIB_ROBOINT_FILE=0.5.3.zip
+LIB_ROBOINT_IDIR=libroboint-0.5.3
 
 FTDDIRECT="ftduino_direct-1.0.8"
 
@@ -38,17 +54,17 @@ ORIENTATION=90
 if [ "$#" -gt 0 ]; then
     # todo: Allow for other types as well
     if [ "$1" == "LCD35" ]; then
-	echo "Setup for waveshare 3.5 inch (A) screen"
-	LCD=$1
+        echo "Setup for waveshare 3.5 inch (A) screen"
+        LCD=$1
     elif [ "$1" == "LCD35B" ]; then
-	echo "Setup for waveshare 3.5 inch (B) IPS screen"
-	LCD=$1
+        echo "Setup for waveshare 3.5 inch (B) IPS screen"
+        LCD=$1
     else
-	echo "Unknown parameter \"$1\""
-	echo "Allowed parameters:"
-	echo "LCD35    - create 3.5\" setup (instead of 3.2\")" 
-	echo "LCD35B   - create 3.5\" IPS setup)" 
-	exit -1
+        echo "Unknown parameter \"$1\""
+        echo "Allowed parameters:"
+        echo "LCD35    - create 3.5\" setup (instead of 3.2\")"
+        echo "LCD35B   - create 3.5\" IPS setup)"
+        exit -1
     fi
 fi
 
@@ -59,13 +75,14 @@ fi
 
 # ----------------------- package installation ---------------------
 
+echo "Update Debian"
 apt-get update
 apt-get -y upgrade
 
 # X11
 apt-get -y install --no-install-recommends xserver-xorg xinit xserver-xorg-video-fbdev xserver-xorg-legacy unclutter
 # python and pyqt
-apt-get -y install --no-install-recommends python3-pyqt4 python3 python3-pip python3-numpy python3-dev cmake python3-serial python3-pexpect
+apt-get -y install --no-install-recommends python3 python3-pyqt4 python3-pip python3-numpy python3-dev cmake python3-pexpect
 # python RPi GPIO access
 apt-get -y install -y python3-rpi.gpio
 apt-get -y install -y python-rpi.gpio
@@ -73,11 +90,12 @@ apt-get -y install -y python-rpi.gpio
 apt-get -y install i2c-tools python3-smbus lighttpd git subversion ntpdate usbmount
 # avrdude
 apt-get -y install avrdude
+# Install Beautiful Soup 4.x
+apt-get install -y python3-bs4
 
 # some additional python stuff
 pip3 install semantic_version
 pip3 install websockets
-pip3 install --upgrade pyserial
 pip3 install --upgrade setuptools
 
 # ---------------------- display setup ----------------------
@@ -92,6 +110,12 @@ sed -i "s/sudo reboot/#sudo reboot/g" LCD-show/$LCD-show
 sed -i "s/\"reboot now\"/\"not rebooting yet\"/g" LCD-show/$LCD-show
 cd LCD-show
 ./$LCD-show $ORIENTATION
+# Clean up
+rm -f LCD-show-170703.tar.gz
+if [ "$DEBUG" = false ]; then
+    rm -rf LCD-show
+fi
+
 
 # TODO:
 # in /boot/config.txt for at least LCD35 and LCD35B set spi speed to 40Mhz like so:
@@ -117,6 +141,7 @@ nl_NL.UTF-8 UTF-8
 fr_FR.UTF-8 UTF-8
 EOF
 locale-gen
+#TODO: Fails if /etc/ssh/ssh_config contains "SendEnv LANG LC_*" (default) and the TX-PI setup is run headless via SSH
 update-locale --no-checks LANG="de_DE.UTF-8"
 
 # install bluetooth tools required for e.g. bnep
@@ -127,13 +152,22 @@ wget -N $LOCALGIT/hcitool-xlescan.tgz
 tar xvfz hcitool-xlescan.tgz -C /usr/bin
 rm -f hcitool-xlescan.tgz
 
-# fetch precompiled opencv and its dependencies
-# we might build our own package to get rid of these dependencies,
-# especially gtk
-apt-get -y install libjasper1 libgtk2.0-0 libavcodec56 libavformat56 libswscale3
-wget -N https://github.com/jabelone/OpenCV-for-Pi/raw/master/latest-OpenCV.deb
-dpkg -i latest-OpenCV.deb
-rm -f latest-OpenCV.deb
+if [ "$IS_STRETCH" = true ]; then
+   apt-get -y install --no-install-recommends libatlas3-base libwebp6 libtiff5 libjasper1 libilmbase12 \
+                                              libopenexr22 libilmbase12 libgstreamer1.0-0 \
+                                              libavcodec57 libavformat57 libavutil55 libswscale4 \
+                                              libgtk-3-0 libpangocairo-1.0-0 libpango-1.0-0 libatk1.0-0 \
+                                              libcairo-gobject2 libcairo2 libgdk-pixbuf2.0-0
+   pip3 install opencv-python-headless
+else
+    # fetch precompiled opencv and its dependencies
+    # we might build our own package to get rid of these dependencies,
+    # especially gtk
+    apt-get -y install libjasper1 libgtk2.0-0 libavcodec56 libavformat56 libswscale3
+    wget -N https://github.com/jabelone/OpenCV-for-Pi/raw/master/latest-OpenCV.deb
+    dpkg -i latest-OpenCV.deb
+    rm -f latest-OpenCV.deb
+fi
 
 apt-get -y install --no-install-recommends libzbar0 python3-pil 
 apt-get -y install --no-install-recommends libzbar-dev
@@ -221,16 +255,23 @@ EOF
 wget -N $LOCALGIT/splash.png -O /etc/splash.png
 
 # install fbv viewer
-apt-get install -y --no-install-recommends  libjpeg-dev
-cd
-wget -N https://github.com/godspeed1989/fbv/archive/master.zip
-unzip -x master.zip
-cd fbv-master/
-FRAMEBUFFER=/dev/fb1 ./configure
-make
-make install
-cd ..
-rm -rf master.zip fbv-master
+apt-get install -y --no-install-recommends libjpeg-dev
+SPLASH_EXEC="/bin/sh -c \"echo 'q' | fbv -e /etc/splash.png\""
+#TODO: Splash screen does not work with Stretch neither fbv nor fbi
+if [ "$IS_STRETCH" = true ]; then
+    apt install -y --no-install-recommends fbi
+    SPLASH_EXEC="/usr/bin/fbi -T 1 -d /dev/fb1 --noverbose -a /etc/splash.png"
+else
+    cd
+    wget -N https://github.com/godspeed1989/fbv/archive/master.zip
+    unzip -x master.zip
+    cd fbv-master/
+    FRAMEBUFFER=/dev/fb1 ./configure
+    make
+    make install
+    cd ..
+    rm -rf master.zip fbv-master
+fi
 
 # create a service to start fbv at startup
 cat <<EOF > /etc/systemd/system/splash.service
@@ -241,7 +282,7 @@ After=local-fs.target
 [Service]
 StandardInput=tty
 StandardOutput=tty
-ExecStart=/bin/sh -c "echo 'q' | fbv -e /etc/splash.png"
+ExecStart=$SPLASH_EXEC
 
 [Install]
 WantedBy=sysinit.target
@@ -345,22 +386,48 @@ for i in 24:23 28:24 32:24; do
     sed -i "s/^\(\s*font:\)\s*${from}px/\1 ${to}px/" $STYLE
 done
 
+
 # install libroboint
 echo "Installing libroboint"
-wget -N $LOCALGIT/libroboint-inst.sh
-chmod a+x libroboint-inst.sh
-./libroboint-inst.sh
-rm -f libroboint-inst.sh
+# install libusb-dev
+apt-get install libusb-dev
+wget -N $LIB_ROBOINT_URL$LIB_ROBOINT_FILE
+unzip $LIB_ROBOINT_FILE
+# build
+cd $LIB_ROBOINT_IDIR
+cmake .
+make
+#TODO: Fails. Remove?
+if [ true = false ]; then
+    make doc
+fi
+# install
+make install
+ldconfig
+# install python
+make python
+# udev rules
+cp udev/fischertechnik.rules /etc/udev/rules.d/
+# python3 compatibility 'patch'
+cd ..
+wget -N https://github.com/PeterDHabermehl/libroboint-py3/raw/master/robointerface.py
+cp robointerface.py /usr/local/lib/python3.5/dist-packages/
+mv robointerface.py /usr/local/lib/python3.4/dist-packages/
+# clean up
+rm -f $LIB_ROBOINT_FILE
+rm -rf $LIB_ROBOINT_IDIR
+
 
 # and ftduino_direct
 echo "Installing ftduino_direct.py"
 wget -N https://github.com/PeterDHabermehl/ftduino_direct/raw/master/$FTDDIRECT.tar.gz
 tar -xzvf $FTDDIRECT.tar.gz 
 cd $FTDDIRECT
-sudo python3 ./setup.py install
+python3 ./setup.py install
 cd ..
-sudo rm -fr $FTDDIRECT $FTDDIRECT.tar.gz
-sudo rm -fr /opt/ftc/ftduino_direct.py
+rm -f $FTDDIRECT.tar.gz
+rm -rf $FTDDIRECT
+rm -f /opt/ftc/ftduino_direct.py
 
 # remove useless ftgui
 rm -rf /opt/ftc/apps/system/ftgui
@@ -376,7 +443,7 @@ cd /opt/ftc/apps/system
 mkdir tscal
 cd tscal
 wget -N $LOCALGIT/tscal.zip
-unzip tscal.zip
+unzip -o tscal.zip
 rm tscal.zip
 
 # add robolt support
@@ -394,6 +461,7 @@ cd /root
 git clone https://github.com/gbin/WeDoMore.git
 cd WeDoMore
 python3 ./setup.py install
+cd ..
 rm -rf WeDoMore
 
 # install the BT Control Set server
@@ -466,6 +534,7 @@ dwc_otg.lpm_enable=0 console=ttyAMA0,115200 root=/dev/mmcblk0p2 rootfstype=ext4 
 EOF
 
 systemctl disable getty@tty1
+
 
 # adjust lighttpd config
 cat <<EOF > /etc/lighttpd/lighttpd.conf
@@ -542,11 +611,17 @@ rm websockify.tgz
 
 # make sure fbgrab is there to take screenshots
 chown -R ftc:ftc /var/www
-apt-get -y install --no-install-recommends fbgrab Netpbm
-sed -i 's.fbgrab.fbgrab -d /dev/fb1.' /var/www/screenshot.py
 
 # fbgrab needs netpbm to generate png files
 apt-get -y install netpbm
+
+if [ "$IS_STRETCH" = true ]; then
+    apt-get -y install --no-install-recommends fbcat
+else
+    apt-get -y install --no-install-recommends fbgrab
+fi
+sed -i 's.fbgrab.fbgrab -d /dev/fb1.' /var/www/screenshot.py
+
 
 # adjust file ownership for changed www user name
 chown -R ftc:ftc /var/www
