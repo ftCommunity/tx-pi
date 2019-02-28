@@ -512,8 +512,8 @@ if [ "$ENABLE_NETREQ" = true ]; then
     rm -rf netreq
 
     cat <<EOF > /etc/netreq_permissions
-    # netreq permissions
-    EOF
+# netreq permissions
+EOF
     chmod og+rw /etc/netreq_permissions
 
     cat <<EOF > /etc/systemd/system/netreq.service
