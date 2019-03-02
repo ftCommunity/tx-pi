@@ -288,7 +288,7 @@ if [ "$ENABLE_SPLASH" = true ]; then
         cmd_line=$( cat /boot/cmdline.txt )
         # These params are needed to show the splash screen
         # Append them to the cmdline.txt without changing other params
-        for param in "logo.nologo" "vt.global_cursor_default=0" "quiet"
+        for param in "logo.nologo" "vt.global_cursor_default=0" "splash" "quiet"
         do
             if [[ $cmd_line != *"$param"* ]]; then
                 cmd_line="$cmd_line $param"
