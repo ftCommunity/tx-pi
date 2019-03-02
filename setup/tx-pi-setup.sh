@@ -30,7 +30,7 @@ if [ "${DEBIAN_VERSION:0:1}" = "9" ]; then
 fi
 
 if [ "$IS_STRETCH" = true ]; then
-   echo "Setting up TX-PI on Stretch lite (EXPERIMENTAL!)"
+    echo "Setting up TX-PI on Stretch lite (EXPERIMENTAL!)"
 else
     echo "Setting up TX-PI on Jessie lite"
 fi
@@ -267,53 +267,65 @@ EOF
 systemctl daemon-reload
 systemctl enable launcher
 
-
 # Splash screen
 if [ "$ENABLE_SPLASH" = true ]; then
     # a simple boot splash
     wget -N $LOCALGIT/splash.png -O /etc/splash.png
     apt-get install -y --no-install-recommends libjpeg-dev
-    SPLASH_EXEC="/bin/sh -c \"echo 'q' | fbv -e /etc/splash.png\""
-    #TODO: Splash screen does not work with Stretch neither fbv nor fbi
+    cd
+    wget -N https://github.com/godspeed1989/fbv/archive/master.zip
+    unzip -x master.zip
+    cd fbv-master/
+    FRAMEBUFFER=/dev/fb1 ./configure
+    make
+    make install
+    cd ..
+    rm -rf master.zip fbv-master
     if [ "$IS_STRETCH" = true ]; then
-        apt install -y --no-install-recommends fbi
-        SPLASH_EXEC="/usr/bin/fbi -T 1 -d /dev/fb1 --noverbose -a /etc/splash.png"
+        # Remove plymouth otherwise the splash is not shown
+        #TODO: CAUTION: Removes "mountall" due to a strange dependency, too.
+        # Another solution: Install or create a plymouth theme.
+        # IMO too much work for a simple, almost useless splash screen
+        # BTW: "systemctl mask plymouth" does not work
+        apt-get -y purge plymouth
+        ENABLE_DEFAULT_DEPENDENCIS="yes"
+        cmd_line=$( cat /boot/cmdline.txt )
+        # These params are needed to show the splash screen
+        # Append them to the cmdline.txt without changing other params
+        for param in "logo.nologo" "vt.global_cursor_default=0" "quiet"
+        do
+            if [[ $cmd_line != *"$param"* ]]; then
+                cmd_line="$cmd_line $param"
+            fi
+        done
+        cat <<EOF > /boot/cmdline.txt
+${cmd_line}
+EOF
     else
-        cd
-        wget -N https://github.com/godspeed1989/fbv/archive/master.zip
-        unzip -x master.zip
-        cd fbv-master/
-        FRAMEBUFFER=/dev/fb1 ./configure
-        make
-        make install
-        cd ..
-        rm -rf master.zip fbv-master
+        ENABLE_DEFAULT_DEPENDENCIS="no"
+        # disable any text output on the LCD
+        cat <<EOF > /boot/cmdline.txt
+dwc_otg.lpm_enable=0 console=ttyAMA0,115200 root=/dev/mmcblk0p2 rootfstype=ext4 elevator=deadline rootwait logo.nologo quiet
+EOF
     fi
-
     # create a service to start fbv at startup
     cat <<EOF > /etc/systemd/system/splash.service
 [Unit]
-DefaultDependencies=no
+DefaultDependencies=${ENABLE_DEFAULT_DEPENDENCIS}
 After=local-fs.target
 
 [Service]
 StandardInput=tty
 StandardOutput=tty
-ExecStart=$SPLASH_EXEC
+ExecStart=/bin/sh -c "echo 'q' | fbv -e /etc/splash.png"
 
 [Install]
 WantedBy=sysinit.target
 EOF
-        # disable any text output on the LCD
-    cat <<EOF > /boot/cmdline.txt
-dwc_otg.lpm_enable=0 console=ttyAMA0,115200 root=/dev/mmcblk0p2 rootfstype=ext4 elevator=deadline rootwait logo.nologo quiet
-EOF
-
     systemctl daemon-reload
     systemctl disable getty@tty1
     systemctl enable splash
 fi  # End ENABLE_SPLASH
-
 
 # allow any user to start xs
 sed -i 's,^\(allowed_users=\).*,\1'\anybody',' /etc/X11/Xwrapper.config
