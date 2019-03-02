@@ -282,12 +282,8 @@ if [ "$ENABLE_SPLASH" = true ]; then
     cd ..
     rm -rf master.zip fbv-master
     if [ "$IS_STRETCH" = true ]; then
-        # Remove plymouth otherwise the splash is not shown
-        #TODO: CAUTION: Removes "mountall" due to a strange dependency, too.
-        # Another solution: Install or create a plymouth theme.
-        # IMO too much work for a simple, almost useless splash screen
-        # BTW: "systemctl mask plymouth" does not work
-        apt-get -y purge plymouth
+        # Remove plymouth start service otherwise the splash is not shown
+        systemctl mask plymouth-start.service
         ENABLE_DEFAULT_DEPENDENCIS="yes"
         cmd_line=$( cat /boot/cmdline.txt )
         # These params are needed to show the splash screen
