@@ -274,7 +274,7 @@ if [ "$ENABLE_SPLASH" = true ]; then
         #
         enable_default_dependencies="yes"
         cmd_line=$( cat /boot/cmdline.txt )
-        # These params are needed to show the splash screen
+        # These params are needed to show the splash screen and to omit any text output on the LCD
         # Append them to the cmdline.txt without changing other params
         for param in "logo.nologo" "vt.global_cursor_default=0" "plymouth.ignore-serial-consoles" "splash" "quiet"
         do
