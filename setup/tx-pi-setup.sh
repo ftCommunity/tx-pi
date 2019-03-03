@@ -649,11 +649,7 @@ chown -R ftc:ftc /var/www
 # fbgrab needs netpbm to generate png files
 apt-get -y install netpbm
 
-if [ "$IS_STRETCH" = true ]; then
-    apt-get -y install --no-install-recommends fbcat
-else
-    apt-get -y install --no-install-recommends fbgrab
-fi
+apt-get -y install --no-install-recommends fbcat
 sed -i 's.fbgrab.fbgrab -d /dev/fb1.' /var/www/screenshot.py
 
 
