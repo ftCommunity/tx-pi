@@ -574,7 +574,8 @@ cat <<EOF > /etc/lighttpd/lighttpd.conf
 server.modules = (
         "mod_access",
         "mod_alias",
-        "mod_redirect"
+        "mod_redirect",
+        "mod_compress"
 )
 
 server.document-root        = "/var/www"
