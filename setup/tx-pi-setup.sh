@@ -237,20 +237,6 @@ ftc     ALL = NOPASSWD: /usr/bin/ft_bt_remote_start.sh, /usr/bin/ft_bt_remote_se
 EOF
 chmod 0440 /etc/sudoers.d/ft_bt_remote_server
 
-# ----------------------- display setup ---------------------
-
-# disable fbturbo/enable ordinary fbdev
-rm -f /usr/share/X11/xorg.conf.d/99-fbturbo.conf
-cat <<EOF > /usr/share/X11/xorg.conf.d/99-fbdev.conf
-Section "Device"
-        Identifier      "FBDEV"
-        Driver          "fbdev"
-        Option          "fbdev" "/dev/fb1"
-
-        Option          "SwapbuffersWait" "true"
-EndSection
-EOF
-
 # X server/launcher start
 cat <<EOF > /etc/systemd/system/launcher.service
 [Unit]
@@ -267,6 +253,7 @@ EOF
 systemctl daemon-reload
 systemctl enable launcher
 
+
 # Splash screen
 if [ "$ENABLE_SPLASH" = true ]; then
     # a simple boot splash
@@ -282,13 +269,14 @@ if [ "$ENABLE_SPLASH" = true ]; then
     cd ..
     rm -rf master.zip fbv-master
     if [ "$IS_STRETCH" = true ]; then
-        # Remove plymouth start service otherwise the splash is not shown
-        systemctl mask plymouth-start.service
-        ENABLE_DEFAULT_DEPENDENCIS="yes"
+        # X.Org config file
+        x_fbdev_conf="/usr/share/X11/xorg.conf.d/99-fbdev.conf"
+        #
+        enable_default_dependencies="yes"
         cmd_line=$( cat /boot/cmdline.txt )
         # These params are needed to show the splash screen
         # Append them to the cmdline.txt without changing other params
-        for param in "logo.nologo" "vt.global_cursor_default=0" "splash" "quiet"
+        for param in "logo.nologo" "vt.global_cursor_default=0" "plymouth.ignore-serial-consoles" "splash" "quiet"
         do
             if [[ $cmd_line != *"$param"* ]]; then
                 cmd_line="$cmd_line $param"
@@ -298,7 +286,9 @@ if [ "$ENABLE_SPLASH" = true ]; then
 ${cmd_line}
 EOF
     else
-        ENABLE_DEFAULT_DEPENDENCIS="no"
+        # X.Org config file
+        x_fbdev_conf="/usr/share/X11/xorg.conf.d/99-fbturbo.conf"
+        enable_default_dependencies="no"
         # disable any text output on the LCD
         cat <<EOF > /boot/cmdline.txt
 dwc_otg.lpm_enable=0 console=ttyAMA0,115200 root=/dev/mmcblk0p2 rootfstype=ext4 elevator=deadline rootwait logo.nologo quiet
@@ -307,7 +297,7 @@ EOF
     # create a service to start fbv at startup
     cat <<EOF > /etc/systemd/system/splash.service
 [Unit]
-DefaultDependencies=${ENABLE_DEFAULT_DEPENDENCIS}
+DefaultDependencies=${enable_default_dependencies}
 After=local-fs.target
 
 [Service]
@@ -317,6 +307,17 @@ ExecStart=/bin/sh -c "echo 'q' | fbv -e /etc/splash.png"
 
 [Install]
 WantedBy=sysinit.target
+EOF
+    # Patch X.Org to use /dev/fb1
+    rm -f ${x_fbdev_conf}
+    cat <<EOF > ${x_fbdev_conf}
+Section "Device"
+        Identifier      "FBDEV"
+        Driver          "fbdev"
+        Option          "fbdev" "/dev/fb1"
+
+        Option          "SwapbuffersWait" "true"
+EndSection
 EOF
     systemctl daemon-reload
     systemctl disable getty@tty1
