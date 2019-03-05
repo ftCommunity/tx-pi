@@ -254,6 +254,23 @@ systemctl daemon-reload
 systemctl enable launcher
 
 
+# Configure X.Org to use /dev/fb1
+x_fbdev_conf="/usr/share/X11/xorg.conf.d/99-fbturbo.conf"
+if [ "$IS_STRETCH" ]; then
+    x_fbdev_conf="/usr/share/X11/xorg.conf.d/99-fbdev.conf"
+fi
+# Patch X.Org to use /dev/fb1
+rm -f ${x_fbdev_conf}
+cat <<EOF > ${x_fbdev_conf}
+Section "Device"
+    Identifier      "FBDEV"
+    Driver          "fbdev"
+    Option          "fbdev" "/dev/fb1"
+    Option          "SwapbuffersWait" "true"
+EndSection
+EOF
+
+
 # Splash screen
 if [ "$ENABLE_SPLASH" = true ]; then
     # a simple boot splash
@@ -269,9 +286,6 @@ if [ "$ENABLE_SPLASH" = true ]; then
     cd ..
     rm -rf master.zip fbv-master
     if [ "$IS_STRETCH" = true ]; then
-        # X.Org config file
-        x_fbdev_conf="/usr/share/X11/xorg.conf.d/99-fbdev.conf"
-        #
         enable_default_dependencies="yes"
         cmd_line=$( cat /boot/cmdline.txt )
         # These params are needed to show the splash screen and to omit any text output on the LCD
@@ -286,8 +300,6 @@ if [ "$ENABLE_SPLASH" = true ]; then
 ${cmd_line}
 EOF
     else
-        # X.Org config file
-        x_fbdev_conf="/usr/share/X11/xorg.conf.d/99-fbturbo.conf"
         enable_default_dependencies="no"
         # disable any text output on the LCD
         cat <<EOF > /boot/cmdline.txt
@@ -303,21 +315,11 @@ After=local-fs.target
 [Service]
 StandardInput=tty
 StandardOutput=tty
+Type=oneshot
 ExecStart=/bin/sh -c "echo 'q' | fbv -e /etc/splash.png"
 
 [Install]
 WantedBy=sysinit.target
-EOF
-    # Patch X.Org to use /dev/fb1
-    rm -f ${x_fbdev_conf}
-    cat <<EOF > ${x_fbdev_conf}
-Section "Device"
-        Identifier      "FBDEV"
-        Driver          "fbdev"
-        Option          "fbdev" "/dev/fb1"
-
-        Option          "SwapbuffersWait" "true"
-EndSection
 EOF
     systemctl daemon-reload
     systemctl disable getty@tty1
