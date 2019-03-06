@@ -124,9 +124,16 @@ sed -i "s/\"reboot now\"/\"not rebooting yet\"/g" LCD-show/$LCD-show
 cd LCD-show
 ./$LCD-show $ORIENTATION
 # Clean up
-rm -f LCD-show-170703.tar.gz
+cd ..
+rm -f ./LCD-show-170703.tar.gz
 if [ "$DEBUG" = false ]; then
-    rm -rf LCD-show
+    rm -rf ./LCD-show
+fi
+
+# Driver installation changes "console=serial0,115200" to "console=ttyAMA0,115200"
+# Revert it here since /dev/ttyAMA0 is Bluetooth (Pi3 , Pi3B+ ...)
+if [ "$IS_STRETCH" = true ]; then
+    sed -i "s/=ttyAMA0,/=serial0,/g" /boot/cmdline.txt
 fi
 
 
