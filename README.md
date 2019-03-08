@@ -4,7 +4,7 @@ This repository contains the basic requirements to make a Raspberry Pi
 hardware and software compatible with the [community firmware
 for the fischertechnik TXT](http://cfw.ftcommunity.de/).
 
-The image below show a TX-Pi-XL (with 3.5" display) using an
+The image below shows a TX-Pi-XL (with 3.5" display) using an
 [ftDuino](https://github.com/harbaum/ftduino) to connect to 
 fischertechnik actors and sensors.
 
@@ -65,6 +65,17 @@ The required screws are M2.5 * 12mm countersunk.
 
 # Software setup
 
+## SD card images:
+
+For your convenience, you might download one of the following SD card images. To install the image onto SD card, please follow the instructions given on the [Raspbian site](https://www.raspberrypi.org/documentation/installation/installing-images/README.md) except to use the TX-Pi image instead of the Raspbian image.
+
+Currently available SD card images:
+
+3.5" A-Type display, Raspbian stretch, created 2019-03-07: [tx-pi_disp35A_stretch_20190307.img.zip, 1GB](https://www.filehosting.org/file/details/786116/tx-pi_disp35A_stretch_20190307.zip)
+
+## Alternatively: manual installation
+
+If you want to manually install Raspian and the TX-Pi setup instead of using a SD card image as described above, follow the instructions here.
 The entire installation consists of three main steps:
 
   1. Install a standard raspbian operating system image onto SD card
