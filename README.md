@@ -71,7 +71,8 @@ For your convenience, you might download one of the following SD card images. To
 
 Currently available SD card images:
 
-3.5" A-Type display, Raspbian stretch, created 2019-03-07: [tx-pi_disp35A_stretch_20190307.img.zip, 1GB](https://www.filehosting.org/file/details/786116/tx-pi_disp35A_stretch_20190307.zip)
+- 3.2" display, Raspbian stretch, created 2019-03-07: [tx-pi_disp32_stretch_20190307.zip, 1GB](https://www.filehosting.org/file/details/786169/tx-pi_disp32_stretch_20190307.zip)
+- 3.5" A-Type display, Raspbian stretch, created 2019-03-07: [tx-pi_disp35A_stretch_20190307.img.zip, 1GB](https://www.filehosting.org/file/details/786116/tx-pi_disp35A_stretch_20190307.zip)
 
 ## Alternatively: manual installation
 
