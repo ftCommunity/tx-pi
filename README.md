@@ -67,6 +67,8 @@ The required screws are M2.5 * 12mm countersunk.
 
 ## SD card images:
 
+__Attention: the image files are experimental at the moment, so if you experience any problems, please let us know!__
+
 For your convenience, you might download one of the following SD card images. To install the image onto SD card, please follow the instructions given on the [Raspbian site](https://www.raspberrypi.org/documentation/installation/installing-images/README.md) except to use the TX-Pi image instead of the Raspbian image.
 
 Currently available SD card images:
