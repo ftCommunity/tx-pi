@@ -105,6 +105,11 @@ pip3 install --upgrade setuptools
 if [ "$IS_STRETCH" = true ]; then
     # Remove dhcpcd because it fails to start (isc-dhcp-client is available)
     apt-get -y purge dhcpcd5
+    # Do not try too long to reach the DHCPD server (blocks booting)
+    sed -i "s/#timeout 60;/timeout 10;/g" /etc/dhcp/dhclient.conf
+    # By default, the client tries to contact the DHCP server after five min.
+    # Reduce this time to 20 sec.
+    sed -i "s/#retry 60;/retry 20;/g" /etc/dhcp/dhclient.conf
 else
     # force "don't wait for network"
     rm -f /etc/systemd/system/dhcpcd.service.d/wait.conf
@@ -131,7 +136,7 @@ if [ "$DEBUG" = false ]; then
 fi
 
 # Driver installation changes "console=serial0,115200" to "console=ttyAMA0,115200"
-# Revert it here since /dev/ttyAMA0 is Bluetooth (Pi3 , Pi3B+ ...)
+# Revert it here since /dev/ttyAMA0 is Bluetooth (Pi3, Pi3B+ ...)
 if [ "$IS_STRETCH" = true ]; then
     sed -i "s/=ttyAMA0,/=serial0,/g" /boot/cmdline.txt
 fi
