@@ -94,7 +94,6 @@ mount -n -t vfat /dev/mmcblk0p1 "$mount_dir" -o rw
 # Configure WIFI
 boot_wifi=$mount_dir/wpa_supplicant.conf
 if [ -f "$boot_wifi" ]; then
-    #echo "hello" > $nount_dir/found_wpa.txt
     mv -f $boot_wifi /etc/wpa_supplicant/wpa_supplicant.conf
     chmod 600 /etc/wpa_supplicant/wpa_supplicant.conf
 fi
