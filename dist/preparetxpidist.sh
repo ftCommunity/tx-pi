@@ -160,5 +160,5 @@ kpartx -d $img
 
 if [ "$was_kpartx_available" = false ]; then
     echo "Removing kpartx"
-    apt-get remove kpartx
+    apt-get -y remove kpartx
 fi
