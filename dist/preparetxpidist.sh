@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Script to prepare a TX PI distribution.
+# Script to prepare a TX-Pi distribution.
 #
 # This script ensures that sensible data is removed from the distribution image
 # and prepares the distribution for the first boot process.
@@ -154,7 +154,6 @@ sed -i "s|^#!/bin/bash|#!/bin/bash\n${additional_commands//$'\n'/\\n}|" "${mount
 
 umount "${mount_dir}"
 
-# Clean up
 kpartx -d $img
 
 if [ "$was_kpartx_available" = false ]; then
