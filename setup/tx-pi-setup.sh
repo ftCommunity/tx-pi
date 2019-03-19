@@ -40,7 +40,7 @@ GITROOT=$GITBASE"board/fischertechnik/TXT/rootfs"
 SVNBASE="https://github.com/ftCommunity/ftcommunity-TXT.git/trunk/"
 SVNROOT=$SVNBASE"board/fischertechnik/TXT/rootfs"
 TSVNBASE="https://github.com/harbaum/TouchUI.git/trunk/"
-LOCALGIT="https://github.com/harbaum/tx-pi/raw/master/setup"
+LOCALGIT="https://github.com/ftCommunity/tx-pi/raw/master/setup"
 
 LIB_ROBOINT_URL=https://github.com/nxdefiant/libroboint/archive/
 LIB_ROBOINT_FILE=0.5.3.zip
