@@ -1,4 +1,4 @@
-# TX-PI - A Raspberry PI setup for fischertechnik
+# TX-Pi - A Raspberry Pi setup for fischertechnik
 
 This repository contains the basic requirements to make a Raspberry Pi
 hardware and software compatible with the [community firmware
@@ -8,7 +8,7 @@ The image below shows a TX-Pi-XL (with 3.5" display) using an
 [ftDuino](https://github.com/harbaum/ftduino) to connect to 
 fischertechnik actors and sensors.
 
-<img src="https://raw.githubusercontent.com/harbaum/tx-pi/master/images/tx-pi-xl+ftduino.jpg" alt="TX-PI"/>
+![TX-Pi with ftDuino](images/tx-pi-xl+ftduino.jpg)
 
 # Features and Highlights
 
@@ -51,7 +51,8 @@ You'll need:
 Optionally you might use matching [ft compatible cases](https://www.thingiverse.com/thing:2217355) and the [PiPower](https://github.com/harbaum/tx-pi/tree/master/pipower) to supply the Pi from fischertechnik power sources.
 
 In case you do not want to use the 3D printed case, you might opt for a wide variety of standard RPi cases  suited for the LCD touchscreen. See the image below for how this might look like:
-<img src="https://raw.githubusercontent.com/harbaum/tx-pi/master/images/TX-Pi-light-small.jpg" alt="TX-PI in standard case"/>
+
+![TX-Pi in standard case](images/TX-Pi-light-small.jpg)
 
 # Hardware setup
 
@@ -73,8 +74,8 @@ For your convenience, you might download one of the following SD card images. To
 
 Currently available SD card images:
 
-- 3.2" display, Raspbian stretch, created 2019-03-18: [tx-pi_disp32_stretch_20190318.zip, 1GB](https://github.com/harbaum/tx-pi/releases/download/2019-03-18/tx-pi_disp32_stretch_20190318.zip)<br>MD5 checksum of the image: 067714a944981ab361941d89c5534ffd
-- 3.5" A-Type display, Raspbian stretch, created 2019-03-18: [tx-pi_disp35A_stretch_20190318.zip, 1GB](https://github.com/harbaum/tx-pi/releases/download/2019-03-18/tx-pi_disp35A_stretch_20190318.zip)<br>MD5 checksum of the image: 8f7cc2f270315ef5f51a69e038372333
+- 3.2" display, Raspbian stretch, created 2019-03-18: [tx-pi_disp32_stretch_20190318.zip, 1GB](https://github.com/ftCommunity/tx-pi/releases/download/2019-03-18/tx-pi_disp32_stretch_20190318.zip)<br>MD5 checksum of the image: 067714a944981ab361941d89c5534ffd
+- 3.5" A-Type display, Raspbian stretch, created 2019-03-18: [tx-pi_disp35A_stretch_20190318.zip, 1GB](https://github.com/ftCommunity/tx-pi/releases/download/2019-03-18/tx-pi_disp35A_stretch_20190318.zip)<br>MD5 checksum of the image: 8f7cc2f270315ef5f51a69e038372333
 
 ## Alternatively: manual installation
 
@@ -139,7 +140,8 @@ your Pi will automatically reboot and it will boot into the user
 interface of the [fischertechnik community
 firmware](http://cfw.ftcommunity.de/)..
 
-<img src="https://raw.githubusercontent.com/harbaum/tx-pi/master/images/display32.png" alt="3.2 inch display"/>
+![3.2 inch display](images/display32.png)
+
 
 # Support for 3.5" screens
 
@@ -162,7 +164,8 @@ and the display of the fischertechnik TXT only provide 240x320 pixels. Thus
 some apps written for the TXT or the regular TX-Pi setup may look a little
 different. But due to the Qt framework most apps will just look fine.
 
-<img src="https://raw.githubusercontent.com/harbaum/tx-pi/master/images/display35.png" alt="3.5 inch display"/>
+![3.5 inch display](images/display35.png)
+
 
 ## Tweaking the display performance
 
