@@ -384,6 +384,7 @@ After=network.target
 
 [Service]
 ExecStart=/bin/su ftc -c "/usr/bin/x11vnc -forever"
+ExecStop=/usr/bin/killall x11vnc
 
 [Install]
 WantedBy=multi-user.target
