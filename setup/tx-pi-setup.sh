@@ -350,10 +350,7 @@ cp fbc /usr/bin/
 cd ..
 rm -rf fbc.tgz fbc
 
-# install vnc server
-apt-get -y install x11vnc
-
-# hide cursor and disable screensaver
+# Hide cursor and disable screensaver
 cat <<EOF > /etc/X11/xinit/xserverrc
 #!/bin/sh
 for f in /dev/input/by-id/*-mouse; do
@@ -374,10 +371,27 @@ for f in /dev/input/by-id/*-mouse; do
     break
 done
 
-sh -c 'sleep 2; x11vnc -display :0 -forever' &
-
 exec /usr/bin/X -s 0 dpms \$CUROPT -nolisten tcp "\$@"
 EOF
+
+
+# Install vnc server
+apt-get -y install x11vnc
+cat <<EOF > /etc/systemd/system/x11vnc.service
+[Unit]
+Description=X11 VNC service
+After=network.target
+
+[Service]
+ExecStart=/bin/su ftc -c "/usr/bin/x11vnc -forever"
+ExecStop=/usr/bin/killall x11vnc
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+systemctl daemon-reload
+systemctl enable x11vnc
 
 
 # allow user to modify locale and network settings
