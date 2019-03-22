@@ -562,7 +562,7 @@ Wants=network-online.target
 After=network-online.target
 
 [Service]
-Type=oneshot
+Type=simple
 ExecStart=/usr/bin/netreq
 
 [Install]
