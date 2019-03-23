@@ -523,10 +523,11 @@ rm tscal.zip
 # Add SSH / VNC app
 wget https://github.com/heuer/ftremotely/archive/0.0.1.zip -O remotely.zip
 unzip -o remotely.zip
+mv ./ftremotely-* ./remotely  # Reliable diretory name
+chown ftc:ftc ./remotely/app.py
+chmod 744 ./remotely/app.py
 rm -rf /home/ftc/apps/430d692e-d285-4f05-82fd-a7b3ce9019e5
-mv ./ftremotely-* /home/ftc/apps/430d692e-d285-4f05-82fd-a7b3ce9019e5
-chown ftc:ftc /home/ftc/apps/430d692e-d285-4f05-82fd-a7b3ce9019e5/app.py
-chmod 744 /home/ftc/apps/430d692e-d285-4f05-82fd-a7b3ce9019e5/app.py
+mv ./remotely /home/ftc/apps/430d692e-d285-4f05-82fd-a7b3ce9019e5
 rm -f ./remotely.zip
 
 
