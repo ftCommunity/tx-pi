@@ -249,6 +249,14 @@ ftc     ALL = NOPASSWD: /usr/bin/ft_bt_remote_start.sh, /usr/bin/ft_bt_remote_se
 EOF
 chmod 0440 /etc/sudoers.d/ft_bt_remote_server
 
+cat <<EOF > /etc/sudoers.d/sshvnc
+## Permissions for ftc access to programs required
+## for SSH and VNC server enabling / disabling / start / shutdown
+ftc     ALL = NOPASSWD: /bin/systemctl stop x11vnc, /bin/systemctl disable x11vnc, /bin/systemctl start x11vnc, /bin/systemctl enable x11vnc, /bin/systemctl start ssh, /bin/systemctl stop ssh, /bin/systemctl enable ssh, /bin/systemctl disable ssh
+EOF
+chmod 0440 /etc/sudoers.d/sshvnc
+
+
 # X server/launcher start
 cat <<EOF > /etc/systemd/system/launcher.service
 [Unit]
@@ -510,6 +518,17 @@ cd tscal
 wget -N $LOCALGIT/tscal.zip
 unzip -o tscal.zip
 rm tscal.zip
+
+
+# Add SSH / VNC app
+wget https://github.com/heuer/ftremotely/archive/0.0.1.zip -O remotely.zip
+unzip -o remotely.zip
+rm -rf /home/ftc/apps/430d692e-d285-4f05-82fd-a7b3ce9019e5
+mv ./ftremotely-* /home/ftc/apps/430d692e-d285-4f05-82fd-a7b3ce9019e5
+chown ftc:ftc /home/ftc/apps/430d692e-d285-4f05-82fd-a7b3ce9019e5/app.py
+chmod 744 /home/ftc/apps/430d692e-d285-4f05-82fd-a7b3ce9019e5/app.py
+rm -f ./remotely.zip
+
 
 # add robolt support
 # robolt udev rules have already been installed from the main repository
