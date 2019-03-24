@@ -99,6 +99,7 @@ apt-get install -y python3-bs4
 pip3 install semantic_version
 pip3 install websockets
 pip3 install --upgrade setuptools
+pip3 install --upgrade wheel  # Needed for zbar
 
 
 # DHCP client
