@@ -3,5 +3,6 @@
 ## 2019-mm-dd
 * Decouple VNC service from X service (VNC can be disabled independently from X)
 * Fixed: NetReq service blocks systemd
-* Experimental support to enable / disable SSH and VNC
-* Ensure that Python Wheels is available.
+* Experimental support to enable / disable SSH and VNC via app
+* Ensure that Python wheel package is available.
+* Move Power-Off app to homescreen

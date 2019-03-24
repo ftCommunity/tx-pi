@@ -47,6 +47,7 @@ LIB_ROBOINT_FILE=0.5.3.zip
 LIB_ROBOINT_IDIR=libroboint-0.5.3
 
 FTDDIRECT="ftduino_direct-1.0.8"
+REMOTELY_VERSION="0.0.1"
 
 # default lcd is 3.2 inch
 LCD=LCD32
@@ -509,6 +510,9 @@ rm -rf /opt/ftc/apps/system/ftgui
 # add power tool from touchui
 cd /opt/ftc/apps/system
 svn export $TSVNBASE"/touchui/apps/system/power"
+# Move power button to home screen
+sed -i "s/category: System/category: /g" /opt/ftc/apps/system/power/manifest
+
 
 # add screen calibration tool
 apt-get -y install --no-install-recommends xinput-calibrator
@@ -523,7 +527,7 @@ rm tscal.zip
 
 # Add SSH / VNC app
 cd /root
-wget https://github.com/heuer/ftremotely/archive/0.0.1.zip -O remotely.zip
+wget https://github.com/heuer/ftremotely/archive/$REMOTELY_VERSION.zip -O remotely.zip
 unzip -o remotely.zip
 mv ./ftremotely-* ./remotely  # Reliable diretory name
 chown ftc:ftc ./remotely/app.py
