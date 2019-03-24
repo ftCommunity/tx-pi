@@ -126,7 +126,7 @@ the password ```raspberry```.
 Now download the setup script by typing:
 
 ```
-wget goo.gl/VXvDML -O tx-pi-setup.sh
+wget https://t1p.de/tx-pi -O tx-pi-setup.sh
 ```
 
 and run the script by typing
