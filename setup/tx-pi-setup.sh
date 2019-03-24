@@ -47,7 +47,7 @@ LIB_ROBOINT_FILE=0.5.3.zip
 LIB_ROBOINT_IDIR=libroboint-0.5.3
 
 FTDDIRECT="ftduino_direct-1.0.8"
-REMOTELY_VERSION="0.0.1"
+REMOTELY_VERSION="0.0.2"
 
 # default lcd is 3.2 inch
 LCD=LCD32
@@ -530,8 +530,8 @@ cd /root
 wget https://github.com/heuer/ftremotely/archive/$REMOTELY_VERSION.zip -O remotely.zip
 unzip -o remotely.zip
 mv ./ftremotely-* ./remotely  # Reliable diretory name
-chown ftc:ftc ./remotely/app.py
-chmod 744 ./remotely/app.py
+chown ftc:ftc ./remotely/remotely.py
+chmod 744 ./remotely/remotely.py
 rm -rf /home/ftc/apps/430d692e-d285-4f05-82fd-a7b3ce9019e5
 mkdir -p /home/ftc/apps
 mv ./remotely /home/ftc/apps/430d692e-d285-4f05-82fd-a7b3ce9019e5
