@@ -141,8 +141,15 @@ fi
 # Revert it here since /dev/ttyAMA0 is Bluetooth (Pi3, Pi3B+ ...)
 if [ "$IS_STRETCH" = true ]; then
     sed -i "s/=ttyAMA0,/=serial0,/g" /boot/cmdline.txt
+    cmd_line=$( cat /boot/cmdline.txt )
+    # Driver installation removes "fsck.repair=yes"; revert it
+    if [[ $cmd_line != *"fsck.repair=yes"* ]]; then
+        cmd_line="$cmd_line fsck.repair=yes"
+    fi
+    cat <<EOF > /boot/cmdline.txt
+${cmd_line}
+EOF
 fi
-
 
 # TODO:
 # in /boot/config.txt for at least LCD35 and LCD35B set spi speed to 40Mhz like so:
