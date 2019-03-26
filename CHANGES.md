@@ -1,5 +1,11 @@
 # Changes
 
+
+## 2019-mm-dd
+* The Waveshare setup removes ``fsck.repair=yes`` from ``/boot/cmdline.txt`` 
+  (Stretch). Reenable it.
+
+
 ## 2019-03-24
 * Decouple VNC service from X service (VNC can be disabled independently from X)
 * Fixed: NetReq service blocks systemd
