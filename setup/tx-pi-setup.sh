@@ -285,7 +285,7 @@ systemctl enable launcher
 
 # Configure X.Org to use /dev/fb1
 x_fbdev_conf="/usr/share/X11/xorg.conf.d/99-fbturbo.conf"
-if [ "$IS_STRETCH" ]; then
+if [ "$IS_STRETCH" = true ]; then
     x_fbdev_conf="/usr/share/X11/xorg.conf.d/99-fbdev.conf"
 fi
 # Patch X.Org to use /dev/fb1
@@ -430,8 +430,13 @@ iface lo inet loopback
 EOF
 chmod 666 /etc/network/interfaces
 
-# set timezone to germany
-echo "Europe/Berlin" > /etc/timezone
+# set timezone to Germany
+if [ "$IS_STRETCH" = true ]; then
+    ln -fs /usr/share/zoneinfo/Europe/Berlin /etc/localtime
+    dpkg-reconfigure -f noninteractive tzdata
+else
+    echo "Europe/Berlin" > /etc/timezone
+fi
 
 # set firmware version
 cd /etc

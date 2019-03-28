@@ -6,6 +6,7 @@
   (Stretch). Reenable it.
 * Updated TouchUI to detect TX-Pi to avoid an error due to the missing
   hardware button (TXT). See issue #35
+* Fixed timezone setup (Stretch)
 
 
 ## 2019-03-24
