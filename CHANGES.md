@@ -4,6 +4,8 @@
 ## 2019-mm-dd
 * The Waveshare setup removes ``fsck.repair=yes`` from ``/boot/cmdline.txt`` 
   (Stretch). Reenable it.
+* Updated TouchUI to detect TX-Pi to avoid an error due to the missing
+  hardware button (TXT). See issue #35
 
 
 ## 2019-03-24
