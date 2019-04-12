@@ -126,7 +126,7 @@ the password ```raspberry```.
 Now download the setup script by typing:
 
 ```
-wget https://t1p.de/tx-pi-setup -O tx-pi-setup.sh
+wget https://tx-pi.de/tx-pi-setup.sh
 ```
 
 and run the script by typing
