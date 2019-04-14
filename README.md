@@ -70,12 +70,8 @@ The required screws are M2.5 * 12mm countersunk.
 
 __Attention: the image files are experimental at the moment, so if you experience any problems, please let us know!__
 
-For your convenience, you might download one of the following SD card images. To install the image onto SD card, please follow the instructions given on the [Raspbian site](https://www.raspberrypi.org/documentation/installation/installing-images/README.md) except to use the TX-Pi image instead of the Raspbian image.
-
-Currently available SD card images:
-
-- 3.2" display, Raspbian stretch, created 2019-03-24: [tx-pi_disp32_stretch_20190324.zip, 1.24GB](https://github.com/ftCommunity/tx-pi/releases/download/2019-03-24/tx-pi_disp32_stretch_20190324.zip)<br>MD5 checksum of the image: a40c935fad3c75581ac8fbfea0ab1619
-- 3.5" A-Type display, Raspbian stretch, created 2019-03-24: [tx-pi_disp35_stretch_20190324.zip, 1,25GB](https://github.com/ftCommunity/tx-pi/releases/download/2019-03-24/tx-pi_disp35_stretch_20190324.zip)<br>MD5 checksum of the image: a2f42095853f64050002386c4fd32db6
+For your convenience, you might download one of the [SD card images](https://www.tx-pi.de/images/). 
+To install the image onto SD card, please follow the instructions given on the [Raspbian site](https://www.raspberrypi.org/documentation/installation/installing-images/README.md) except to use the TX-Pi image instead of the Raspbian image.
 
 ## Alternatively: manual installation
 
