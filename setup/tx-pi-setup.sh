@@ -42,6 +42,16 @@ SVNROOT=$SVNBASE"board/fischertechnik/TXT/rootfs"
 TSVNBASE="https://github.com/harbaum/TouchUI.git/trunk/"
 LOCALGIT="https://github.com/ftCommunity/tx-pi/raw/master/setup"
 
+# Waveshare repository / archive for driver installation.
+# Rely on a specific revision since the master branch is a moving target
+# and Waveshare provides no releases (as of 2019-04)
+# Take caution if you want to change the revision: This script modifies the
+# "rotation" parameter since the original script relied on specific "rotation"
+# parameters which does not match the rotation parameters in the Github repository
+# (as of 2019-04), see also the comments in the Screen Driver installation section.
+WAVESHARE_REV="5d90a76"
+WAVESHARE_ARCHIVE="https://github.com/waveshare/LCD-show/archive/@{WAVESHARE_REV}.zip"
+
 LIB_ROBOINT_URL=https://github.com/nxdefiant/libroboint/archive/
 LIB_ROBOINT_FILE=0.5.3.zip
 LIB_ROBOINT_IDIR=libroboint-0.5.3
@@ -50,31 +60,30 @@ FTDDIRECT="ftduino_direct-1.0.8"
 REMOTELY_VERSION="0.0.2"
 
 # default lcd is 3.2 inch
-LCD=LCD32
+LCD_SHOW="LCD32-show"
 ORIENTATION=90
-
 # check if user gave a parameter
 if [ "$#" -gt 0 ]; then
     # todo: Allow for other types as well
+    ORIENTATION=180
     if [ "$1" == "LCD35" ]; then
-        echo "Setup for waveshare 3.5 inch (A) screen"
-        LCD=$1
+        echo "Setup for Waveshare 3.5 inch (A) screen"
+        LCD_SHOW="LCD35-show"
     elif [ "$1" == "LCD35B" ]; then
-        echo "Setup for waveshare 3.5 inch (B) IPS screen"
-        LCD=$1
+        echo "Setup for Waveshare 3.5 inch (B) IPS screen"
+        LCD_SHOW="LCD35B-show"
+    elif [ "$1" == "LCD35BV2" ]; then
+        echo "Setup for Waveshare 3.5 inch (B) version 2 IPS screen"
+        LCD_SHOW="LCD35B-show-V2"
     else
         echo "Unknown parameter \"$1\""
         echo "Allowed parameters:"
         echo "LCD35    - create 3.5\" setup (instead of 3.2\")"
-        echo "LCD35B   - create 3.5\" IPS setup)"
+        echo "LCD35B   - create 3.5\" IPS setup"
+        echo "LCD35BV2 - create 3.5\" IPS version 2 setup"
         exit -1
     fi
 fi
-
-# if [ "$HOSTNAME" != tx-pi ]; then
-#     echo "Make sure your R-Pi has been setup completely and is named tx-pi"
-#     exit -1
-# fi
 
 # ----------------------- package installation ---------------------
 
@@ -109,7 +118,7 @@ if [ "$IS_STRETCH" = true ]; then
     apt-get -y purge dhcpcd5
     # Do not try too long to reach the DHCPD server (blocks booting)
     sed -i "s/#timeout 60;/timeout 10;/g" /etc/dhcp/dhclient.conf
-    # By default, the client tries to contact the DHCP server after five min.
+    # By default, the client retries to contact the DHCP server after five min.
     # Reduce this time to 20 sec.
     sed -i "s/#retry 60;/retry 20;/g" /etc/dhcp/dhclient.conf
 else
@@ -123,16 +132,24 @@ echo "============================================================"
 echo "============== SCREEN DRIVER INSTALLATION =================="
 echo "============================================================"
 cd
-wget -N http://www.waveshare.com/w/upload/0/00/LCD-show-170703.tar.gz
-tar xvfz LCD-show-170703.tar.gz
-# supress automatic reboot after installation
-sed -i "s/sudo reboot/#sudo reboot/g" LCD-show/$LCD-show
-sed -i "s/\"reboot now\"/\"not rebooting yet\"/g" LCD-show/$LCD-show
+wget -N $WAVESHARE_ARCHIVE -O LCD-show.zip
+unzip -x LCD-show.zip
+# Create a reliable directory
+mv ./LCD-show-* ./LCD-show
+# Supress automatic reboot after installation
+sed -i "s/sudo reboot/#sudo reboot/g" LCD-show/$LCD_SHOW
+sed -i "s/\"reboot now\"/\"not rebooting yet\"/g" LCD-show/$LCD_SHOW
 cd LCD-show
-./$LCD-show $ORIENTATION
+./${LCD_SHOW} ${ORIENTATION} lite
+# Previously this script relied on <http://www.waveshare.com/w/upload/0/00/LCD-show-170703.tar.gz>
+# In 170703 ORIENTATION=90 results into rotate=180.
+# The definitions in the Waveshare repository differ, too.
+# I.e. the ORIENTATION=90 may result into "dtoverlay=waveshare35a:rotate=0"
+# Here we use the same rotate value as provided by the ORIENTATION variable.
+sed -i "s/:rotate=[0-9]+/:rotate=${ORIENTATION}/g" /boot/config.txt
 # Clean up
 cd ..
-rm -f ./LCD-show-170703.tar.gz
+rm -f ./LCD-show.zip
 if [ "$DEBUG" = false ]; then
     rm -rf ./LCD-show
 fi
