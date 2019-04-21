@@ -47,7 +47,7 @@ LOCALGIT="https://github.com/ftCommunity/tx-pi/raw/master/setup"
 # and Waveshare provides no releases (as of 2019-04)
 # Take caution if you want to change the revision: This script modifies the
 # "rotation" parameter since the original script relied on specific "rotation"
-# parameters which does not match the rotation parameters in the Github repository
+# parameters which do not match the rotation parameters in the Github repository
 # (as of 2019-04), see also the comments in the Screen Driver installation section.
 WAVESHARE_REV="5d90a76"
 WAVESHARE_ARCHIVE="https://github.com/waveshare/LCD-show/archive/@{WAVESHARE_REV}.zip"
