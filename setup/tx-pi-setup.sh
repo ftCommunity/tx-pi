@@ -146,7 +146,7 @@ cd LCD-show
 # The definitions in the Waveshare repository differ, too.
 # I.e. the ORIENTATION=90 may result into "dtoverlay=waveshare35a:rotate=0"
 # Here we use the same rotate value as provided by the ORIENTATION variable.
-sed -i "s/:rotate=[0-9]+/:rotate=${ORIENTATION}/g" /boot/config.txt
+sed -i "s/:rotate=[0-9]\+/:rotate=${ORIENTATION}/" /boot/config.txt
 # Clean up
 cd ..
 rm -f ./LCD-show.zip
