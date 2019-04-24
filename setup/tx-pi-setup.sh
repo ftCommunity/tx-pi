@@ -42,16 +42,6 @@ SVNROOT=$SVNBASE"board/fischertechnik/TXT/rootfs"
 TSVNBASE="https://github.com/harbaum/TouchUI.git/trunk/"
 LOCALGIT="https://github.com/ftCommunity/tx-pi/raw/master/setup"
 
-# Waveshare repository / archive for driver installation.
-# Rely on a specific revision since the master branch is a moving target
-# and Waveshare provides no releases (as of 2019-04)
-# Take caution if you want to change the revision: This script modifies the
-# "rotation" parameter since the original script relied on specific "rotation"
-# parameters which do not match the rotation parameters in the Github repository
-# (as of 2019-04), see also the comments in the Screen Driver installation section.
-WAVESHARE_REV="5d90a76"
-WAVESHARE_ARCHIVE="https://github.com/waveshare/LCD-show/archive/@{WAVESHARE_REV}.zip"
-
 LIB_ROBOINT_URL=https://github.com/nxdefiant/libroboint/archive/
 LIB_ROBOINT_FILE=0.5.3.zip
 LIB_ROBOINT_IDIR=libroboint-0.5.3
@@ -60,21 +50,18 @@ FTDDIRECT="ftduino_direct-1.0.8"
 REMOTELY_VERSION="0.0.2"
 
 # default lcd is 3.2 inch
-LCD_SHOW="LCD32-show"
+LCD=LCD32
 ORIENTATION=90
 # check if user gave a parameter
 if [ "$#" -gt 0 ]; then
     # todo: Allow for other types as well
-    ORIENTATION=180
+    LCD=$1
     if [ "$1" == "LCD35" ]; then
         echo "Setup for Waveshare 3.5 inch (A) screen"
-        LCD_SHOW="LCD35-show"
     elif [ "$1" == "LCD35B" ]; then
         echo "Setup for Waveshare 3.5 inch (B) IPS screen"
-        LCD_SHOW="LCD35B-show"
     elif [ "$1" == "LCD35BV2" ]; then
-        echo "Setup for Waveshare 3.5 inch (B) version 2 IPS screen"
-        LCD_SHOW="LCD35B-show-V2"
+        echo "Setup for Waveshare 3.5 inch (B) version 2 IPS screen (experimental)"
     else
         echo "Unknown parameter \"$1\""
         echo "Allowed parameters:"
@@ -132,26 +119,32 @@ echo "============================================================"
 echo "============== SCREEN DRIVER INSTALLATION =================="
 echo "============================================================"
 cd
-wget -N $WAVESHARE_ARCHIVE -O LCD-show.zip
-unzip -x LCD-show.zip
-# Create a reliable directory
-mv ./LCD-show-* ./LCD-show
-# Supress automatic reboot after installation
-sed -i "s/sudo reboot/#sudo reboot/g" LCD-show/$LCD_SHOW
-sed -i "s/\"reboot now\"/\"not rebooting yet\"/g" LCD-show/$LCD_SHOW
+wget -N https://www.waveshare.com/w/upload/0/00/LCD-show-170703.tar.gz
+tar xvfz LCD-show-170703.tar.gz
+if [ ${LCD} == "LCD35BV2" ]; then
+    # Support for Waveshare 3.5" "B" rev. 2.0
+    # This display is not supported by the LCD-show-170703 driver but by
+    # the Waveshare GH repository.
+    # We won't switch to the GH repository soon since it causes more problems
+    # than blessing (2019-04)
+    cp ./LCD-show/LCD35B-show ./LCD-show/$LCD-show
+    wget https://github.com/waveshare/LCD-show/raw/master/waveshare35b-v2-overlay.dtb -P ./LCD-show/
+    sed -i "s/waveshare35b-overlay/waveshare35b-v2-overlay/g" ./LCD-show/$LCD-show
+fi
+# supress automatic reboot after installation
+sed -i "s/sudo reboot/#sudo reboot/g" LCD-show/$LCD-show
+sed -i "s/\"reboot now\"/\"not rebooting yet\"/g" LCD-show/$LCD-show
 cd LCD-show
-./${LCD_SHOW} ${ORIENTATION} lite
-# Previously this script relied on <http://www.waveshare.com/w/upload/0/00/LCD-show-170703.tar.gz>
-# In 170703 ORIENTATION=90 results into rotate=180.
-# The definitions in the Waveshare repository differ, too.
-# I.e. the ORIENTATION=90 may result into "dtoverlay=waveshare35a:rotate=0"
-# Here we use the same rotate value as provided by the ORIENTATION variable.
-sed -i "s/:rotate=[0-9]\+/:rotate=${ORIENTATION}/" /boot/config.txt
+./$LCD-show $ORIENTATION
 # Clean up
 cd ..
-rm -f ./LCD-show.zip
+rm -f ./LCD-show-170703.tar.gz
 if [ "$DEBUG" = false ]; then
     rm -rf ./LCD-show
+fi
+if [ $LCD == "LCD35BV2" ]; then
+    # Support for Waveshare 3.5" "B" rev. 2.0
+    sed -i "s/waveshare35b/waveshare35b-v2/g" /boot/config.txt
 fi
 
 # Driver installation changes "console=serial0,115200" to "console=ttyAMA0,115200"
