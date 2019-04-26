@@ -47,7 +47,11 @@ LIB_ROBOINT_FILE=0.5.3.zip
 LIB_ROBOINT_IDIR=libroboint-0.5.3
 
 FTDDIRECT="ftduino_direct-1.0.8"
-REMOTELY_VERSION="0.0.2"
+
+# TX-Pi config
+TXPICONFIG_VERSION="0.0.1"
+TXPICONFIG_URL="https://github.com/heuer/txpiconfig/archive/${TXPICONFIG_VERSION}.zip"
+TXPICONFIG_DIR="/home/ftc/apps/e7b22a70-7366-4090-b251-5fead780c5a0"
 
 # default lcd is 3.2 inch
 LCD=LCD32
@@ -268,12 +272,12 @@ ftc     ALL = NOPASSWD: /usr/bin/ft_bt_remote_start.sh, /usr/bin/ft_bt_remote_se
 EOF
 chmod 0440 /etc/sudoers.d/ft_bt_remote_server
 
-cat <<EOF > /etc/sudoers.d/sshvnc
+cat <<EOF > /etc/sudoers.d/txpiconfig
 ## Permissions for ftc access to programs required
-## for SSH and VNC server enabling / disabling / start / shutdown
-ftc     ALL = NOPASSWD: /bin/systemctl stop x11vnc, /bin/systemctl disable x11vnc, /bin/systemctl start x11vnc, /bin/systemctl enable x11vnc, /bin/systemctl start ssh, /bin/systemctl stop ssh, /bin/systemctl enable ssh, /bin/systemctl disable ssh
+## for the TX-Pi config app
+ftc     ALL = NOPASSWD: ${TXPICONFIG_DIR}/scrips/hostname, ${TXPICONFIG_DIR}/scrips/ssh, ${TXPICONFIG_DIR}/scrips/x11vnc
 EOF
-chmod 0440 /etc/sudoers.d/sshvnc
+chmod 0440 /etc/sudoers.d/txpiconfig
 
 
 # X server/launcher start
@@ -547,17 +551,28 @@ unzip -o tscal.zip
 rm tscal.zip
 
 
-# Add SSH / VNC app
-cd /root
-wget https://github.com/heuer/ftremotely/archive/$REMOTELY_VERSION.zip -O remotely.zip
-unzip -o remotely.zip
-mv ./ftremotely-* ./remotely  # Reliable diretory name
-chown ftc:ftc ./remotely/remotely.py
-chmod 744 ./remotely/remotely.py
+#
+# - Add TX-Pi config
+#
+# Remove old app to configure SSH and VNC servers.
+# Became obsolete due to new TX-Pi config
 rm -rf /home/ftc/apps/430d692e-d285-4f05-82fd-a7b3ce9019e5
+rm -f /etc/sudoers.d/sshvnc
+
+# Remove any installed TX-Pi config
+rm -rf ${TXPICONFIG_DIR}
+
+cd /root
+wget ${TXPICONFIG_URL} -O txpiconfig.zip
+unzip -o txpiconfig.zip
+mv ./txpiconfig-* ./txpiconfig  # Reliable diretory name
+chown ftc:ftc ./txpiconfig/config.py
+chmod 744 ./txpiconfig/config.py
 mkdir -p /home/ftc/apps
-mv ./remotely /home/ftc/apps/430d692e-d285-4f05-82fd-a7b3ce9019e5
-rm -f ./remotely.zip
+mv ./txpiconfig ${TXPICONFIG_DIR}
+chown root:root "${TXPICONFIG_DIR}/scripts/*"
+chmod 744 "${TXPICONFIG_DIR}/scripts/*"
+rm -f ./txpiconfig.zip
 
 
 # add robolt support
