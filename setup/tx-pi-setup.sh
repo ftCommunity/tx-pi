@@ -50,7 +50,7 @@ FTDDIRECT="ftduino_direct-1.0.8"
 
 # TX-Pi config
 TXPICONFIG_VERSION="0.0.3"
-TXPICONFIG_URL="https://github.com/heuer/txpiconfig/archive/${TXPICONFIG_VERSION}.zip"
+TXPICONFIG_URL="https://github.com/ftCommunity/txpiconfig/archive/${TXPICONFIG_VERSION}.zip"
 TXPICONFIG_DIR="/home/ftc/apps/e7b22a70-7366-4090-b251-5fead780c5a0"
 
 # default lcd is 3.2 inch
