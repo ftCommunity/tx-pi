@@ -34,7 +34,7 @@ mount /dev/mapper/${loop_names[0]} "${mount_dir}" -o loop,rw
 echo "Removing SSH and WLAN config (if any)"
 rm -f -v ${mount_dir}/ssh
 rm -f -v ${mount_dir}/wpa_supplicant.conf
-# Remove OSX spefiic files. They do no harm, though
+# Remove OSX specific files. They do no harm, though
 rm -rf -v ${mount_dir}/._.Trashes ${mount_dir}/.Trashes/
 umount "${mount_dir}"
 
