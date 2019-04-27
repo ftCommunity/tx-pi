@@ -155,6 +155,11 @@ and if you have the IPS (B) type display:
 sudo bash ./tx-pi-setup.sh LCD35B
 ```
 
+If you have the IPS (B) *revision 2.0* type display:
+```
+sudo bash ./tx-pi-setup.sh LCD35BV2
+```
+
 The 3.5" display has a resolution of 320x480 pixel while the 3.2" display
 and the display of the fischertechnik TXT only provide 240x320 pixels. Thus
 some apps written for the TXT or the regular TX-Pi setup may look a little

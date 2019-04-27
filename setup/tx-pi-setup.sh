@@ -65,7 +65,7 @@ if [ "$#" -gt 0 ]; then
     elif [ "$1" == "LCD35B" ]; then
         echo "Setup for Waveshare 3.5 inch (B) IPS screen"
     elif [ "$1" == "LCD35BV2" ]; then
-        echo "Setup for Waveshare 3.5 inch (B) version 2 IPS screen (experimental)"
+        echo "Setup for Waveshare 3.5 inch (B) version 2 IPS screen"
     else
         echo "Unknown parameter \"$1\""
         echo "Allowed parameters:"
@@ -133,7 +133,7 @@ if [ ${LCD} == "LCD35BV2" ]; then
     # than blessing (2019-04)
     cp ./LCD-show/LCD35B-show ./LCD-show/$LCD-show
     wget https://github.com/waveshare/LCD-show/raw/master/waveshare35b-v2-overlay.dtb -P ./LCD-show/
-    sed -i "s/waveshare35b-overlay/waveshare35b-v2-overlay/g" ./LCD-show/$LCD-show
+    sed -i "s/waveshare35b/waveshare35b-v2/g" ./LCD-show/$LCD-show
 fi
 # supress automatic reboot after installation
 sed -i "s/sudo reboot/#sudo reboot/g" LCD-show/$LCD-show
