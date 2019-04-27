@@ -99,7 +99,7 @@ if [ -f "$boot_wifi" ]; then
 fi
 
 # Check if /boot/ssh is available.
-# The file will be removed by the ssh.switch service we'll restore it in rc.local
+# The file will be removed by the ssh.switch service. We'll restore it in rc.local
 # so it becomes available after the reboot to give the SSH server a 2nd chance
 boot_ssh=$mount_dir/ssh
 if [ -f "$boot_ssh" ]; then
