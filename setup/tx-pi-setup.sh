@@ -565,12 +565,14 @@ rm -rf ${TXPICONFIG_DIR}
 cd /root
 wget ${TXPICONFIG_URL} -O txpiconfig.zip
 unzip -o txpiconfig.zip
+rm -f ./txpiconfig.zip
 mv ./txpiconfig-* ./txpiconfig  # Reliable diretory name
 mkdir -p /home/ftc/apps
 mv ./txpiconfig ${TXPICONFIG_DIR}
-chown root:root "${TXPICONFIG_DIR}/scripts/*"
-chmod 744 "${TXPICONFIG_DIR}/scripts/*"
-rm -f ./txpiconfig.zip
+chown ftc:ftc ${TXPICONFIG_DIR}/*
+chmod 744 ${TXPICONFIG_DIR}/config.py
+chown root:root ${TXPICONFIG_DIR}/scripts/*
+chmod 744 ${TXPICONFIG_DIR}/scripts/*
 
 
 # add robolt support
