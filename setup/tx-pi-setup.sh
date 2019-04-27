@@ -30,9 +30,9 @@ if [ "${DEBIAN_VERSION:0:1}" = "9" ]; then
 fi
 
 if [ "$IS_STRETCH" = true ]; then
-    echo "Setting up TX-PI on Stretch lite (EXPERIMENTAL!)"
+    echo "Setting up TX-Pi on Stretch lite (EXPERIMENTAL!)"
 else
-    echo "Setting up TX-PI on Jessie lite"
+    echo "Setting up TX-Pi on Jessie lite"
 fi
 
 GITBASE="https://raw.githubusercontent.com/ftCommunity/ftcommunity-TXT/master/"
@@ -191,7 +191,7 @@ EOF
 
 locale-gen
 
-#TODO: May fail if /etc/ssh/ssh_config contains "SendEnv LANG LC_*" (default) and the TX-PI setup is run headless via SSH
+#TODO: May fail if /etc/ssh/ssh_config contains "SendEnv LANG LC_*" (default) and the TX-Pi setup is run headless via SSH
 update-locale --no-checks LANG="de_DE.UTF-8"
 
 # install bluetooth tools required for e.g. bnep
@@ -708,11 +708,11 @@ rm -rf www
 svn export $SVNROOT"/var/www"
 touch /var/www/tx-pi
 
-# convert most "fischertechnik TXT" texts to "ftcommunity TX-PI"
+# convert most "fischertechnik TXT" texts to "ftcommunity TX-Pi"
 cd /var/www
 for i in /var/www/*.html /var/www/*.py; do 
-    sed -i 's.<div class="outline"><font color="red">fischer</font><font color="#046ab4">technik</font>\&nbsp;<font color="#fcce04">TXT</font></div>.<div class="outline"><font color="red">ft</font><font color="#046ab4">community</font>\&nbsp;<font color="#fcce04">TX-PI</font></div>.' $i
-    sed -i 's.<title>fischertechnik TXT community firmware</title>.<title>ftcommunity TX-PI</title>.' $i
+    sed -i 's.<div class="outline"><font color="red">fischer</font><font color="#046ab4">technik</font>\&nbsp;<font color="#fcce04">TXT</font></div>.<div class="outline"><font color="red">ft</font><font color="#046ab4">community</font>\&nbsp;<font color="#fcce04">TX-Pi</font></div>.' $i
+    sed -i 's.<title>fischertechnik TXT community firmware</title>.<title>ftcommunity TX-Pi</title>.' $i
 done
 
 # add novnc link to index page
