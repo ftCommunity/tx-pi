@@ -49,7 +49,7 @@ LIB_ROBOINT_IDIR=libroboint-0.5.3
 FTDDIRECT="ftduino_direct-1.0.8"
 
 # TX-Pi config
-TXPICONFIG_VERSION="0.0.4"
+TXPICONFIG_VERSION="0.0.5"
 TXPICONFIG_URL="https://github.com/ftCommunity/txpiconfig/archive/${TXPICONFIG_VERSION}.zip"
 TXPICONFIG_DIR="/home/ftc/apps/e7b22a70-7366-4090-b251-5fead780c5a0"
 
@@ -275,7 +275,7 @@ chmod 0440 /etc/sudoers.d/ft_bt_remote_server
 cat <<EOF > /etc/sudoers.d/txpiconfig
 ## Permissions for ftc access to programs required
 ## for the TX-Pi config app
-ftc     ALL = NOPASSWD: ${TXPICONFIG_DIR}/scripts/hostname, ${TXPICONFIG_DIR}/scripts/ssh, ${TXPICONFIG_DIR}/scripts/x11vnc
+ftc     ALL = NOPASSWD: ${TXPICONFIG_DIR}/scripts/hostname, ${TXPICONFIG_DIR}/scripts/ssh, ${TXPICONFIG_DIR}/scripts/x11vnc, ${TXPICONFIG_DIR}/scripts/display
 EOF
 chmod 0440 /etc/sudoers.d/txpiconfig
 
