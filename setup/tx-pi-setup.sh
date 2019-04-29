@@ -49,8 +49,7 @@ LIB_ROBOINT_IDIR=libroboint-0.5.3
 FTDDIRECT="ftduino_direct-1.0.8"
 
 # TX-Pi config
-TXPICONFIG_VERSION="0.0.5"
-TXPICONFIG_URL="https://github.com/ftCommunity/txpiconfig/archive/${TXPICONFIG_VERSION}.zip"
+TXPICONFIG_URL="https://github.com/ftCommunity/txpiconfig/archive/master.zip"
 TXPICONFIG_DIR="/home/ftc/apps/e7b22a70-7366-4090-b251-5fead780c5a0"
 
 # default lcd is 3.2 inch
@@ -65,13 +64,13 @@ if [ "$#" -gt 0 ]; then
     elif [ "$1" == "LCD35B" ]; then
         echo "Setup for Waveshare 3.5 inch (B) IPS screen"
     elif [ "$1" == "LCD35BV2" ]; then
-        echo "Setup for Waveshare 3.5 inch (B) version 2 IPS screen"
+        echo "Setup for Waveshare 3.5 inch (B) IPS rev. 2 screen"
     else
         echo "Unknown parameter \"$1\""
         echo "Allowed parameters:"
         echo "LCD35    - create 3.5\" setup (instead of 3.2\")"
         echo "LCD35B   - create 3.5\" IPS setup"
-        echo "LCD35BV2 - create 3.5\" IPS version 2 setup"
+        echo "LCD35BV2 - create 3.5\" IPS rev. 2 setup"
         exit -1
     fi
 fi
