@@ -163,6 +163,9 @@ if [ "$IS_STRETCH" = true ]; then
     cat <<EOF > /boot/cmdline.txt
 ${cmd_line}
 EOF
+   # Screen driver installation enables I2C without actually loading the
+   # necessary modules. Revert it.
+   sed -i "s/^dtparam=i2c_arm=on/#dtparam=i2c_arm=on/g" /boot/config.txt
 fi
 
 
