@@ -274,7 +274,7 @@ chmod 0440 /etc/sudoers.d/ft_bt_remote_server
 cat <<EOF > /etc/sudoers.d/txpiconfig
 ## Permissions for ftc access to programs required
 ## for the TX-Pi config app
-ftc     ALL = NOPASSWD: ${TXPICONFIG_DIR}/scripts/hostname, ${TXPICONFIG_DIR}/scripts/ssh, ${TXPICONFIG_DIR}/scripts/x11vnc, ${TXPICONFIG_DIR}/scripts/display
+ftc     ALL = NOPASSWD: ${TXPICONFIG_DIR}/scripts/hostname, ${TXPICONFIG_DIR}/scripts/ssh, ${TXPICONFIG_DIR}/scripts/x11vnc, ${TXPICONFIG_DIR}/scripts/display, ${TXPICONFIG_DIR}/scripts/i2cbus
 EOF
 chmod 0440 /etc/sudoers.d/txpiconfig
 

@@ -3,6 +3,8 @@
 
 ## 2019-mm-dd
 * Changed TX-Pi logo / splash screen
+* Added TX-Pi config application which can be used to configure the
+  hostname, display etc. (fixes issues #31, #32, and #33) 
 * Replaced "SSH / VNC" app with "TX-Pi config" app
 * Use "TX-Pi" instead of "TX-PI" in web UI
 * Added support for Waveshare 3.5" B version 2 displays (fixes issue #37). 
