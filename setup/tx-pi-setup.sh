@@ -50,7 +50,7 @@ FTDDIRECT="ftduino_direct-1.0.8"
 
 # TX-Pi config
 TXPICONFIG_URL="https://github.com/ftCommunity/txpiconfig/archive/master.zip"
-TXPICONFIG_DIR="/home/ftc/apps/e7b22a70-7366-4090-b251-5fead780c5a0"
+TXPICONFIG_DIR="/opt/ftc/apps/system/txpiconfig"
 
 # default lcd is 3.2 inch
 LCD=LCD32
@@ -553,6 +553,7 @@ rm tscal.zip
 # Remove old app to configure SSH and VNC servers.
 # Became obsolete due to new TX-Pi config
 rm -rf /home/ftc/apps/430d692e-d285-4f05-82fd-a7b3ce9019e5
+rm -rf /home/ftc/apps/e7b22a70-7366-4090-b251-5fead780c5a0  # Previous location of TX-Pi conig
 rm -f /etc/sudoers.d/sshvnc
 
 # Remove any installed TX-Pi config
@@ -563,10 +564,7 @@ wget ${TXPICONFIG_URL} -O txpiconfig.zip
 unzip -o txpiconfig.zip
 rm -f ./txpiconfig.zip
 mv ./txpiconfig-* ./txpiconfig  # Reliable diretory name
-mkdir -p /home/ftc/apps
 mv ./txpiconfig ${TXPICONFIG_DIR}
-chown ftc:ftc ${TXPICONFIG_DIR}/*
-chmod 744 ${TXPICONFIG_DIR}/config.py
 chown root:root ${TXPICONFIG_DIR}/scripts/*
 chmod 744 ${TXPICONFIG_DIR}/scripts/*
 
