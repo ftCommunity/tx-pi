@@ -79,6 +79,7 @@ fi
 
 echo "Update Debian"
 apt-get update
+apt --fix-broken -y install
 apt-get -y upgrade
 
 # X11
@@ -164,13 +165,6 @@ ${cmd_line}
 EOF
 fi
 
-# TODO:
-# in /boot/config.txt for at least LCD35 and LCD35B set spi speed to 40Mhz like so:
-# dtoverlay=waveshare35a:rotate=180 ->
-# dtoverlay=waveshare35a:rotate=180,speed=40000000
-
-# TODO1:
-# adjust screen rotation
 
 # usbmount config
 cd /etc/usbmount
