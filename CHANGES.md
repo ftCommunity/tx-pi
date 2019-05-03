@@ -7,7 +7,8 @@
   hostname, display etc. (fixes issues #31, #32, and #33) 
 * Replaced "SSH / VNC" app with "TX-Pi config" app
 * Use "TX-Pi" instead of "TX-PI" in web UI
-* Added support for Waveshare 3.5" B version 2 displays (fixes issue #37). 
+* Added support for Waveshare 3.5" B revision 2 displays (fixes issue #37).
+  Thanks to Peter Sterk, who generously donated a display!
 * The Waveshare setup removes ``fsck.repair=yes`` from ``/boot/cmdline.txt`` 
   (Stretch). Reactivate it.
 * Updated TouchUI to detect TX-Pi to avoid an error due to the missing
