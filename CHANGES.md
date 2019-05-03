@@ -2,6 +2,7 @@
 
 
 ## 2019-mm-dd
+* Updated TS-Cal (fixes issue #39)
 * Changed TX-Pi logo / splash screen
 * Added TX-Pi config application which can be used to configure the
   hostname, display etc. (fixes issues #31, #32, and #33) 

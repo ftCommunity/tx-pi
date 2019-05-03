@@ -48,6 +48,10 @@ LIB_ROBOINT_IDIR=libroboint-0.5.3
 
 FTDDIRECT="ftduino_direct-1.0.8"
 
+# TX-Pi touchscreen calibration
+TXPITSCAL_URL="https://github.com/ftCommunity/txpitscal/archive/master.zip"
+TXPITSCAL_DIR="/opt/ftc/apps/system/tscal"
+
 # TX-Pi config
 TXPICONFIG_URL="https://github.com/ftCommunity/txpiconfig/archive/master.zip"
 TXPICONFIG_DIR="/opt/ftc/apps/system/txpiconfig"
@@ -536,15 +540,21 @@ svn export $TSVNBASE"/touchui/apps/system/power"
 sed -i "s/category: System/category: /g" /opt/ftc/apps/system/power/manifest
 
 
-# add screen calibration tool
+#
+# - Add TX-Pi TS-Cal
+#
 apt-get -y install --no-install-recommends xinput-calibrator
 chmod og+rw /usr/share/X11/xorg.conf.d/99-calibration.conf
-cd /opt/ftc/apps/system
-mkdir tscal
-cd tscal
-wget -N $LOCALGIT/tscal.zip
-unzip -o tscal.zip
-rm tscal.zip
+
+# Remove any installed TS-Cal
+rm -rf ${TXPITSCAL_DIR}
+
+cd /root
+wget ${TXPITSCAL_URL} -O txpitscal.zip
+unzip -o txpitscal.zip
+rm -f ./txpitscal.zip
+mv ./txpitscal-* ./tscal  # Reliable diretory name
+mv ./tscal ${TXPITSCAL_DIR}
 
 
 #
