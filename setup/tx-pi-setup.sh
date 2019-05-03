@@ -30,7 +30,7 @@ if [ "${DEBIAN_VERSION:0:1}" = "9" ]; then
 fi
 
 if [ "$IS_STRETCH" = true ]; then
-    echo "Setting up TX-Pi on Stretch lite (EXPERIMENTAL!)"
+    echo "Setting up TX-Pi on Stretch lite"
 else
     echo "Setting up TX-Pi on Jessie lite"
 fi
