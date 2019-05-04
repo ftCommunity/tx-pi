@@ -1,7 +1,7 @@
 # Changes
 
 
-## 2019-mm-dd
+## 2019-05-04
 * Recommending Raspbian Stretch as default setup
 * Updated TS-Cal (fixes issue #39)
 * Changed TX-Pi logo / splash screen
