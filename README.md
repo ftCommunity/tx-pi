@@ -85,7 +85,7 @@ The entire installation consists of three main steps:
 ## Step 1: Install Raspbian onto SD card
 
 Get an SD card image of e.g.  [Raspbian Stretch
-Lite](https://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2018-11-15/2018-11-13-raspbian-stretch-lite.zip) (recommended)
+Lite](https://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2019-04-09/2019-04-08-raspbian-stretch-lite.zip) (recommended)
 or [Raspbian Jessie
 Lite](https://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2017-07-05/2017-07-05-raspbian-jessie-lite.zip) (still supported but not actively maintained)
 and install it onto SD card. Other versions may work as well but the
