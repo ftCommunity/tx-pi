@@ -64,6 +64,10 @@ Case for the Raspberry Pi / TX-Pi itself.
 
 ![Top case](../images/stl/pi_top.png)
 
+### top_extended.stl
+
+![Top case with extended slot for 40 pin cable](../images/stl/top_extended.png)
+
 ### pi_bottom.stl
 
 ![Bottom case](../images/stl/pi_bottom.png)
