@@ -64,6 +64,11 @@ Case for the Raspberry Pi / TX-Pi itself.
 
 ![Top case](../images/stl/pi_top.png)
 
+
+### pi_top_with_ribbon_slot.png
+![Top case with slot for the Raspberry PI Camera and the Raspberry PI standard display slot ](../images/stl/pi_top_with_ribbon_slot.png)
+
+
 ### top_extended.stl
 
 ![Top case with extended slot for 40 pin cable](../images/stl/top_extended.png)
