@@ -39,7 +39,7 @@ use in conjunction with version of the raspberry pi top case with camera and dis
 
 The taller version is required for some 3.2" V3 displays.
 
-| Regular bottom | Regular bottom | Taller bottom |
+| Regular bottom | Bottom with cable slot | Taller bottom |
 |:---:|:---:|:---:|
 | ![Bottom](../images/stl/display32_v4_bottom.png) | ![Bottom](../images/stl/display_v4_bottom_with_ribbon_slot.png) | ![Bottom for 3.2" V3 display](../images/stl/display32_v3_bottom.png) |
 | [View](display32_v4_bottom.stl) | [View](display_v4_bottom_with_ribbon_slot.stl) | [View](display32_v3_bottom.stl) |
