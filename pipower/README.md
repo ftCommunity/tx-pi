@@ -25,3 +25,9 @@ and use a screwdriver to adjust the output voltage to 5V. Once done
 close the case using two M3 (3mm) flat head screws with 6-8mm length.
 
 ![PiPower assembled](https://raw.githubusercontent.com/harbaum/tx-pi/master/images/pipower_assembled.jpg)
+
+| Top | Bottom |
+|:---:|:---:|
+| ![Top](../images/stl/pipower_top.png) | ![Bottom](../images/stl/pipower_bottom.png) |
+| [View](top.stl) | [View](bottom.stl) |
+| [Download](top.stl?raw=true) | [Download](bottom.stl?raw=true) |
