@@ -62,7 +62,7 @@ are different versions for the 3,5" waveshare version A and B displays and nonam
 
 | 3.5" top noname | 3.5" top A | 3.5" top A  |
 |:---:|:---:|:---:|
-| ![Top 3.5"](../images/stl/display35_top.png) | ![Top 3.5" A](../images/stl/display35a_top.png) | ![Top 3.5" B](../images/stl/display35b_top.png) |
+| ![Top 3.5"](../images/stl/display35_top.png) | ![Top 3.5" A](../images/stl/display_ws35a_top.png) | ![Top 3.5" B](../images/stl/display_ws35b_top.png) |
 | [View](display35_top.stl) | [View](display_ws35a_top.stl) | [View](display_ws35b_top.stl) |
 | [Download](display35_top.stl?raw=true) | [Download](display_ws35a_top.stl?raw=true) | [Download](display_ws35b_top.stl?raw=true) |
 
