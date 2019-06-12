@@ -1,16 +1,8 @@
-# More
-
-This repository contains only some of the TX-Pi related designs.
-More can be found under:
-
-  - [TX-Pi I2C breakout and power supply](https://www.thingiverse.com/thing:3478004)
-  - [TX-Pi 4" display](https://www.thingiverse.com/thing:3605290)
+# Raspberry Pi case
 
 ![Standard case](../images/tx-pi-cases.jpg)
 
-# Raspberry Pi case
-
-Case for the Raspberry Pi / TX-Pi itself.
+This is the case for the Raspberry Pi / TX-Pi itself.
 
 | PI bottom | PI top |
 |:---:|:---:|
@@ -65,4 +57,12 @@ are different versions for the 3.5" waveshare version A and B displays and nonam
 | ![Top 3.5"](../images/stl/display35_top.png) | ![Top 3.5" A](../images/stl/display_ws35a_top.png) | ![Top 3.5" B](../images/stl/display_ws35b_top.png) |
 | [View](display35_top.stl) | [View](display_ws35a_top.stl) | [View](display_ws35b_top.stl) |
 | [Download](display35_top.stl?raw=true) | [Download](display_ws35a_top.stl?raw=true) | [Download](display_ws35b_top.stl?raw=true) |
+
+# More
+
+This repository contains only some of the TX-Pi related designs.
+More can be found under:
+
+  - [TX-Pi I2C breakout and power supply](https://www.thingiverse.com/thing:3478004)
+  - [TX-Pi 4" display](https://www.thingiverse.com/thing:3605290)
 
