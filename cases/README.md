@@ -18,9 +18,9 @@ Case for the Raspberry Pi / TX-Pi itself.
 | [View](pi_bottom.stl) | [View](pi_top.stl) |
 | [Download](pi_bottom.stl?raw=true) | [Download](pi_top.stl?raw=true) |
 
-Top case variants with slot for the Raspberry PI Camera and the Raspberry PI standard display slot and extended 40pin slot:
+Top case variants with slot for the Raspberry PI Camera and the Raspberry PI standard display slot. And a variant with extended 40 pin GPIO slot:
 
-| Camera and display | Extended GPIO |
+| Camera and display slot | Extended GPIO slot |
 |:---:|:---:|
 | ![Slot for camera and display](../images/stl/pi_top_with_ribbon_slot.png) | ![Extended GPIO slot](../images/stl/top_extended.png) |
 | [View](pi_top_with_ribbon_slot.stl) | [View](top_extended.stl) |
