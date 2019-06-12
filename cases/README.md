@@ -28,7 +28,7 @@ Top case variants with slot for the Raspberry PI Camera and the Raspberry PI sta
 
 # Display cases
 
-The display cases are for most 3,2" and 3,5" displays by Waveshare and compatible ones. The 
+The display cases are for most 3.2" and 3.5" displays by Waveshare and compatible ones. The 
 
 ## Bottom
 
@@ -45,7 +45,7 @@ The taller version is required for some 3.2" V3 displays.
 | [View](display32_v4_bottom.stl) | [View](display_v4_bottom_with_ribbon_slot.stl) | [View](display32_v3_bottom.stl) |
 | [Download](display32_v4_bottom.stl?raw=true) | [Download](display_v4_bottom.stl?raw=true) | [Download](display32_v3_bottom.stl?raw=true) |
 
-## 3,2" top
+## 3.2" top
 
 Top case for 3.2" display with three buttons:
 
@@ -58,7 +58,7 @@ Top case for 3.2" display with three buttons:
 ## 3.5" top
 
 The 3.5" displays have the visible area of the screen at different position. There
-are different versions for the 3,5" waveshare version A and B displays and noname displays.
+are different versions for the 3.5" waveshare version A and B displays and noname displays.
 
 | 3.5" top noname | 3.5" top A | 3.5" top A  |
 |:---:|:---:|:---:|
