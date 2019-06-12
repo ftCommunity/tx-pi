@@ -52,7 +52,7 @@ Top case for 3.2" display with three buttons:
 The 3.5" displays have the visible area of the screen at different position. There
 are different versions for the 3.5" waveshare version A and B displays and noname displays.
 
-| 3.5" top noname | 3.5" top A | 3.5" top A  |
+| 3.5" top noname | 3.5" top A | 3.5" top B |
 |:---:|:---:|:---:|
 | ![Top 3.5"](../images/stl/display35_top.png) | ![Top 3.5" A](../images/stl/display_ws35a_top.png) | ![Top 3.5" B](../images/stl/display_ws35b_top.png) |
 | [View](display35_top.stl) | [View](display_ws35a_top.stl) | [View](display_ws35b_top.stl) |
