@@ -13,7 +13,7 @@ More can be found under:
 Case for the Raspberry Pi / TX-Pi itself.
 
 | PI bottom | PI top |
-
+|:---:|:---:|
 | ![Bottom case](../images/stl/pi_bottom.png) | ![Top case](../images/stl/pi_top.png) |
 |:---:|:---:|
 | [View](pi_bottom.stl) | [View](pi_top.stl) |
