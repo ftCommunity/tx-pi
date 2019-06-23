@@ -14,6 +14,6 @@
 
 | TX-Pi Clip |
 |:---:|
-| ![Clip](../images/stl/TX-Pi-clip_15x30x4.png) |
+| ![Clip](../../images/stl/TX-Pi-clip_15x30x4.png) |
 | [View](TX-Pi-clip_15x30x4.stl) |
 | [Download](TX-Pi-clip_15x30x4.stl?raw=true)
