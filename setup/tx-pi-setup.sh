@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # preparaion
-# copy 2017-03-02-raspbian-jessie-lite.img to sd card
+# copy raspbian-lite.img to sd card
 # set interfaces for eth0
 # touch /boot/ssh
 # -> boot pi
@@ -20,19 +20,32 @@
 
 DEBUG=false
 ENABLE_SPLASH=true
-ENABLE_NETREQ=true
+ENABLE_NETREQ=false
 
-#-- Handle Jessie (8.x) vs. Stretch (9.x)
+#-- Handle Stretch (9.x) vs. Buster (10.x)
 DEBIAN_VERSION=$( cat /etc/debian_version )
 IS_STRETCH=false
+IS_BUSTER=true
+PYTHON_VERSION='python3.7'  # Required for Robointerface, lower case major version
+
 if [ "${DEBIAN_VERSION:0:1}" = "9" ]; then
     IS_STRETCH=true
+    ENABLE_NETREQ=true
+    PYTHON_VERSION='python3.5'
+elif [ "${DEBIAN_VERSION:0:2}" = "10" ]; then
+    IS_BUSTER=true
+elif [ "${DEBIAN_VERSION:0:1}" = "8" ]; then
+    echo "Debian Jessie is not supported anymore"
+    exit 2
+else
+    echo "Unknown Debian version: '${DEBIAN_VERSION}'"
+    exit 2
 fi
 
 if [ "$IS_STRETCH" = true ]; then
     echo "Setting up TX-Pi on Stretch lite"
-else
-    echo "Setting up TX-Pi on Jessie lite"
+elif [ "$IS_BUSTER" = true ]; then
+    echo "Setting up TX-Pi on Buster lite"
 fi
 
 GITBASE="https://raw.githubusercontent.com/ftCommunity/ftcommunity-TXT/master/"
@@ -101,26 +114,25 @@ apt-get -y install avrdude
 apt-get install -y python3-bs4
 
 # some additional python stuff
-pip3 install semantic_version
-pip3 install websockets
-pip3 install --upgrade setuptools
-pip3 install --upgrade wheel  # Needed for zbar
+if [ "$IS_STRETCH" = true ]; then
+    pip3 install semantic_version
+    pip3 install websockets
+    pip3 install --upgrade setuptools
+    pip3 install --upgrade wheel  # Needed for zbar
+else
+    apt-get -y install python3-semantic_version
+    apt-get -y install python3-websockets
+fi
 
 
 # DHCP client
-if [ "$IS_STRETCH" = true ]; then
-    # Remove dhcpcd because it fails to start (isc-dhcp-client is available)
-    apt-get -y purge dhcpcd5
-    # Do not try too long to reach the DHCPD server (blocks booting)
-    sed -i "s/#timeout 60;/timeout 10;/g" /etc/dhcp/dhclient.conf
-    # By default, the client retries to contact the DHCP server after five min.
-    # Reduce this time to 20 sec.
-    sed -i "s/#retry 60;/retry 20;/g" /etc/dhcp/dhclient.conf
-else
-    # force "don't wait for network"
-    rm -f /etc/systemd/system/dhcpcd.service.d/wait.conf
-fi
-
+# Remove dhcpcd because it fails to start (isc-dhcp-client is available)
+apt-get -y purge dhcpcd5
+# Do not try too long to reach the DHCPD server (blocks booting)
+sed -i "s/#timeout 60;/timeout 10;/g" /etc/dhcp/dhclient.conf
+# By default, the client retries to contact the DHCP server after five min.
+# Reduce this time to 20 sec.
+sed -i "s/#retry 60;/retry 20;/g" /etc/dhcp/dhclient.conf
 
 # ---------------------- display setup ----------------------
 echo "============================================================"
@@ -157,14 +169,11 @@ fi
 
 # Driver installation changes "console=serial0,115200" to "console=ttyAMA0,115200"
 # Revert it here since /dev/ttyAMA0 is Bluetooth (Pi3, Pi3B+ ...)
-if [ "$IS_STRETCH" = true ]; then
-    sed -i "s/=ttyAMA0,/=serial0,/g" /boot/cmdline.txt
-    cmd_line=$( cat /boot/cmdline.txt )
-    # Driver installation removes "fsck.repair=yes"; revert it
-    if [[ $cmd_line != *"fsck.repair=yes"* ]]; then
-        cmd_line="$cmd_line fsck.repair=yes"
-    fi
-    cat <<EOF > /boot/cmdline.txt
+sed -i "s/=ttyAMA0,/=serial0,/g" /boot/cmdline.txt
+cmd_line=$( cat /boot/cmdline.txt )
+# Driver installation removes "fsck.repair=yes"; revert it
+if [[ $cmd_line != *"fsck.repair=yes"* ]]; then
+    cmd_line="$cmd_line fsck.repair=yes"
 ${cmd_line}
 EOF
    # Screen driver installation enables I2C without actually loading the
@@ -204,20 +213,14 @@ rm -f hcitool-xlescan.tgz
 
 # Install OpenCV
 if [ "$IS_STRETCH" = true ]; then
-   apt-get -y install --no-install-recommends libatlas3-base libwebp6 libtiff5 libjasper1 libilmbase12 \
-                                              libopenexr22 libilmbase12 libgstreamer1.0-0 \
-                                              libavcodec57 libavformat57 libavutil55 libswscale4 \
-                                              libgtk-3-0 libpangocairo-1.0-0 libpango-1.0-0 libatk1.0-0 \
-                                              libcairo-gobject2 libcairo2 libgdk-pixbuf2.0-0
-   pip3 install opencv-python-headless
+    apt-get -y install --no-install-recommends libatlas3-base libwebp6 libtiff5 libjasper1 libilmbase12 \
+                                               libopenexr22 libilmbase12 libgstreamer1.0-0 \
+                                               libavcodec57 libavformat57 libavutil55 libswscale4 \
+                                               libgtk-3-0 libpangocairo-1.0-0 libpango-1.0-0 libatk1.0-0 \
+                                               libcairo-gobject2 libcairo2 libgdk-pixbuf2.0-0
+    pip3 install opencv-python-headless
 else
-    # fetch precompiled opencv and its dependencies
-    # we might build our own package to get rid of these dependencies,
-    # especially gtk
-    apt-get -y install libjasper1 libgtk2.0-0 libavcodec56 libavformat56 libswscale3
-    wget -N https://github.com/jabelone/OpenCV-for-Pi/raw/master/latest-OpenCV.deb
-    dpkg -i latest-OpenCV.deb
-    rm -f latest-OpenCV.deb
+    apt-get -y  --no-install-recommends python3-opencv
 fi
 
 apt-get -y install --no-install-recommends libzbar0 python3-pil 
@@ -298,10 +301,7 @@ systemctl enable launcher
 
 
 # Configure X.Org to use /dev/fb1
-x_fbdev_conf="/usr/share/X11/xorg.conf.d/99-fbturbo.conf"
-if [ "$IS_STRETCH" = true ]; then
-    x_fbdev_conf="/usr/share/X11/xorg.conf.d/99-fbdev.conf"
-fi
+x_fbdev_conf="/usr/share/X11/xorg.conf.d/99-fbdev.conf"
 # Patch X.Org to use /dev/fb1
 rm -f ${x_fbdev_conf}
 cat <<EOF > ${x_fbdev_conf}
@@ -328,27 +328,19 @@ if [ "$ENABLE_SPLASH" = true ]; then
     make install
     cd ..
     rm -rf master.zip fbv-master
-    if [ "$IS_STRETCH" = true ]; then
-        enable_default_dependencies="yes"
-        cmd_line=$( cat /boot/cmdline.txt )
-        # These params are needed to show the splash screen and to omit any text output on the LCD
-        # Append them to the cmdline.txt without changing other params
-        for param in "logo.nologo" "vt.global_cursor_default=0" "plymouth.ignore-serial-consoles" "splash" "quiet"
-        do
-            if [[ $cmd_line != *"$param"* ]]; then
-                cmd_line="$cmd_line $param"
-            fi
-        done
-        cat <<EOF > /boot/cmdline.txt
+    enable_default_dependencies="yes"
+    cmd_line=$( cat /boot/cmdline.txt )
+    # These params are needed to show the splash screen and to omit any text output on the LCD
+    # Append them to the cmdline.txt without changing other params
+    for param in "logo.nologo" "vt.global_cursor_default=0" "plymouth.ignore-serial-consoles" "splash" "quiet"
+    do
+        if [[ $cmd_line != *"$param"* ]]; then
+            cmd_line="$cmd_line $param"
+        fi
+    done
+    cat <<EOF > /boot/cmdline.txt
 ${cmd_line}
 EOF
-    else
-        enable_default_dependencies="no"
-        # disable any text output on the LCD
-        cat <<EOF > /boot/cmdline.txt
-dwc_otg.lpm_enable=0 console=ttyAMA0,115200 root=/dev/mmcblk0p2 rootfstype=ext4 elevator=deadline rootwait logo.nologo quiet
-EOF
-    fi
     # create a service to start fbv at startup
     cat <<EOF > /etc/systemd/system/splash.service
 [Unit]
@@ -445,12 +437,8 @@ EOF
 chmod 666 /etc/network/interfaces
 
 # set timezone to Germany
-if [ "$IS_STRETCH" = true ]; then
-    ln -fs /usr/share/zoneinfo/Europe/Berlin /etc/localtime
-    dpkg-reconfigure -f noninteractive tzdata
-else
-    echo "Europe/Berlin" > /etc/timezone
-fi
+ln -fs /usr/share/zoneinfo/Europe/Berlin /etc/localtime
+dpkg-reconfigure -f noninteractive tzdata
 
 # set firmware version
 cd /etc
@@ -509,10 +497,7 @@ cp udev/fischertechnik.rules /etc/udev/rules.d/
 # python3 compatibility 'patch'
 cd ..
 wget -N https://github.com/PeterDHabermehl/libroboint-py3/raw/master/robointerface.py
-cp robointerface.py /usr/local/lib/python3.5/dist-packages/
-if [ "$IS_STRETCH" = false ]; then
-    cp robointerface.py /usr/local/lib/python3.4/dist-packages/
-fi
+cp robointerface.py /usr/local/lib/${PYTHON_VERSION}/dist-packages/
 # clean up
 rm -f robointerface.py
 rm -f $LIB_ROBOINT_FILE
