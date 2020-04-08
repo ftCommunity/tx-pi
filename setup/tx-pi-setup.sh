@@ -222,7 +222,7 @@ if [ "$IS_STRETCH" = true ]; then
                                                libcairo-gobject2 libcairo2 libgdk-pixbuf2.0-0
     pip3 install opencv-python-headless
 else
-    apt-get -y  --no-install-recommends python3-opencv
+    apt-get -y install --no-install-recommends python3-opencv
 fi
 
 apt-get -y install --no-install-recommends libzbar0 python3-pil 
