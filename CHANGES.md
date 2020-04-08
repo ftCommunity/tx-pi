@@ -1,7 +1,10 @@
 # Changes
 
-## 2019-mm-dd
-
+## 2020-mm-dd
+* Removed support for Debian Jessie (v8)
+* Added support for Debian Buster (v10)
+* Removed support of netreq for Buster since its purpose is uncertain,
+  see <https://github.com/ftCommunity/tx-pi/issues/23>
 
 
 ## 2019-05-04
