@@ -120,6 +120,8 @@ if [ "$IS_STRETCH" = true ]; then
     pip3 install --upgrade setuptools
     pip3 install --upgrade wheel  # Needed for zbar
 else
+    apt-get -y install python3-setuptools
+    apt-get -y install python3-wheel
     apt-get -y install python3-semantic_version
     apt-get -y install python3-websockets
 fi
