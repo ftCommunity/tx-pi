@@ -245,7 +245,6 @@ usermod -a -G dialout ftc
 usermod -a -G input ftc
 usermod -a -G gpio ftc
 usermod -a -G i2c ftc
-usermod -a -G www-data ftc
 echo "ftc:ftc" | chpasswd
 
 # special ftc permissions
@@ -748,6 +747,19 @@ chown -R ftc:ftc /var/www
 chown -R ftc:ftc /var/log/lighttpd
 chown -R ftc:ftc /var/run/lighttpd
 chown -R ftc:ftc /var/cache/lighttpd
+
+# In Buster, systemd (tmpfiles.d) resets the permissions to www-data if the
+# system reboots. This ensures that the permissions are kept alive.
+if [ "$IS_STRETCH" = false ]; then
+    cat <<EOF > /usr/lib/tmpfiles.d/lighttpd.tmpfile.conf
+d /run/lighttpd 0750 ftc ftc -
+d /var/log/lighttpd 0750 ftc ftc -
+d /var/cache/lighthttpd 0750 ftc ftc -
+d /var/cache/lighthttpd/compress 0750 ftc ftc -
+d /var/cache/lighthttpd/uploads 0750 ftc ftc -
+EOF
+fi
+
 
 mkdir /home/ftc/apps
 chown -R ftc:ftc /home/ftc/apps
