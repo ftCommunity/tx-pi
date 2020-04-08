@@ -241,6 +241,7 @@ usermod -a -G dialout ftc
 usermod -a -G input ftc
 usermod -a -G gpio ftc
 usermod -a -G i2c ftc
+usermod -a -G www-data ftc
 echo "ftc:ftc" | chpasswd
 
 # special ftc permissions
