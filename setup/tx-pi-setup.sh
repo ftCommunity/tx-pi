@@ -650,6 +650,13 @@ fi
 #make install
 #depmod -a
 
+lighttpd_mime_types="/usr/share/lighttpd/create-mime.conf.pl"
+lighttpd_config="include \"/etc/lighttpd/conf-enabled/*.conf\""
+
+if [ "$IS_STRETCH" = true ]; then
+    lighttpd_mime_types="/usr/share/lighttpd/create-mime.assign.pl"
+    lighttpd_config="include_shell \"/usr/share/lighttpd/include-conf-enabled.pl\""
+fi
 
 # adjust lighttpd config
 cat <<EOF > /etc/lighttpd/lighttpd.conf
@@ -675,8 +682,8 @@ static-file.exclude-extensions = ( ".php", ".pl", ".fcgi" )
 # default listening port for IPv6 falls back to the IPv4 port
 
 include_shell "/usr/share/lighttpd/use-ipv6.pl " + server.port
-include_shell "/usr/share/lighttpd/create-mime.assign.pl"
-include_shell "/usr/share/lighttpd/include-conf-enabled.pl"
+include_shell "${lighttpd_mime_types}"
+${lighttpd_config}
 
 server.modules += ( "mod_ssi" )
 ssi.extension = ( ".html" )
@@ -750,10 +757,6 @@ chown ftc:ftc /home/ftc/.launcher.config
 
 # remove cfw display configuration app since it does not work here...
 rm -fr /opt/ftc/apps/system/display/
-
-# 
-
-/etc/init.d/lighttpd restart
 
 echo "rebooting ..."
 
