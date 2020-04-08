@@ -176,12 +176,14 @@ cmd_line=$( cat /boot/cmdline.txt )
 # Driver installation removes "fsck.repair=yes"; revert it
 if [[ $cmd_line != *"fsck.repair=yes"* ]]; then
     cmd_line="$cmd_line fsck.repair=yes"
+fi
+cat <<EOF > /boot/cmdline.txt
 ${cmd_line}
 EOF
-   # Screen driver installation enables I2C without actually loading the
-   # necessary modules. Revert it.
-   sed -i "s/^dtparam=i2c_arm=on/#dtparam=i2c_arm=on/g" /boot/config.txt
-fi
+
+# Screen driver installation enables I2C without actually loading the
+# necessary modules. Revert it.
+sed -i "s/^dtparam=i2c_arm=on/#dtparam=i2c_arm=on/g" /boot/config.txt
 
 
 # usbmount config
