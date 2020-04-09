@@ -186,6 +186,8 @@ EOF
 sed -i "s/^dtparam=i2c_arm=on/#dtparam=i2c_arm=on/g" /boot/config.txt
 
 
+#-- Support for the TX-Pi shield
+
 # Enable I2c
 raspi-config nonint do_i2c 0 dtparam=i2c_arm=on
 sed -i "s/dtparam=i2c_arm=on/dtparam=i2c_arm=on\ndtparam=i2c_vc=on/g" /boot/config.txt
