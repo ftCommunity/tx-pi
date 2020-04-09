@@ -186,6 +186,17 @@ EOF
 sed -i "s/^dtparam=i2c_arm=on/#dtparam=i2c_arm=on/g" /boot/config.txt
 
 
+# Enable I2c
+raspi-config nonint do_i2c 0 dtparam=i2c_arm=on
+sed -i "s/dtparam=i2c_arm=on/dtparam=i2c_arm=on\ndtparam=i2c_vc=on/g" /boot/config.txt
+
+# Disable RTC
+sed -i "s/exit 0/\# ack pending RTC wakeup\n\/usr\/sbin\/i2cset -y 0 0x68 0x0f 0x00\n\nexit 0/g" /etc/rc.local
+
+# Power control via GPIO4
+echo "dtoverlay=gpio-poweroff,gpiopin=4,active_low=1" >> /boot/config.txt
+
+
 # usbmount config
 cd /etc/usbmount
 wget -N https://raw.githubusercontent.com/ftCommunity/ftcommunity-TXT/3de48278d1260c48a0a20b07a35d14572c6248d3/board/fischertechnik/TXT/rootfs/etc/usbmount/usbmount.conf
