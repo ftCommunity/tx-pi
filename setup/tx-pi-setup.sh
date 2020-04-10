@@ -764,13 +764,7 @@ chown -R ftc:ftc /var/cache/lighttpd
 # In Buster, systemd (tmpfiles.d) resets the permissions to www-data if the
 # system reboots. This ensures that the permissions are kept alive.
 if [ "$IS_STRETCH" = false ]; then
-    cat <<EOF > /usr/lib/tmpfiles.d/lighttpd.tmpfile.conf
-d /run/lighttpd 0750 ftc ftc -
-d /var/log/lighttpd 0750 ftc ftc -
-d /var/cache/lighthttpd 0750 ftc ftc -
-d /var/cache/lighthttpd/compress 0750 ftc ftc -
-d /var/cache/lighthttpd/uploads 0750 ftc ftc -
-EOF
+    sed -i "s/www-data/ftc/g" /usr/lib/tmpfiles.d/lighttpd.tmpfile.conf
 fi
 
 
