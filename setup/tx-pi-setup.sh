@@ -181,26 +181,19 @@ cat <<EOF > /boot/cmdline.txt
 ${cmd_line}
 EOF
 
-# Screen driver installation enables I2C without actually loading the
-# necessary modules. Revert it.
-sed -i "s/^dtparam=i2c_arm=on/#dtparam=i2c_arm=on/g" /boot/config.txt
-
 
 #-- Support for the TX-Pi HAT
-
 # Enable I2c
 raspi-config nonint do_i2c 0 dtparam=i2c_arm=on
 sed -i "s/dtparam=i2c_arm=on/dtparam=i2c_arm=on\ndtparam=i2c_vc=on/g" /boot/config.txt
-
 # Disable RTC
 sed -i "s/exit 0/\# ack pending RTC wakeup\n\/usr\/sbin\/i2cset -y 0 0x68 0x0f 0x00\n\nexit 0/g" /etc/rc.local
-
 # Power control via GPIO4
 echo "dtoverlay=gpio-poweroff,gpiopin=4,active_low=1" >> /boot/config.txt
 
 
 #-- Enable WLAN iff it isn't enabled yet
-if [ -z "$(wpa_cli -i wlan0 get country)" ]; then
+if [ "$(wpa_cli -i wlan0 get country)" != "OK" ]; then
     echo "Enable WLAN"
     wpa_cli -i wlan0 set country DE
     wpa_cli -i wlan0 save_config
