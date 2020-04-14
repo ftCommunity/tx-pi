@@ -784,6 +784,17 @@ chown ftc:ftc /home/ftc/.launcher.config
 # remove cfw display configuration app since it does not work here...
 rm -fr /opt/ftc/apps/system/display/
 
+
+#-- Add Till's app repository
+shop_repositories="/home/ftc/.repositories.xml"
+if [ ! -f "$shop_repositories" ]; then
+  cat <<EOF > $shop_repositories
+<repositories>
+  <repository name="Till&apos;s Apps" repo="cfw-apps" user="harbaum"/>
+</repositories>
+EOF
+fi
+
 echo "rebooting ..."
 
 sync
