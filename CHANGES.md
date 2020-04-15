@@ -5,6 +5,9 @@
 * Added support for Debian Buster (v10)
 * Removed support of netreq for Buster since its purpose is uncertain,
   see <https://github.com/ftCommunity/tx-pi/issues/23>
+* Setup enables I2C by default
+* Setup enables WLAN support by default
+* Added <https://github.com/harbaum/cfw-apps> as App-Shop URL
 
 
 ## 2019-05-04
