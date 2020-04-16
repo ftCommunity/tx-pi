@@ -1,22 +1,32 @@
 #!/bin/bash
+#===============================================================================
+# TX-Pi setup script.
+#
+# See <https://www.tx-pi.de/en/installation/> or
+# <https://www.tx-pi.de/de/installation/> (German) for detailed installation
+# instructions.
+#
+# In short:
+# * Copy a supported Raspbian lite version onto SD card
+# * Either plug-in your display and a keyboard or enable SSH and add your
+#   WLAN configuration via /boot/ssh and /boot/wpa_supplicant.conf, see
+#   <https://www.raspberrypi.org/documentation/configuration/wireless/headless.md>
+#   for details
+# * Insert the SD card into your Pi and boot it
+# * Log into your Pi and download the script via
+#   wget https://tx-pi.de/tx-pi-setup.sh
+# * Run the script
+#   sudo bash ./tx-pi-setup.sh
+#   You can also specify your touch screen device, i.e.
+#   sudo bash ./tx-pi-setup.sh LCD35
+#   to support popular Waveshare LCD 3.5" type "A" display.
+#   See <https://www.tx-pi.de/en/installation/> for details
+# * After running the script, the Pi will boot into the fischertechnik community
+#   firmware.
+#===============================================================================
 
-# preparaion
-# copy raspbian-lite.img to sd card
-# set interfaces for eth0
-# touch /boot/ssh
-# -> boot pi
-# raspi-config
-#    hostname tx-pi (not mandatory, choose the name as you like)
-#    enable ssh
-#    optional disable wait for network
-
-# TODO
-# - add screen calibration tool
-# - adjust timezone
-# - fix wlan/eth
-#   - don't wait for eth0
-#   - control regular dhcpcd
-# much much more ...
+# Schema: YY.<release-number-within-the-year>.minor(.dev)?
+TX_PI_VERSION='20.1.0.dev'
 
 DEBUG=false
 ENABLE_SPLASH=true
@@ -120,10 +130,10 @@ if [ "$IS_STRETCH" = true ]; then
     pip3 install --upgrade setuptools
     pip3 install --upgrade wheel  # Needed for zbar
 else
-    apt-get -y install python3-setuptools
-    apt-get -y install python3-wheel
-    apt-get -y install python3-semantic-version
-    apt-get -y install python3-websockets
+    apt-get -y install --no-install-recommends python3-semantic-version
+    apt-get -y install --no-install-recommends python3-websockets
+    apt-get -y install --no-install-recommends python3-setuptools
+    apt-get -y install --no-install-recommends python3-wheel
 fi
 
 
@@ -207,6 +217,10 @@ wget -N https://raw.githubusercontent.com/ftCommunity/ftcommunity-TXT/3de48278d1
 
 # create file indicating that this is a tx-pi setup
 touch /etc/tx-pi
+
+# TX-Pi version information
+echo "${TX_PI_VERSION}" > /etc/tx-pi-ver.txt
+
 
 # create locales
 cat <<EOF > /etc/locale.gen
