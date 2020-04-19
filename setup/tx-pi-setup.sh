@@ -448,7 +448,7 @@ Package: *
 Pin: release a=jessie
 Pin-Priority: 50
 EOF
-    echo "# Sid repository added by TX-Pi setup to solve VNC problems" >> /etc/apt/sources.list
+    echo "# Jessie repository added by TX-Pi setup to solve VNC problems" >> /etc/apt/sources.list
     echo "deb http://raspbian.raspberrypi.org/raspbian/ jessie main contrib non-free rpi" >> /etc/apt/sources.list
     apt-get update
     apt-get -y install -t=jessie x11vnc
