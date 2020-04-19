@@ -432,7 +432,27 @@ EOF
 
 
 # Install vnc server
-apt-get -y install x11vnc
+if [ "$IS_BUSTER" = true ]; then
+    # VNC support in Buster is broken / may deliver distorted output
+    cat <<EOF > /etc/apt/preferences.d/buster.pref
+# Added by TX-Pi setup to solve VNC problems with Buster.
+Package: *
+Pin: release a=buster
+Pin-Priority: 900
+EOF
+    cat <<EOF > /etc/apt/preferences.d/stretch.pref
+# Added by TX-Pi setup to solve VNC problems with Buster.
+Package: *
+Pin: release a=stretch
+Pin-Priority: 50
+EOF
+    echo "# Stretch repository added by TX-Pi setup to solve VNC problems" >> /etc/apt/sources.list
+    echo "deb http://raspbian.raspberrypi.org/raspbian/ stretch main contrib non-free rpi" >> /etc/apt/sources.list
+    apt-get update
+    apt-get -y install -t=stretch x11vnc
+else
+    apt-get -y install x11vnc
+fi
 cat <<EOF > /etc/systemd/system/x11vnc.service
 [Unit]
 Description=X11 VNC service
