@@ -19,7 +19,7 @@
 #   sudo bash ./tx-pi-setup.sh
 #   You can also specify your touch screen device, i.e.
 #   sudo bash ./tx-pi-setup.sh LCD35
-#   to support popular Waveshare LCD 3.5" type "A" display.
+#   to support the popular Waveshare LCD 3.5" type "A" display.
 #   See <https://www.tx-pi.de/en/installation/> for details
 # * After running the script, the Pi will boot into the fischertechnik community
 #   firmware.
