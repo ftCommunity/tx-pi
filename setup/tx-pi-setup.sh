@@ -434,22 +434,24 @@ EOF
 # Install vnc server
 if [ "$IS_BUSTER" = true ]; then
     # VNC support in Buster is broken / may deliver distorted output
+    # Remove libvncserver1 if any
+    apt-get -y remove libvncserver1 x11vnc-data libvncclient1
     cat <<EOF > /etc/apt/preferences.d/buster.pref
 # Added by TX-Pi setup to solve VNC problems with Buster.
 Package: *
 Pin: release a=buster
 Pin-Priority: 900
 EOF
-    cat <<EOF > /etc/apt/preferences.d/stretch.pref
+    cat <<EOF > /etc/apt/preferences.d/jessie.pref
 # Added by TX-Pi setup to solve VNC problems with Buster.
 Package: *
-Pin: release a=stretch
+Pin: release a=jessie
 Pin-Priority: 50
 EOF
-    echo "# Stretch repository added by TX-Pi setup to solve VNC problems" >> /etc/apt/sources.list
-    echo "deb http://raspbian.raspberrypi.org/raspbian/ stretch main contrib non-free rpi" >> /etc/apt/sources.list
+    echo "# Sid repository added by TX-Pi setup to solve VNC problems" >> /etc/apt/sources.list
+    echo "deb http://raspbian.raspberrypi.org/raspbian/ jessie main contrib non-free rpi" >> /etc/apt/sources.list
     apt-get update
-    apt-get -y install -t=stretch x11vnc
+    apt-get -y install -t=jessie x11vnc
 else
     apt-get -y install x11vnc
 fi
