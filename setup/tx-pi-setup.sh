@@ -826,6 +826,7 @@ shop_repositories="/home/ftc/.repositories.xml"
 if [ ! -f "$shop_repositories" ]; then
   cat <<EOF > $shop_repositories
 <repositories>
+  <repository name="TX-Pi Apps" repo="tx-pi-apps" user="ftCommunity"/>
   <repository name="Till&apos;s Apps" repo="cfw-apps" user="harbaum"/>
 </repositories>
 EOF
