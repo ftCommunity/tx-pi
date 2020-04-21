@@ -75,8 +75,7 @@ FTDDIRECT="ftduino_direct-1.0.8"
 TXPIAPPS_URL="https://github.com/ftCommunity/tx-pi-apps/raw/master/packages/"
 
 # TX-Pi config
-TXPICONFIG_URL="https://github.com/ftCommunity/txpiconfig/archive/master.zip"
-TXPICONFIG_DIR="/opt/ftc/apps/system/txpiconfig"
+TXPICONFIG_DIR="/home/ftc/apps/e7b22a70-7366-4090-b251-5fead780c5a0"
 
 # default lcd is 3.2 inch
 LCD=LCD32
@@ -585,8 +584,11 @@ sed -i "s/category: System/category: /g" /opt/ftc/apps/system/power/manifest
 apt-get -y install --no-install-recommends xinput-calibrator
 chmod og+rw /usr/share/X11/xorg.conf.d/99-calibration.conf
 
-# Remove any installed TS-Cal
+# Remove old app
 rm -rf /opt/ftc/apps/system/tscal
+
+# Remove any installed TS-Cal
+rm -rf /home/ftc/apps/ffe0d8c4-be33-4f62-b25d-2fa7923daaa2
 
 cd /home/ftc/apps
 wget "${TXPIAPPS_URL}tscal.zip"
@@ -603,18 +605,18 @@ rm -f ./tscal.zip
 rm -rf /home/ftc/apps/430d692e-d285-4f05-82fd-a7b3ce9019e5
 rm -rf /home/ftc/apps/e7b22a70-7366-4090-b251-5fead780c5a0  # Previous location of TX-Pi conig
 rm -f /etc/sudoers.d/sshvnc
+rm -rf /opt/ftc/apps/system/txpiconfig
 
 # Remove any installed TX-Pi config
 rm -rf ${TXPICONFIG_DIR}
 
-cd /root
-wget ${TXPICONFIG_URL} -O txpiconfig.zip
-unzip -o txpiconfig.zip
-rm -f ./txpiconfig.zip
-mv ./txpiconfig-* ./txpiconfig  # Reliable diretory name
-mv ./txpiconfig ${TXPICONFIG_DIR}
+cd /home/ftc/apps
+wget "${TXPIAPPS_URL}config.zip"
+unzip -o config.zip -d "${TXPICONFIG_DIR}"
+chown -R ftc:ftc ${TXPICONFIG_DIR}
 chown root:root ${TXPICONFIG_DIR}/scripts/*
 chmod 744 ${TXPICONFIG_DIR}/scripts/*
+rm -f ./config.zip
 
 
 # add robolt support
