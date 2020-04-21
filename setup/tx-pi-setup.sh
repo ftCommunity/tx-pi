@@ -113,7 +113,7 @@ apt-get -y install --no-install-recommends xserver-xorg xinit xserver-xorg-video
 apt-get -y install --no-install-recommends python3 python3-pyqt4 python3-pip python3-numpy python3-dev cmake python3-pexpect
 # python RPi GPIO access
 apt-get -y install -y python3-rpi.gpio
-apt-get -y install -y python-rpi.gpio
+apt-get -y install -y python-rpi.gpio  #TODO: Still necessary?
 # misc tools
 apt-get -y install i2c-tools python3-smbus lighttpd git subversion ntpdate usbmount
 # avrdude
@@ -123,15 +123,11 @@ apt-get install -y python3-bs4
 
 # some additional python stuff
 if [ "$IS_STRETCH" = true ]; then
-    pip3 install semantic_version
-    pip3 install websockets
-    pip3 install --upgrade setuptools
-    pip3 install --upgrade wheel  # Needed for zbar
+    pip3 install -U semantic_version websockets setuptools \
+        wheel  # Needed for zbar
 else
-    apt-get -y install --no-install-recommends python3-semantic-version
-    apt-get -y install --no-install-recommends python3-websockets
-    apt-get -y install --no-install-recommends python3-setuptools
-    apt-get -y install --no-install-recommends python3-wheel
+    apt-get -y install --no-install-recommends python3-semantic-version \
+        python3-websockets python3-setuptools python3-wheel
 fi
 
 
@@ -254,8 +250,7 @@ else
     apt-get -y install --no-install-recommends python3-opencv
 fi
 
-apt-get -y install --no-install-recommends libzbar0 python3-pil 
-apt-get -y install --no-install-recommends libzbar-dev
+apt-get -y install --no-install-recommends libzbar0 python3-pil libzbar-dev
 pip3 install zbarlight
 
 # system wide mpg123 overrides the included mpg123 of some apps
