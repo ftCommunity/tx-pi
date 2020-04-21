@@ -71,9 +71,8 @@ LIB_ROBOINT_IDIR=libroboint-0.5.3
 
 FTDDIRECT="ftduino_direct-1.0.8"
 
-# TX-Pi touchscreen calibration
-TXPITSCAL_URL="https://github.com/ftCommunity/txpitscal/archive/master.zip"
-TXPITSCAL_DIR="/opt/ftc/apps/system/tscal"
+# TX-Pi app store
+TXPIAPPS_URL="https://github.com/ftCommunity/tx-pi-apps/raw/master/packages/"
 
 # TX-Pi config
 TXPICONFIG_URL="https://github.com/ftCommunity/txpiconfig/archive/master.zip"
@@ -587,14 +586,13 @@ apt-get -y install --no-install-recommends xinput-calibrator
 chmod og+rw /usr/share/X11/xorg.conf.d/99-calibration.conf
 
 # Remove any installed TS-Cal
-rm -rf ${TXPITSCAL_DIR}
+rm -rf /opt/ftc/apps/system/tscal
 
-cd /root
-wget ${TXPITSCAL_URL} -O txpitscal.zip
-unzip -o txpitscal.zip
-rm -f ./txpitscal.zip
-mv ./txpitscal-* ./tscal  # Reliable diretory name
-mv ./tscal ${TXPITSCAL_DIR}
+cd /home/ftc/apps
+wget "${TXPIAPPS_URL}tscal.zip"
+unzip -o tscal.zip -d ffe0d8c4-be33-4f62-b25d-2fa7923daaa2
+chown -R ftc:ftc ffe0d8c4-be33-4f62-b25d-2fa7923daaa2
+rm -f ./tscal.zip
 
 
 #
