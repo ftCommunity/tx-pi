@@ -538,10 +538,6 @@ unzip $LIB_ROBOINT_FILE
 cd $LIB_ROBOINT_IDIR
 cmake .
 make
-#TODO: Fails. Remove?
-if [ true = false ]; then
-    make doc
-fi
 # install
 make install
 ldconfig
@@ -823,7 +819,7 @@ chown ftc:ftc /home/ftc/.launcher.config
 rm -fr /opt/ftc/apps/system/display/
 
 
-#-- Add Till's app repository
+#-- Add useful TX-Pi stores
 shop_repositories="/home/ftc/.repositories.xml"
 if [ ! -f "$shop_repositories" ]; then
   cat <<EOF > $shop_repositories
