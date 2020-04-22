@@ -587,6 +587,7 @@ cd /home/ftc/apps
 wget "${TXPIAPPS_URL}tscal.zip"
 unzip -o tscal.zip -d ffe0d8c4-be33-4f62-b25d-2fa7923daaa2
 chown -R ftc:ftc ffe0d8c4-be33-4f62-b25d-2fa7923daaa2
+chmod +x ffe0d8c4-be33-4f62-b25d-2fa7923daaa2/tscal.py
 rm -f ./tscal.zip
 
 
@@ -612,6 +613,7 @@ mkdir -p "${TXPICONFIG_SCRIPTS_DIR}"
 unzip -o config.zip -d "${TXPICONFIG_DIR}"
 unzip -o scripts.zip -d "${TXPICONFIG_SCRIPTS_DIR}"
 chown -R ftc:ftc ${TXPICONFIG_DIR}
+chmod +x ${TXPICONFIG_DIR}/config.py
 chown root:root ${TXPICONFIG_SCRIPTS_DIR}/*
 chmod 744 ${TXPICONFIG_SCRIPTS_DIR}/*
 rm -f ./config.zip
