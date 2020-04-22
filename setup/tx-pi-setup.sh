@@ -75,7 +75,7 @@ FTDDIRECT="ftduino_direct-1.0.8"
 TXPIAPPS_URL="https://github.com/ftCommunity/tx-pi-apps/raw/master/packages/"
 
 # TX-Pi config
-TXPICONFIG_DIR="/home/ftc/apps/e7b22a70-7366-4090-b251-5fead780c5a0"
+TXPICONFIG_SCRIPTS_DIR="/opt/ftc/apps/system/txpiconfig/scripts"
 
 # default lcd is 3.2 inch
 LCD=LCD32
@@ -304,7 +304,7 @@ chmod 0440 /etc/sudoers.d/ft_bt_remote_server
 cat <<EOF > /etc/sudoers.d/txpiconfig
 ## Permissions for ftc access to programs required
 ## for the TX-Pi config app and the app store (install dependencies via apt-get)
-ftc     ALL = NOPASSWD: ${TXPICONFIG_DIR}/scripts/hostname, ${TXPICONFIG_DIR}/scripts/ssh, ${TXPICONFIG_DIR}/scripts/x11vnc, ${TXPICONFIG_DIR}/scripts/display, ${TXPICONFIG_DIR}/scripts/i2cbus, /usr/bin/apt-get
+ftc     ALL = NOPASSWD: ${TXPICONFIG_SCRIPTS_DIR}/hostname, ${TXPICONFIG_SCRIPTS_DIR}/ssh, ${TXPICONFIG_SCRIPTS_DIR}/x11vnc, ${TXPICONFIG_SCRIPTS_DIR}/display, ${TXPICONFIG_SCRIPTS_DIR}/i2cbus, /usr/bin/apt-get
 EOF
 chmod 0440 /etc/sudoers.d/txpiconfig
 
@@ -593,10 +593,11 @@ rm -f ./tscal.zip
 #
 # - Add TX-Pi config
 #
+TXPICONFIG_DIR="/home/ftc/apps/e7b22a70-7366-4090-b251-5fead780c5a0"
 # Remove old app to configure SSH and VNC servers.
 # Became obsolete due to new TX-Pi config
 rm -rf /home/ftc/apps/430d692e-d285-4f05-82fd-a7b3ce9019e5
-rm -rf /home/ftc/apps/e7b22a70-7366-4090-b251-5fead780c5a0  # Previous location of TX-Pi conig
+rm -rf /home/ftc/apps/e7b22a70-7366-4090-b251-5fead780c5a0
 rm -f /etc/sudoers.d/sshvnc
 rm -rf /opt/ftc/apps/system/txpiconfig
 
@@ -605,11 +606,16 @@ rm -rf ${TXPICONFIG_DIR}
 
 cd /home/ftc/apps
 wget "${TXPIAPPS_URL}config.zip"
+wget "${TXPIAPPS_URL}/config/scripts.zip"
+mkdir -p "${TXPICONFIG_DIR}"
+mkdir -p "${TXPICONFIG_SCRIPTS_DIR}"
 unzip -o config.zip -d "${TXPICONFIG_DIR}"
+unzip -o scripts.zip -d "${TXPICONFIG_SCRIPTS_DIR}"
 chown -R ftc:ftc ${TXPICONFIG_DIR}
-chown root:root ${TXPICONFIG_DIR}/scripts/*
-chmod 744 ${TXPICONFIG_DIR}/scripts/*
+chown root:root ${TXPICONFIG_SCRIPTS_DIR}/*
+chmod 744 ${TXPICONFIG_SCRIPTS_DIR}/*
 rm -f ./config.zip
+rm -f ./scripts.zip
 
 
 # add robolt support
