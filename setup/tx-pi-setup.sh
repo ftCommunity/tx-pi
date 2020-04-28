@@ -807,7 +807,7 @@ if [ "$IS_STRETCH" = false ]; then
 fi
 
 
-mkdir /home/ftc/apps
+mkdir -p /home/ftc/apps
 chown -R ftc:ftc /home/ftc/apps
 
 # disable the TXTs default touchscreen timeout as the waveshare isn't half
