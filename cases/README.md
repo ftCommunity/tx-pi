@@ -4,19 +4,31 @@
 
 This is the case for the Raspberry Pi / TX-Pi itself.
 
+# Raspberry 4
+
+
 | PI bottom | PI top |
 |:---:|:---:|
-| ![Bottom case](../images/stl/pi_bottom.png) | ![Top case](../images/stl/pi_top.png) |
-| [View](pi_bottom.stl) | [View](pi_top.stl) |
-| [Download](pi_bottom.stl?raw=true) | [Download](pi_top.stl?raw=true) |
+| ![Bottom case](../images/stl/TX-Pi4/TX-Pi4-Wanne.png) | ![Top case](../images/stl/TX-Pi4/TX-Pi4-Deckel.png) |
+| [View](TX-Pi4/TX-Pi4-Wanne.stl) | [View](TX-Pi4/TX-Pi4-Deckel.stl) |
+| [Download](TX-Pi4/TX-Pi4-Wanne.stl?raw=true) | [Download](TX-Pi4/TX-Pi4-Deckel.stl?raw=true) |
+
+# Raspberry 3
+
+| PI bottom | PI top |
+|:---:|:---:|
+| ![Bottom case](../images/stl/TX-Pi3/pi3_bottom.png) | ![Top case](../images/stl/TX-Pi3/pi3_top.png) |
+| [View](TX-Pi3/pi3_bottom.stl) | [View](TX-Pi3/pi3_top.stl) |
+| [Download](TX-Pi3/pi3_bottom.stl?raw=true) | [Download](TX-Pi3/pi3_top.stl?raw=true) |
+
 
 Top case variants with slot for the Raspberry PI Camera and the Raspberry PI standard display slot. And a variant with extended 40 pin GPIO slot:
 
 | Camera and display slot | Extended GPIO slot |
 |:---:|:---:|
-| ![Slot for camera and display](../images/stl/pi_top_with_ribbon_slot.png) | ![Extended GPIO slot](../images/stl/top_extended.png) |
-| [View](pi_top_with_ribbon_slot.stl) | [View](top_extended.stl) |
-| [Download](pi_top_with_ribbon_slot.stl?raw=true) | [Download](top_extended.stl?raw=true) |
+| ![Slot for camera and display](../images/stl/TX-Pi3/pi3_top_with_ribbon_slot.png) | ![Extended GPIO slot](../images/stl/misc/top_extended.png) |
+| [View](TX-Pi3/pi3_top_with_ribbon_slot.stl) | [View](misc/top_extended.stl) |
+| [Download](TX-Pi3/pi3_top_with_ribbon_slot.stl?raw=true) | [Download](misc/top_extended.stl?raw=true) |
 
 # Display cases
 
