@@ -2,7 +2,7 @@
 
 ![Standard case](../images/tx-pi-cases.jpg)
 
-This is the case for the Raspberry Pi / TX-Pi itself.
+This is the case for the Raspberry Pi / TX-Pi itself. Be aware that due to a different placement of Ethernet and USB ports on Pi3 and Pi4 both the Pi AND display cases must match. A Pi4 Display bottom will not fit onto a Pi3 and vice versa.
 
 # Raspberry 4
 
