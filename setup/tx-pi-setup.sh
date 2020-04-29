@@ -65,9 +65,9 @@ SVNROOT=$SVNBASE"board/fischertechnik/TXT/rootfs"
 TSVNBASE="https://github.com/harbaum/TouchUI.git/trunk/"
 LOCALGIT="https://github.com/ftCommunity/tx-pi/raw/master/setup"
 
-LIB_ROBOINT_URL=https://github.com/nxdefiant/libroboint/archive/
-LIB_ROBOINT_FILE=0.5.3.zip
-LIB_ROBOINT_IDIR=libroboint-0.5.3
+LIB_ROBOINT_URL=https://gitlab.com/Humpelstilzchen/libroboint/-/archive/0.5.4/
+LIB_ROBOINT_FILE=libroboint-0.5.4.zip
+LIB_ROBOINT_IDIR=libroboint-0.5.4
 
 FTDDIRECT="ftduino_direct-1.0.8"
 
