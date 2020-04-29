@@ -65,10 +65,6 @@ SVNROOT=$SVNBASE"board/fischertechnik/TXT/rootfs"
 TSVNBASE="https://github.com/harbaum/TouchUI.git/trunk/"
 LOCALGIT="https://github.com/ftCommunity/tx-pi/raw/master/setup"
 
-LIB_ROBOINT_URL=https://gitlab.com/Humpelstilzchen/libroboint/-/archive/0.5.4/
-LIB_ROBOINT_FILE=libroboint-0.5.4.zip
-LIB_ROBOINT_IDIR=libroboint-0.5.4
-
 FTDDIRECT="ftduino_direct-1.0.8"
 
 # TX-Pi app store
@@ -528,10 +524,8 @@ echo "Installing libroboint"
 rm -f /usr/local/lib/libroboint.so*
 # install libusb-dev
 apt-get install libusb-dev
-wget -N $LIB_ROBOINT_URL$LIB_ROBOINT_FILE
-unzip $LIB_ROBOINT_FILE
-# build
-cd $LIB_ROBOINT_IDIR
+git clone https://gitlab.com/Humpelstilzchen/libroboint.git
+cd libroboint
 cmake .
 make
 # install
@@ -542,13 +536,10 @@ make python
 # udev rules
 cp udev/fischertechnik.rules /etc/udev/rules.d/
 # python3 compatibility 'patch'
+wget -O /usr/local/lib/${PYTHON_VERSION}/dist-packages/robointerface.py https://github.com/PeterDHabermehl/libroboint-py3/raw/master/robointerface.py
 cd ..
-wget -N https://github.com/PeterDHabermehl/libroboint-py3/raw/master/robointerface.py
-cp robointerface.py /usr/local/lib/${PYTHON_VERSION}/dist-packages/
 # clean up
-rm -f robointerface.py
-rm -f $LIB_ROBOINT_FILE
-rm -rf $LIB_ROBOINT_IDIR
+rm -rf libroboint
 
 
 # and ftduino_direct
