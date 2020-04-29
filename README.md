@@ -44,7 +44,7 @@ There's also a [thread in the fischertechnik community forum](https://forum.ftco
 
 You'll need:
 
-  - a Raspberry Pi B+, 2 or 3
+  - a Raspberry Pi B+, 2, 3 or 4
   - a Waveshare 3.2" LCD touchscreen (either V3 or V4) (see below for 3.5" support)
   - a micro SD card with at least 8GB space
 

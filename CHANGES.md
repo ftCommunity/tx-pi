@@ -7,7 +7,8 @@
   see <https://github.com/ftCommunity/tx-pi/issues/23>
 * Setup enables I2C by default
 * Setup enables WLAN support by default
-* Added <https://github.com/harbaum/cfw-apps> as App-Shop URL
+* Added <https://github.com/ftCommunity/tx-pi-apps> as app store.
+* Added <https://github.com/harbaum/cfw-apps> as app store.
 
 
 ## 2019-05-04
