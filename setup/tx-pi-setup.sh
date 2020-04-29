@@ -525,6 +525,7 @@ done
 
 # install libroboint
 echo "Installing libroboint"
+rm -f /usr/local/lib/libroboint.so*
 # install libusb-dev
 apt-get install libusb-dev
 wget -N $LIB_ROBOINT_URL$LIB_ROBOINT_FILE
