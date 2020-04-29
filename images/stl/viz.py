@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import bpy
 import sys
 import os
@@ -8,11 +9,15 @@ global cam_target
 mat = 'abs'
 
 rotations = {
-    "../i2c_protector.stl"      : 180,
+    "i2c_protector.stl"      : 180,
     "fixing_block.stl"      : 180,
     "rear_fixing_block.stl" : 180,
     "atx_short_bracket.stl" : -90,
-    "z_bar_clamp.stl"       : 180
+    "z_bar_clamp.stl"       : 180,
+    u'Display-Wanne_ohne_Öffnungen.stl': 180,
+    'Pi3_display_v4_bottom_with_ribbon_slot.stl': 180,
+    'Pi3_display32_v3_bottom.stl': 180, 
+    'Pi3_display32_v4_bottom.stl': 180,
 }
 
 
@@ -35,7 +40,7 @@ def load_stl(file_path):
     # place
     z_dim = ob.dimensions[2]
     print(z_dim)
-    filename = file_path.split(os.sep)[-1]
+    filename = os.path.basename(file_path)
     if filename in rotations:
         bpy.ops.transform.rotate(value = rotations[filename] * math.pi / 180.0, axis = (False, False, True))
 
