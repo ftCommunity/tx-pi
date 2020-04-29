@@ -13,7 +13,15 @@ This is the case for the Raspberry Pi / TX-Pi itself. Be aware that due to a dif
 | [View](TX-Pi4/TX-Pi4-Wanne.stl) | [View](TX-Pi4/TX-Pi4-Deckel.stl) |
 | [Download](TX-Pi4/TX-Pi4-Wanne.stl?raw=true) | [Download](TX-Pi4/TX-Pi4-Deckel.stl?raw=true) |
 
-# Raspberry 3
+## Display case
+
+| bottom |
+|:---:|
+| ![Bottom case](../images/stl/Display_Bottoms/Pi4_Display-Wanne.png) |
+| [View](Display_Bottoms/Pi4_Display-Wanne.stl) |
+| [Download](Display_Bottoms/Pi4_Display-Wanne.stl?raw=true) |
+
+# Raspberry 2 - 3
 
 | PI bottom | PI top |
 |:---:|:---:|
@@ -30,11 +38,11 @@ Top case variants with slot for the Raspberry PI Camera and the Raspberry PI sta
 | [View](TX-Pi3/pi3_top_with_ribbon_slot.stl) | [View](misc/top_extended.stl) |
 | [Download](TX-Pi3/pi3_top_with_ribbon_slot.stl?raw=true) | [Download](misc/top_extended.stl?raw=true) |
 
-# Display cases
+## Display cases
 
 The display cases are for most 3.2" and 3.5" displays by Waveshare and compatible ones. The 
 
-## Bottom
+### Bottom
 
 Regular bottom half for most 3.2" and 3.5" displays. 
 
@@ -45,9 +53,9 @@ The taller version is required for some 3.2" V3 displays.
 
 | Regular bottom | Bottom with cable slot | Taller bottom |
 |:---:|:---:|:---:|
-| ![Bottom](../images/stl/display32_v4_bottom.png) | ![Bottom](../images/stl/display_v4_bottom_with_ribbon_slot.png) | ![Bottom for 3.2" V3 display](../images/stl/display32_v3_bottom.png) |
-| [View](display32_v4_bottom.stl) | [View](display_v4_bottom_with_ribbon_slot.stl) | [View](display32_v3_bottom.stl) |
-| [Download](display32_v4_bottom.stl?raw=true) | [Download](display_v4_bottom.stl?raw=true) | [Download](display32_v3_bottom.stl?raw=true) |
+| ![Bottom](../images/stl/Display_Bottoms/Pi3_display32_v4_bottom.png) | ![Bottom](../images/stl/Display_Bottoms/Pi3_display_v4_bottom_with_ribbon_slot.png) | ![Bottom for 3.2" V3 display](../images/stl/Display_Bottoms/Pi3_display32_v3_bottom.png) |
+| [View](Display_Bottoms/Pi3_display32_v4_bottom.stl) | [View](Display_Bottoms/Pi3_display_v4_bottom_with_ribbon_slot.stl) | [View](Display_Bottoms/Pi3_display32_v3_bottom.stl) |
+| [Download](Display_Bottoms/Pi3_display32_v4_bottom.stl?raw=true) | [Download](Display_Bottoms/Pi3_display_v4_bottom_with_ribbon_slot.stl?raw=true) | [Download](Display_Bottoms/Pi3_display32_v3_bottom.stl?raw=true) |
 
 ## 3.2" top
 
@@ -55,9 +63,9 @@ Top case for 3.2" display with three buttons:
 
 | 3.2" top | buttons |
 |:---:|:---:|
-| ![Top 3.2"](../images/stl/display32_top.png) | ![Buttons](../images/stl/buttons.png) |
-| [View](display32_top.stl) | [View](buttons.stl) |
-| [Download](display32_top.stl?raw=true) | [Download](buttons.stl?raw=true) |
+| ![Top 3.2"](../images/stl/Display_Tops/display32_top.png) | ![Buttons](../images/stl/Display_Tops/disp32_buttons.png) |
+| [View](Display_Tops/display32_top.stl) | [View](Display_Tops/disp32_buttons.stl) |
+| [Download](Display_Tops/display32_top.stl?raw=true) | [Download](Display_Tops/disp32_buttons?raw=true) |
 
 ## 3.5" top
 
@@ -66,9 +74,9 @@ are different versions for the 3.5" waveshare version A and B displays and nonam
 
 | 3.5" top noname | 3.5" top A | 3.5" top B |
 |:---:|:---:|:---:|
-| ![Top 3.5"](../images/stl/display35_top.png) | ![Top 3.5" A](../images/stl/display_ws35a_top.png) | ![Top 3.5" B](../images/stl/display_ws35b_top.png) |
-| [View](display35_top.stl) | [View](display_ws35a_top.stl) | [View](display_ws35b_top.stl) |
-| [Download](display35_top.stl?raw=true) | [Download](display_ws35a_top.stl?raw=true) | [Download](display_ws35b_top.stl?raw=true) |
+| ![Top 3.5"](../images/stl/Display_Tops/display35_top.png) | ![Top 3.5" A](../images/stl/Display_Tops/display_ws35a_top.png) | ![Top 3.5" B](../images/stl/Display_Tops/display_ws35b_top.png) |
+| [View](Display_Tops/display35_top.stl) | [View](Display_Tops/display_ws35a_top.stl) | [View](Display_Tops/display_ws35b_top.stl) |
+| [Download](Display_Tops/display35_top.stl?raw=true) | [Download](Display_Tops/display_ws35a_top.stl?raw=true) | [Download](Display_Tops/display_ws35b_top.stl?raw=true) |
 
 # More
 
