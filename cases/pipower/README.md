@@ -28,6 +28,6 @@ close the case using two M3 (3mm) flat head screws with 6-8mm length.
 
 | Top | Bottom |
 |:---:|:---:|
-| ![Top](../images/stl/pipower/top.png) | ![Bottom](../images/stl/pipower/bottom.png) |
+| ![Top](../../images/stl/pipower/top.png) | ![Bottom](../../images/stl/pipower/bottom.png) |
 | [View](top.stl) | [View](bottom.stl) |
 | [Download](top.stl?raw=true) | [Download](bottom.stl?raw=true) |
