@@ -36,12 +36,10 @@ ENABLE_NETREQ=false
 DEBIAN_VERSION=$( cat /etc/debian_version )
 IS_STRETCH=false
 IS_BUSTER=true
-PYTHON_VERSION='python3.7'  # Required for Robointerface, lower case major version
 
 if [ "${DEBIAN_VERSION:0:1}" = "9" ]; then
     IS_STRETCH=true
     ENABLE_NETREQ=true
-    PYTHON_VERSION='python3.5'
 elif [ "${DEBIAN_VERSION:0:2}" = "10" ]; then
     IS_BUSTER=true
 elif [ "${DEBIAN_VERSION:0:1}" = "8" ]; then
