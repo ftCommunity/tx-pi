@@ -526,6 +526,8 @@ rm -f /usr/local/lib/libroboint.so*
 apt-get install libusb-dev
 git clone https://gitlab.com/Humpelstilzchen/libroboint.git
 cd libroboint
+# python3 compatibility 'patch'
+sed -i "s/python2/python3/g" ./CMakeLists.txt
 cmake .
 make
 # install
@@ -535,8 +537,6 @@ ldconfig
 make python
 # udev rules
 cp udev/fischertechnik.rules /etc/udev/rules.d/
-# python3 compatibility 'patch'
-wget -O /usr/local/lib/${PYTHON_VERSION}/dist-packages/robointerface.py https://github.com/PeterDHabermehl/libroboint-py3/raw/master/robointerface.py
 cd ..
 # clean up
 rm -rf libroboint
