@@ -70,7 +70,7 @@ elif [ "$IS_BUSTER" = true ]; then
 fi
 
 GITBASE="https://raw.githubusercontent.com/ftCommunity/ftcommunity-TXT/master/"
-GITROOT=$GITBASE"board/fischertechnik/TXT/rootf2s"
+GITROOT=$GITBASE"board/fischertechnik/TXT/rootfs"
 SVNBASE="https://github.com/ftCommunity/ftcommunity-TXT.git/trunk/"
 SVNROOT=$SVNBASE"board/fischertechnik/TXT/rootfs"
 TSVNBASE="https://github.com/harbaum/TouchUI.git/trunk/"
