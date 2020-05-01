@@ -32,6 +32,19 @@ DEBUG=false
 ENABLE_SPLASH=true
 ENABLE_NETREQ=false
 
+function msg {
+    echo -e "\033[93m$1\033[0m"
+}
+
+function header {
+    echo -e "\033[0;32m--- $1 ---\033[0m"
+}
+
+
+function error {
+    echo -e "\033[0;31m$1\033[0m"
+}
+
 #-- Handle Stretch (9.x) vs. Buster (10.x)
 DEBIAN_VERSION=$( cat /etc/debian_version )
 IS_STRETCH=false
@@ -43,21 +56,21 @@ if [ "${DEBIAN_VERSION:0:1}" = "9" ]; then
 elif [ "${DEBIAN_VERSION:0:2}" = "10" ]; then
     IS_BUSTER=true
 elif [ "${DEBIAN_VERSION:0:1}" = "8" ]; then
-    echo "Debian Jessie is not supported anymore"
+    error "Debian Jessie is not supported anymore"
     exit 2
 else
-    echo "Unknown Debian version: '${DEBIAN_VERSION}'"
+    error "Unknown Raspbian version: '${DEBIAN_VERSION}'"
     exit 2
 fi
 
 if [ "$IS_STRETCH" = true ]; then
-    echo "Setting up TX-Pi on Stretch lite"
+    header "Setting up TX-Pi on Stretch lite"
 elif [ "$IS_BUSTER" = true ]; then
-    echo "Setting up TX-Pi on Buster lite"
+    header "Setting up TX-Pi on Buster lite"
 fi
 
 GITBASE="https://raw.githubusercontent.com/ftCommunity/ftcommunity-TXT/master/"
-GITROOT=$GITBASE"board/fischertechnik/TXT/rootfs"
+GITROOT=$GITBASE"board/fischertechnik/TXT/rootf2s"
 SVNBASE="https://github.com/ftCommunity/ftcommunity-TXT.git/trunk/"
 SVNROOT=$SVNBASE"board/fischertechnik/TXT/rootfs"
 TSVNBASE="https://github.com/harbaum/TouchUI.git/trunk/"
@@ -71,6 +84,7 @@ TXPIAPPS_URL="https://github.com/ftCommunity/tx-pi-apps/raw/master/packages/"
 # TX-Pi config
 TXPICONFIG_SCRIPTS_DIR="/opt/ftc/apps/system/txpiconfig/scripts"
 
+
 # default lcd is 3.2 inch
 LCD=LCD32
 ORIENTATION=90
@@ -79,24 +93,24 @@ if [ "$#" -gt 0 ]; then
     # todo: Allow for other types as well
     LCD=$1
     if [ "$1" == "LCD35" ]; then
-        echo "Setup for Waveshare 3.5 inch (A) screen"
+        header "Setup for Waveshare 3.5 inch (A) screen"
     elif [ "$1" == "LCD35B" ]; then
-        echo "Setup for Waveshare 3.5 inch (B) IPS screen"
+        header "Setup for Waveshare 3.5 inch (B) IPS screen"
     elif [ "$1" == "LCD35BV2" ]; then
-        echo "Setup for Waveshare 3.5 inch (B) IPS rev. 2 screen"
+        header "Setup for Waveshare 3.5 inch (B) IPS rev. 2 screen"
     else
-        echo "Unknown parameter \"$1\""
-        echo "Allowed parameters:"
-        echo "LCD35    - create 3.5\" setup (instead of 3.2\")"
-        echo "LCD35B   - create 3.5\" IPS setup"
-        echo "LCD35BV2 - create 3.5\" IPS rev. 2 setup"
-        exit -1
+        error "Unknown parameter \"$1\""
+        error "Allowed parameters:"
+        error "LCD35    - create 3.5\" setup (instead of 3.2\")"
+        error "LCD35B   - create 3.5\" IPS setup"
+        error "LCD35BV2 - create 3.5\" IPS rev. 2 setup"
+        exit 2
     fi
 fi
 
 # ----------------------- package installation ---------------------
 
-echo "Update Debian"
+header "Update Debian"
 apt-get update
 apt --fix-broken -y install
 apt-get -y upgrade
@@ -116,6 +130,7 @@ apt-get -y install avrdude
 apt-get install -y python3-bs4
 
 # some additional python stuff
+header "Install Python libs"
 if [ "$IS_STRETCH" = true ]; then
     pip3 install -U semantic_version websockets setuptools \
         wheel  # Needed for zbar
@@ -126,6 +141,7 @@ fi
 
 
 # DHCP client
+header "Setup DHCP client"
 # Remove dhcpcd because it fails to start (isc-dhcp-client is available)
 apt-get -y purge dhcpcd5
 # Do not try too long to reach the DHCPD server (blocks booting)
@@ -135,9 +151,7 @@ sed -i "s/#timeout 60;/timeout 10;/g" /etc/dhcp/dhclient.conf
 sed -i "s/#retry 60;/retry 20;/g" /etc/dhcp/dhclient.conf
 
 # ---------------------- display setup ----------------------
-echo "============================================================"
-echo "============== SCREEN DRIVER INSTALLATION =================="
-echo "============================================================"
+header "Install screen driver"
 cd
 wget -N https://www.waveshare.com/w/upload/0/00/LCD-show-170703.tar.gz
 tar xvfz LCD-show-170703.tar.gz
@@ -192,12 +206,12 @@ echo "dtoverlay=gpio-poweroff,gpiopin=4,active_low=1" >> /boot/config.txt
 
 #-- Enable WLAN iff it isn't enabled yet
 if [ "$(wpa_cli -i wlan0 get country)" == "FAIL" ]; then
-    echo "Enable WLAN"
+    msg "Enable WLAN"
     wpa_cli -i wlan0 set country DE
     wpa_cli -i wlan0 save_config
     rfkill unblock wifi
 else
-   echo "WLAN already configured, don't touch it"
+    msg "WLAN already configured, don't touch it"
 fi
 
 
@@ -499,7 +513,7 @@ wget -N $GITROOT/etc/udev/rules.d/60-i2c-tools.rules
 wget -N $GITROOT/etc/udev/rules.d/99-USBasp.rules
 
 # get /opt/ftc
-echo "Populating /opt/ftc ..."
+header "Populating /opt/ftc ..."
 cd /opt
 rm -rf ftc
 svn export $SVNROOT"/opt/ftc"
@@ -520,7 +534,7 @@ done
 
 
 # install libroboint
-echo "Installing libroboint"
+header "Installing libroboint"
 rm -f /usr/local/lib/libroboint.so*
 # install libusb-dev
 apt-get install libusb-dev
@@ -543,7 +557,7 @@ rm -rf libroboint
 
 
 # and ftduino_direct
-echo "Installing ftduino_direct.py"
+header "Installing ftduino_direct.py"
 wget -N https://github.com/PeterDHabermehl/ftduino_direct/raw/master/$FTDDIRECT.tar.gz
 tar -xzvf $FTDDIRECT.tar.gz 
 cd $FTDDIRECT
@@ -748,7 +762,7 @@ cgi.assign      = (
 EOF
 
 # fetch www pages
-echo "Populating /var/www ..."
+header "Populating /var/www ..."
 cd /var
 rm -rf www
 svn export $SVNROOT"/var/www"
@@ -825,7 +839,7 @@ if [ ! -f "$shop_repositories" ]; then
 EOF
 fi
 
-echo "rebooting ..."
+msg "rebooting ..."
 
 sync
 sleep 30
