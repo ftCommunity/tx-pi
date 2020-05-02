@@ -48,9 +48,9 @@ You'll need:
   - a Waveshare 3.2" LCD touchscreen (either V3 or V4) (see below for 3.5" support)
   - a micro SD card with at least 8GB space
 
-Optionally you might use matching [ft compatible cases](https://www.thingiverse.com/thing:2217355) and the [PiPower](https://github.com/harbaum/tx-pi/tree/master/pipower) to supply the Pi from fischertechnik power sources.
+Optionally you might use matching [ft compatible cases](cases/README.md) and the [PiPower](https://github.com/harbaum/tx-pi/tree/master/pipower) to supply the Pi from fischertechnik power sources.
 
-In case you do not want to use the 3D printed case, you might opt for a wide variety of standard RPi cases  suited for the LCD touchscreen. See the image below for how this might look like:
+In case you do not want to use the 3D printed case, you might opt for a wide variety of standard RPi cases suited for the LCD touchscreen. See the image below for how this might look like:
 
 ![TX-Pi in standard case](images/TX-Pi-light-small.jpg)
 
@@ -78,7 +78,7 @@ To install the image onto SD card, please follow the instructions given on the [
 If you want to manually install Raspian and the TX-Pi setup instead of using a SD card image as described above, follow the instructions here.
 The entire installation consists of three main steps:
 
-  1. Install a standard raspbian operating system image onto SD card
+  1. Install a standard Raspbian operating system image onto SD card
   2. Do some minor manual preparations
   3. Run a script that will do all the tx-pi specific modifications
 
@@ -86,8 +86,7 @@ The entire installation consists of three main steps:
 
 Get an SD card image of e.g.  [Raspbian Stretch
 Lite](https://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2019-04-09/2019-04-08-raspbian-stretch-lite.zip) (recommended)
-or [Raspbian Jessie
-Lite](https://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2017-07-05/2017-07-05-raspbian-jessie-lite.zip) (still supported but not actively maintained)
+or [Raspbian Buster Lite](https://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2020-02-14/2020-02-13-raspbian-buster-lite.zip)
 and install it onto SD card. Other versions may work as well but the
 aforementioned ones have been tested. More information on installing
 rasbian on SD card can be found
