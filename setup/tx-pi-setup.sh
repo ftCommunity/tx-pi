@@ -210,6 +210,7 @@ if [ "$(wpa_cli -i wlan0 get country)" == "FAIL" ]; then
     wpa_cli -i wlan0 set country DE
     wpa_cli -i wlan0 save_config
     rfkill unblock wifi
+    wpa_cli -i wlan0 scan  # Enforce scan for networks
 else
     msg "WLAN already configured, don't touch it"
 fi
