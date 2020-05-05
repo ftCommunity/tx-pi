@@ -251,13 +251,14 @@ tar xvfz hcitool-xlescan.tgz -C /usr/bin
 rm -f hcitool-xlescan.tgz
 
 # Install OpenCV
+header "Install OpenCV"
 if [ "$IS_STRETCH" = true ]; then
     apt-get -y install --no-install-recommends libatlas3-base libwebp6 libtiff5 libjasper1 libilmbase12 \
                                                libopenexr22 libilmbase12 libgstreamer1.0-0 \
                                                libavcodec57 libavformat57 libavutil55 libswscale4 \
                                                libgtk-3-0 libpangocairo-1.0-0 libpango-1.0-0 libatk1.0-0 \
                                                libcairo-gobject2 libcairo2 libgdk-pixbuf2.0-0
-    pip3 install opencv-python-headless
+    pip3 install -U "opencv-python-headless>=3.0,<4.0.0"
 else
     apt-get -y install --no-install-recommends python3-opencv
 fi
