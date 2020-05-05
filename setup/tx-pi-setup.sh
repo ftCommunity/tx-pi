@@ -785,6 +785,9 @@ wget -N $LOCALGIT/novnc.tgz
 tar xvfz novnc.tgz
 rm novnc.tgz
 
+# Fav icon
+wget -O /var/www/favicon.ico $LOCALGIT/favicon.ico
+
 # ... and websockify for novnc
 cd /opt/ftc
 wget -N $LOCALGIT/websockify.tgz
@@ -800,7 +803,6 @@ apt-get -y install netpbm
 apt-get -y install --no-install-recommends fbcat
 sed -i 's.fbgrab.fbgrab -d /dev/fb1.' /var/www/screenshot.py
 
-
 # adjust file ownership for changed www user name
 chown -R ftc:ftc /var/www
 chown -R ftc:ftc /var/log/lighttpd
@@ -812,7 +814,6 @@ chown -R ftc:ftc /var/cache/lighttpd
 if [ "$IS_STRETCH" = false ]; then
     sed -i "s/www-data/ftc/g" /usr/lib/tmpfiles.d/lighttpd.tmpfile.conf
 fi
-
 
 mkdir -p /home/ftc/apps
 chown -R ftc:ftc /home/ftc/apps
