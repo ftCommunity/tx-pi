@@ -8,8 +8,9 @@
 #
 # In short:
 # * Copy a supported Raspbian lite version onto SD card
-# * Either plug-in your display and a keyboard or enable SSH and add your
-#   WLAN configuration via /boot/ssh and /boot/wpa_supplicant.conf, see
+# * Either plug-in your display and a keyboard or enable SSH via /boot/ssh.
+#   Don't forget to change your password!
+#   Optionally, add your WLAN configuration via /boot/wpa_supplicant.conf, see
 #   <https://www.raspberrypi.org/documentation/configuration/wireless/headless.md>
 #   for details
 # * Insert the SD card into your Pi and boot it
