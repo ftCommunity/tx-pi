@@ -9,6 +9,9 @@
 * Setup enables WLAN support by default
 * Added <https://github.com/ftCommunity/tx-pi-apps> as app store.
 * Added <https://github.com/harbaum/cfw-apps> as app store.
+* Updated libroboint to 0.5.5 / master branch
+* Config app provides a dialog to enable / disable the Raspberry Pi 
+  camera port
 
 
 ## 2019-05-04
