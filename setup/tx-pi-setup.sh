@@ -49,7 +49,7 @@ function error {
 #-- Handle Stretch (9.x) vs. Buster (10.x)
 DEBIAN_VERSION=$( cat /etc/debian_version )
 IS_STRETCH=false
-IS_BUSTER=true
+IS_BUSTER=false
 
 if [ "${DEBIAN_VERSION:0:1}" = "9" ]; then
     IS_STRETCH=true
