@@ -153,7 +153,7 @@ sed -i "s/#retry 60;/retry 20;/g" /etc/dhcp/dhclient.conf
 
 # ---------------------- display setup ----------------------
 header "Install screen driver"
-cd
+cd /root
 wget -N https://www.waveshare.com/w/upload/0/00/LCD-show-170703.tar.gz
 tar xvfz LCD-show-170703.tar.gz
 if [ ${LCD} == "LCD35BV2" ]; then
@@ -211,7 +211,8 @@ if [ "$(wpa_cli -i wlan0 get country)" == "FAIL" ]; then
     wpa_cli -i wlan0 set country DE
     wpa_cli -i wlan0 save_config
     rfkill unblock wifi
-    wpa_cli -i wlan0 scan  # Enforce scan for networks
+    # Initial network scan
+    wpa_cli -i wlan0 scan
 else
     msg "WLAN already configured, don't touch it"
 fi
@@ -246,6 +247,7 @@ update-locale --no-checks LANG="de_DE.UTF-8"
 apt-get -y install --no-install-recommends bluez-tools
 
 # fetch bluez hcitool with extended lescan patch
+cd /root
 wget -N $LOCALGIT/hcitool-xlescan.tgz
 tar xvfz hcitool-xlescan.tgz -C /usr/bin
 rm -f hcitool-xlescan.tgz
@@ -358,7 +360,7 @@ if [ "$ENABLE_SPLASH" = true ]; then
     # a simple boot splash
     wget -N $LOCALGIT/splash.png -O /etc/splash.png
     apt-get install -y --no-install-recommends libjpeg-dev
-    cd
+    cd /root
     wget -N https://github.com/godspeed1989/fbv/archive/master.zip
     unzip -x master.zip
     cd fbv-master/
@@ -404,6 +406,7 @@ fi  # End ENABLE_SPLASH
 sed -i 's,^\(allowed_users=\).*,\1'\anybody',' /etc/X11/Xwrapper.config
 
 # install framebuffer copy tool
+cd /root
 wget -N $LOCALGIT/fbc.tgz
 tar xvfz fbc.tgz
 cd fbc
@@ -541,6 +544,7 @@ header "Installing libroboint"
 rm -f /usr/local/lib/libroboint.so*
 # install libusb-dev
 apt-get install libusb-dev
+cd /root
 git clone https://gitlab.com/Humpelstilzchen/libroboint.git
 cd libroboint
 # python3 compatibility 'patch'
@@ -561,6 +565,7 @@ rm -rf libroboint
 
 # and ftduino_direct
 header "Installing ftduino_direct.py"
+cd /root
 wget -N https://github.com/PeterDHabermehl/ftduino_direct/raw/master/$FTDDIRECT.tar.gz
 tar -xzvf $FTDDIRECT.tar.gz 
 cd $FTDDIRECT
@@ -587,7 +592,7 @@ header "Install TS Cal"
 apt-get -y install --no-install-recommends xinput-calibrator
 chmod og+rw /usr/share/X11/xorg.conf.d/99-calibration.conf
 
-# Remove old app
+# Remove legacy app
 rm -rf /opt/ftc/apps/system/tscal
 
 # Remove any installed TS-Cal
@@ -605,30 +610,25 @@ rm -f ./tscal.zip
 # - Add TX-Pi config
 #
 header "Install TX-Pi config"
-# Remove old app to configure SSH and VNC servers.
-# Became obsolete due to new TX-Pi config
+# Remove legacy apps and configurations
 rm -rf /home/ftc/apps/430d692e-d285-4f05-82fd-a7b3ce9019e5
 rm -rf /home/ftc/apps/e7b22a70-7366-4090-b251-5fead780c5a0
-
 rm -f /etc/sudoers.d/sshvnc
-rm -rf /opt/ftc/apps/system/txpiconfig
-
 # Remove any installed TX-Pi config
 rm -rf ${TXPICONFIG_DIR}
-
-cd /home/ftc/apps
-wget "${TXPIAPPS_URL}config/config.zip"
 mkdir -p "${TXPICONFIG_DIR}"
-unzip -o config.zip -d "${TXPICONFIG_DIR}"
+cd ${TXPICONFIG_DIR}
+wget "${TXPIAPPS_URL}config/config.zip"
+unzip ./config.zip
 chown -R ftc:ftc ${TXPICONFIG_DIR}
 chmod +x ${TXPICONFIG_DIR}/config.py
 chown root:root ${TXPICONFIG_DIR}/scripts/*
 chmod 744 ${TXPICONFIG_DIR}/scripts/*
 rm -f ./config.zip
 
-
 # add robolt support
 # robolt udev rules have already been installed from the main repository
+header "Install robolt"
 cd /root
 git clone https://github.com/ftCommunity/python-robolt.git
 cd python-robolt
@@ -638,6 +638,7 @@ rm -rf python-robolt
 
 # add wedo support
 # wedo udev rules have already been installed from the main repository
+header "Install WeDoMore"
 cd /root
 git clone https://github.com/gbin/WeDoMore.git
 cd WeDoMore
@@ -646,6 +647,7 @@ cd ..
 rm -rf WeDoMore
 
 # install the BT Control Set server
+header "Install BT Control Set server"
 apt-get -y install --no-install-recommends libbluetooth-dev
 cd /root
 git clone https://github.com/ftCommunity/ft_bt_remote_server.git
@@ -779,14 +781,15 @@ done
 # add VNC and TX-Pi homepage link to index page
 sed -i 's#<center><a href="https://github.com/ftCommunity/ftcommunity-TXT" target="ft-community">community edition</a></center>#<center><a href="https://github.com/ftCommunity/ftcommunity-TXT" target="ft-community">ftcommunity</a> - <a href="https://www.tx-pi.de/" target="tx-pi">TX-Pi</a> - <a href="/remote">VNC</a></center>#' /var/www/index.html
 
+# Fav icon
+wget -N $LOCALGIT/favicon.ico
+
 # Install novnc ...
 cd /var/www
 wget -N $LOCALGIT/novnc.tgz
 tar xvfz novnc.tgz
 rm novnc.tgz
 
-# Fav icon
-wget -O /var/www/favicon.ico $LOCALGIT/favicon.ico
 
 # ... and websockify for novnc
 cd /opt/ftc
