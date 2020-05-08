@@ -2,6 +2,8 @@
 
 https://www.tx-pi.de/
 
+Setup:
+``pip install -r requirements.txt``
 
 ``webapp.py`` contains the (Flask) application.
 The application can be run locally via ``python runwebapp.py``. 
