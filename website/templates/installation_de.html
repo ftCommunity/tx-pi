@@ -1,0 +1,102 @@
+{% extends "skel.html" %}
+{% block page_title %}TX-Pi installieren{% endblock %}
+{% block main %}
+{% filter markdown %}
+# TX-Pi Installation
+
+Die Installation erfordert lediglich drei einfache Schritte:
+
+  1. Installation der Raspbian Distribution auf einer SD-Karte
+  2. Manuelle Vorbereitungen
+  3. Ausführen des Installationsscripts für TX-Pi
+
+## Schritt 1: Installation der Raspbian Distribution auf einer SD-Karte
+
+Lade ein SD-Karten-Image herunter, bspw. [Raspbian Stretch Lite]
+(https://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2019-04-09/2019-04-08-raspbian-stretch-lite.zip) (empfohlen)
+oder [Raspbian Jessie
+Lite](https://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2017-07-05/2017-07-05-raspbian-jessie-lite.zip)
+(wird unterstützt, aber nicht mehr aktiv gepflegt) und kopiere das Image auf eine SD-Karte.
+Weitere Hinweise zur Installation von Raspbian Lite findet man
+[hier](https://www.raspberrypi.org/documentation/installation/installing-images/README.md).
+
+Lege die SD-Karte in den Raspberry Pi ein und starte diesen.
+Die nächsten Schritte können am einfachsten mit einem direkt angeschlossenen
+Bildschirm sowie einer Tastatur ausgeführt werden. Alternativ funktioniert
+das auch über SSH.
+
+
+## Schritt 2: Manuelle Vorbereitungen
+
+Diese Vorbereitungen sind bis auf die Installation des Displays optional.
+
+Logge Dich auf dem Raspberry Pi ein. Das Login ist "pi" und das Passwort lautet
+"raspberry".
+
+Starte das raspi-config-Script via ```sudo raspi-config``` und nehme folgende
+Änderungen vor:
+
+  1. Ändere den Hostnamen auf ```tx-pi``` oder einen anderen Namen
+  2. Deaktiviere "wait for network" in den ```Boot Options```
+
+Schließe raspi-conig und schalte den Raspberry Pi via ```sudo
+shutdown -h now``` ab.
+
+Schließe den Touchscreen (Waveshare 3,2", Waveshare 3,5" Typ "A", oder
+Waveshare 3,5" Typ "B") an.
+
+Starte Deinen Raspberry Pi.
+
+
+## Schritt 3: Ausführen des Installationsscripts für TX-Pi
+
+Logge Dich erneut auf dem Raspberry Pi (Login ```pi``` und Passwort ```raspberry```)
+ein.
+
+Lade das Setup-Script herunter:
+
+```
+wget https://tx-pi.de/tx-pi-setup.sh
+```
+
+und führe es aus (sofern Du ein 3,5" Display installiert hast, beachte die
+unten genannten Hinweise zu 3,5" Displays):
+
+```
+sudo bash ./tx-pi-setup.sh
+```
+
+Die Ausführung des Scriptes dauert ca. eine Stunde. Es aktualisiert das
+Betriebssystem und lädt weitere Software aus dem Internet. Am Ende der
+Installation wird der Raspberry Pi automatisch neu gestartet und die
+[fischertechnik Community Firmware](http://cfw.ftcommunity.de/) wird
+nach dem Neustart angezeigt.
+
+
+# Unterstützung für 3.5" Displays
+
+Der TX-Pi unterstützt neben dem 3,2" Display auch die 3,5" Displays von
+Waveshare.
+
+Zur Installation des Waveshare 3,5" Typ "A" Displays verwende folgenden Befehl:
+```
+sudo bash ./tx-pi-setup.sh LCD35
+```
+
+und für das Waveshare 3,5" Typ "B" (IPS) Display folgenden Befehl:
+```
+sudo bash ./tx-pi-setup.sh LCD35B
+```
+
+Für das Waveshare 3,5" IPS (B) *revision 2.0* Display:
+```
+sudo bash ./tx-pi-setup.sh LCD35BV2
+```
+
+
+Die 3,5" Displays haben eine Auflösung von 320x480 Pixel, während das 3,2"
+Display und das Display des fischertechnik TXT lediglich 240x320 Pixel bieten.
+Aus diesem Grunde könnten in Ausnahmefällen einige Apps etwas unterschiedlich
+dargestellt werden.
+{% endfilter %}
+{% endblock %}

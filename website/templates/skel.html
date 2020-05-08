@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="{{ LANG }}">
+<head>
+  <meta charset="utf-8">
+  <title>{% block page_title %}TX-Pi{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="format-detection" content="telephone=no">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <link rel="stylesheet" type="text/css" href="/static/styles/main.css"/>
+</head>
+<body>
+<header>
+  <nav>
+    <a href="{{ url_for('home', lang=LANG) }}" class="brand"><span>TX-Pi</span></a>
+    <input id="bmenub" type="checkbox" class="show">
+    <label for="bmenub" class="burger pseudo button">menu</label>
+    <div class="menu">
+      {% for name, endpoint in MAIN_MENU %}
+        <a href="{% if '/' not in endpoint %}{{ url_for(endpoint, lang=LANG) }}{% else %}{{ endpoint }}{% endif %}" class="pseudo button">{{ name }}</a>
+      {% endfor %}
+    </div>
+  </nav>
+</header>
+<main>{% block main %}{% endblock %}</main>
+</body>
+</html>

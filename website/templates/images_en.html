@@ -1,0 +1,13 @@
+{% extends "skel.html" %}
+{% block page_title %}TX-Pi images{% endblock %}
+{% block main %}
+<h1>TX-Pi images</h1>
+<p>To install the image onto SD card, please follow the <a href="https://www.raspberrypi.org/documentation/installation/installing-images/README.md">instructions given on the Raspbian site</a> except to use the TX-Pi image instead of the Raspbian image.</p>
+<p>Download prepared TX-Pi images:</p>
+<div class="flex">
+  {% for img_name in images %}
+      {% set image = images[img_name] %}
+      {% include "image.html" %}
+  {% endfor %}
+</div>
+{% endblock %}
