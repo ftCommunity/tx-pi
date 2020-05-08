@@ -17,8 +17,8 @@
    inkscape:version="0.92.2 5c3e80d, 2017-08-06"
    sodipodi:docname="favicon.svg"
    inkscape:export-filename=""
-   inkscape:export-xdpi="90"
-   inkscape:export-ydpi="90">
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -28,9 +28,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4142136"
-     inkscape:cx="159.96782"
-     inkscape:cy="147.06373"
+     inkscape:zoom="1.99375"
+     inkscape:cx="119.87461"
+     inkscape:cy="248.05311"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -52,7 +52,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -60,36 +60,7 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(0,-732.3622)">
-    <rect
-       style="opacity:1;fill:#ffc421;fill-opacity:1;stroke:none;stroke-width:2.30940104;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       id="rect4157"
-       width="320"
-       height="320"
-       x="0"
-       y="732.36218"
-       inkscape:export-xdpi="96"
-       inkscape:export-ydpi="96" />
-    <path
-       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:medium;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';letter-spacing:5.19027042px;word-spacing:0px;fill:none;fill-opacity:1;stroke:#dddddf;stroke-width:16.05934525;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.94117647"
-       inkscape:connector-curvature="0"
-       id="path4228"
-       d="m 50.39828,828.26595 h 95.21902 v 24.98597 H 111.36336 V 956.45841 H 84.721413 V 853.25192 H 50.39828 Z" />
-    <path
-       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:medium;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';letter-spacing:5.19027042px;word-spacing:0px;fill:none;fill-opacity:1;stroke:#dddddf;stroke-width:16.05934525;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.94117647"
-       inkscape:connector-curvature="0"
-       id="path4230"
-       d="m 228.23086,891.03129 35.84552,65.42712 h -27.74913 l -24.15077,-43.78979 -23.94315,43.78979 H 160.3458 l 35.84552,-65.42712 -34.46153,-62.76534 h 27.81835 l 22.62834,41.2998 22.55916,-41.2998 h 27.95674 z" />
-    <path
-       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:medium;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';letter-spacing:5.19027042px;word-spacing:0px;fill:#448acc;fill-opacity:1;stroke:none;stroke-width:2.43323421px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 50.39828,828.26595 h 95.21902 v 24.98594 h -34.25394 v 103.2065 H 84.721413 V 853.25189 H 50.39828 Z"
-       id="path4158"
-       inkscape:connector-curvature="0" />
-    <path
-       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:medium;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';letter-spacing:5.19027042px;word-spacing:0px;fill:#448acc;fill-opacity:1;stroke:none;stroke-width:2.43323421px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 228.23086,891.03129 35.84555,65.4271 h -27.74916 l -24.15075,-43.7898 -23.94317,43.7898 H 160.3458 l 35.84552,-65.4271 -34.46153,-62.76534 h 27.81835 l 22.62836,41.29977 22.55917,-41.29977 h 27.95671 z"
-       id="path4160"
-       inkscape:connector-curvature="0" />
+     transform="translate(0,-732.36216)">
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;letter-spacing:1px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -112,5 +83,34 @@
          x="640"
          y="1032.3622"
          style="font-size:12.5px;line-height:1.25"> </tspan></text>
+    <g
+       id="g2533"
+       transform="translate(0,-4.00002)">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4158"
+         d="m 57.46507,747.57526 h 91.38301 v 23.97935 H 115.9741 v 99.04871 H 90.405456 V 771.55461 H 57.46507 Z"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:medium;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';letter-spacing:5.19027042px;word-spacing:0px;fill:#0c4273;fill-opacity:1;stroke:none;stroke-width:2.33520842px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path4160"
+         d="m 228.13347,807.81204 34.40146,62.79128 h -26.63126 l -23.17779,-42.02568 -22.97859,42.02568 h -26.76407 l 34.40145,-62.79128 -33.07321,-60.23678 h 26.69765 l 21.71677,39.63596 21.65034,-39.63596 h 26.83045 z"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:medium;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';letter-spacing:5.19027042px;word-spacing:0px;fill:#0c4273;fill-opacity:1;stroke:none;stroke-width:2.33520842px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path4164"
+         d="m 91.966155,922.12102 h 42.437305 q 18.92746,0 29.02209,10.46521 10.16103,10.38281 10.16103,29.66516 0,19.36477 -10.16103,29.82998 -10.09463,10.38283 -29.02209,10.38283 H 117.5348 v 42.6849 H 91.966155 Z m 25.568645,22.9905 v 34.36215 h 14.14578 q 7.43815,0 11.4893,-4.44976 4.05113,-4.5322 4.05113,-12.77252 0,-8.24031 -4.05113,-12.6901 -4.05115,-4.44977 -11.4893,-4.44977 z"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:medium;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';letter-spacing:5.19027042px;word-spacing:0px;fill:#0c4375;fill-opacity:1;stroke:none;stroke-width:2.33520842px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path4166"
+         d="m 202.46519,978.73502 h 25.56866 v 66.41408 h -25.56866 z"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:medium;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';letter-spacing:5.19027042px;word-spacing:0px;fill:#0c4375;fill-opacity:1;stroke:none;stroke-width:2.33520842px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path4166-5"
+         d="m 202.41835,921.17271 h 25.56867 v 25.13302 h -25.56867 z"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:medium;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';letter-spacing:5.19027042px;word-spacing:0px;fill:#0c4375;fill-opacity:1;stroke:none;stroke-width:2.33520842px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    </g>
   </g>
 </svg>
