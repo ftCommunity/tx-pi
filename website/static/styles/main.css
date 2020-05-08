@@ -1,4 +1,4 @@
-@import 'picnic.min.css';
+@import 'picnic.css';
 
 html, * {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", Helvetica, sans-serif;
@@ -23,4 +23,8 @@ body > header {
 
 body > main {
   padding: 2em;
+}
+
+.card {
+  z-index: -1;
 }
