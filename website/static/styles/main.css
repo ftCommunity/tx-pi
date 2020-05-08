@@ -24,3 +24,7 @@ body > header {
 body > main {
   padding: 2em;
 }
+
+.card {
+  z-index: -1;
+}
