@@ -16,7 +16,7 @@ fischertechnik actors and sensors.
   - User friendly touchscreen GUI for small add-on screens
     - Waveshare 3.2" and 3.5" tested
     - Screen mirroring onto the "big screen" for demos and bigger audiences
-    - Automatic detection and unsage of keyboards and mice
+    - Automatic detection and usage of keyboards and mice
   - System tools for network configuration etc
   - Support for various USB or Bluetooth attached fischertechnik interfaces
     - Robo Interface
