@@ -1,0 +1,15 @@
+<div>
+  <article class="card">
+    <header>
+      <h3>{{ image.name }}</h3>
+    </header>
+    <section>
+      <dl>
+        <dt>{{ CHECKSUM }}</dt><dd>{{ image.checksum }}</dd>
+        <dt>{{ RELEASED }}</dt><dd>{{ image.date }}</dd>
+        <dt>{{ SIZE }}</dt><dd>{{ image.size }}</dd>
+      </dl>
+    </section>
+    <footer><a href="/images/latest_{{ img_name }}"><button>Download</button></a></footer>
+  </article>
+</div>

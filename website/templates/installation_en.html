@@ -1,0 +1,96 @@
+{% extends "skel.html" %}
+{% block page_title %}TX-Pi installation{% endblock %}
+{% block main %}
+{% filter markdown %}
+# TX-Pi installation
+
+The entire installation consists of three main steps:
+
+  1. Install a standard raspbian operating system image onto SD card
+  2. Do some minor manual preparations
+  3. Run a script that will do all the tx-pi specific modifications
+
+## Step 1: Install Raspbian onto SD card
+
+Get an SD card image of e.g. [Raspbian Stretch
+Lite](https://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2019-04-09/2019-04-08-raspbian-stretch-lite.zip) (recommended)
+or [Raspbian Jessie
+Lite](https://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2017-07-05/2017-07-05-raspbian-jessie-lite.zip)
+(still supported but not actively maintained)
+and install it onto SD card. Other versions may work as well but the
+aforementioned ones have been tested. More information on installing
+rasbian on SD card can be found
+[here](https://www.raspberrypi.org/documentation/installation/installing-images/README.md).
+
+Insert the SD card into your Pi and boot it. Unless you are very
+familiar with the Pi and are able to do a headless setup you should
+have a keyboard and HDMI display connected to the Pi.
+
+## Step 2: Do some manual preparations
+
+Now log into your pi using the keyboard and the screen. The login is
+"pi" and the password is "raspberry" as with any raspian installation.
+
+Start the raspi-config tool by typing ```sudo raspi-config``` and
+perform the following things:
+
+  1. Change the hostname to ```tx-pi``` or something similar
+  2. Disable "wait for network" in the ```Boot Options```
+
+Leave the raspi-config tool and shutdown the Pi by typing ```sudo
+shutdown -h now```. Connect the small 3.2 inch LCD if you haven't yet
+done so.
+
+Start your Pi again.
+
+## Step 3: Run the TX-Pi setup
+
+Again log into your Pi and once more use use the login ```pi``` and
+the password ```raspberry```.
+
+Now download the setup script by typing:
+
+```
+wget https://tx-pi.de/tx-pi-setup.sh
+```
+
+and run the script by typing
+```
+sudo bash ./tx-pi-setup.sh
+```
+
+This will now take about one hour and download and install a lot of
+programs from the internet onto your Pi. Once the installation is done
+your Pi will automatically reboot and it will boot into the user
+interface of the [fischertechnik community
+firmware](http://cfw.ftcommunity.de/).
+
+
+# Support for 3.5" screens
+
+The TX-Pi also supports the 3.5" TFT displays from Waveshare. To
+configure TX-Pi for one of these instead of the default 3.2" version
+the install script has to be invoked with a special option.
+
+If you use the regular (A) type display from waveshare:
+```
+sudo bash ./tx-pi-setup.sh LCD35
+```
+
+and if you have the IPS (B) type display:
+```
+sudo bash ./tx-pi-setup.sh LCD35B
+```
+
+If you have the IPS (B) *revision 2.0* type display:
+```
+sudo bash ./tx-pi-setup.sh LCD35BV2
+```
+
+
+The 3.5" display has a resolution of 320x480 pixel while the 3.2" display
+and the display of the fischertechnik TXT only provide 240x320 pixels. Thus
+some apps written for the TXT or the regular TX-Pi setup may look a little
+different. But due to the Qt framework most apps will just look fine.
+{% endfilter %}
+{% endblock %}

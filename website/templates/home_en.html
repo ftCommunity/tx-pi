@@ -1,0 +1,17 @@
+{% extends "skel.html" %}
+{% block page_title %}TX-Pi - A Raspberry Pi for fischertechnik{% endblock %}
+{% block main %}
+<h1>TX-Pi - A Raspberry Pi for fischertechnik</h1>
+<p>The aim of the TX-Pi project is to integrate the <a href="https://www.raspberrypi.org/">Raspberry Pi</a>
+  with the <a href="http://www.fischertechnik.de">fischertechnik construction toy</a>.
+  The project therefore provides case designs for mechanical integration, operating system images for
+  software integration and hardware designs for electrical integration.</p>
+<p>The TX-Pi project provides a <a href="{{ url_for('installation', lang=LANG) }}">setup script</a> to install the
+  <a href="https://cfw.ftcommunity.de/">community firmware for the fischertechnik TXT</a> on a regular
+  Raspberry Pi.</p>
+<p>Furthermore, we provide <a href="{{ url_for('images', lang=LANG) }}">SD card images</a> for an easy installation without having to deal with the install script.</p>
+<hr>
+<p><center><img src="https://thingiverse-production-new.s3.amazonaws.com/assets/dd/97/2e/72/57/TX-Pi2c_Geh01.JPG" width="90%"><br>
+<b>The TX-Pi modules:</b> Display module, <a href="https://www.thingiverse.com/thing:3478004">(optional) I2C breakout module</a> and Raspberry Pi module.</center></p>
+<p>3D-Print data for the cases is available at the <a href="https://github.com/ftCommunity/tx-pi">GitHub-Repository</a>.</p>
+{% endblock %}
