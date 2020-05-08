@@ -107,6 +107,8 @@ if [ "$#" -gt 0 ]; then
         error "LCD35BV2 - create 3.5\" IPS rev. 2 setup"
         exit 2
     fi
+else
+   header "Setup for Waveshare 3.2 inch screen"
 fi
 
 # ----------------------- package installation ---------------------
