@@ -19,14 +19,21 @@ body {
 
 body > header {
   position: fixed;
+    z-index: 1000;
+}
+
+body > header nav {
+  font-size: 90%;
+  background-color: #E9F2FA;
+  border-bottom: 1px solid #ccc;
+}
+
+body > header nav .brand {
+  font-size: 120%;
 }
 
 body > main {
-  padding: 2em;
-}
-
-.card {
-  z-index: -1;
+  padding: 3em;
 }
 
 .sdimage {

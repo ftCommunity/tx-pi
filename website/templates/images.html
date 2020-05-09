@@ -1,3 +1,5 @@
+<div class="flex two">
+  {% for image in images %}
 <div>
   <article class="card sdimage">
     <header>
@@ -10,6 +12,8 @@
         <dt>{{ SIZE }}</dt><dd>{{ image.size }}</dd>
       </dl>
     </section>
-    <footer><a href="/images/latest_{{ img_name }}"><button>Download</button></a></footer>
+    <footer><a href="{{ image.download_url }}"><button>Download</button></a></footer>
   </article>
+</div>
+  {% endfor %}
 </div>
