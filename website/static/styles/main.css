@@ -28,3 +28,26 @@ body > main {
 .card {
   z-index: -1;
 }
+
+.sdimage {
+  font-size: 80%;
+}
+
+.sdimage dl {
+  font-size: 96%;
+  color: #566573;
+}
+
+.sdimage dt {
+  font-weight: 500;
+}
+
+.sdimage dd {
+  margin-left: 1em;
+}
+
+.sdimage h3 {
+  font-size: 120%;
+  font-weight: 500;
+  color: #1C2833;
+}
