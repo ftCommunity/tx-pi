@@ -98,7 +98,11 @@ def images(lang):
     """\
     Renders a page about the images.
     """
-    images = TXPI_IMAGES
+    images = []
+    for name, img in TXPI_IMAGES.items():
+        img['download_url'] = '/images/latest_{0}'.format(name)
+        img['descr'] = img['descr_de'] if lang == 'de' else img['descr_en']
+        images.append(img)
     return render_template('images_{0}.html'.format(lang), images=images)
 
 

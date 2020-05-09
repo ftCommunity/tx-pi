@@ -4,10 +4,5 @@
 <h1>TX-Pi Images</h1>
 <p>Zum Installieren der Images auf SD-Karte folge bitte der <a href="https://www.raspberrypi.org/documentation/installation/installing-images/README.md">Anleitung auf der Raspbian-Webseite</a>, wobei statt des Raspbian-Images das TX-Pi-Image zu benutzen ist.</p>
 <p>SD-Karten-Images zum Download</p>
-<div class="flex">
-  {% for img_name in images %}
-      {% set image = images[img_name] %}
-      {% include "image.html" %}
-  {% endfor %}
-</div>
+{% include "images.html" %}
 {% endblock %}

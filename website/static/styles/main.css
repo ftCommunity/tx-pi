@@ -19,12 +19,42 @@ body {
 
 body > header {
   position: fixed;
+    z-index: 1000;
+}
+
+body > header nav {
+  font-size: 90%;
+  background-color: #E9F2FA;
+  border-bottom: 1px solid #ccc;
+}
+
+body > header nav .brand {
+  font-size: 120%;
 }
 
 body > main {
-  padding: 2em;
+  padding: 3em;
 }
 
-.card {
-  z-index: -1;
+.sdimage {
+  font-size: 80%;
+}
+
+.sdimage dl {
+  font-size: 96%;
+  color: #566573;
+}
+
+.sdimage dt {
+  font-weight: 500;
+}
+
+.sdimage dd {
+  margin-left: 1em;
+}
+
+.sdimage h3 {
+  font-size: 120%;
+  font-weight: 500;
+  color: #1C2833;
 }
