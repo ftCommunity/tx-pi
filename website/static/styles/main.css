@@ -29,8 +29,7 @@ body > header nav {
   color: #fff !important;
 }
 
-nav .burger ~ .menu, 
-nav .show:checked ~ .burger {
+nav .burger ~ .menu { 
   background-color: #448acc;
 }
   
