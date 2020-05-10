@@ -29,6 +29,12 @@ body > header nav {
   color: #fff !important;
 }
 
+nav .burger ~ .menu, 
+nav .show:checked ~ .burger {
+  background-color: #448acc;
+}
+  
+
 body > header nav .brand {
   font-size: 120%;
 }
