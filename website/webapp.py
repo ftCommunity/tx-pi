@@ -137,4 +137,5 @@ def inject_defaults():
             'RELEASED': 'Released' if is_en else 'Veröffentlicht',
             'CHECKSUM': 'Checksum (MD5)' if is_en else 'Checksumme (MD5)',
             'SIZE': 'Size' if is_en else 'Größe',
+            'RASPBIAN_VERSION': 'Raspian version' if is_en else 'Raspbian Version',
     }
