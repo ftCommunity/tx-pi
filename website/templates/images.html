@@ -1,4 +1,4 @@
-<div class="flex two">
+<div class="flex two-600 three-1000">
   {% for image in images %}
 <div>
   <article class="card sdimage">
@@ -10,6 +10,7 @@
         <dt>{{ CHECKSUM }}</dt><dd>{{ image.checksum }}</dd>
         <dt>{{ RELEASED }}</dt><dd>{{ image.date }}</dd>
         <dt>{{ SIZE }}</dt><dd>{{ image.size }}</dd>
+        <dt>{{ RASPBIAN_VERSION }}</dt><dd>{{ image.raspbian_version }}</dd>
       </dl>
     </section>
     <footer><a href="{{ image.download_url }}"><button>Download</button></a></footer>
