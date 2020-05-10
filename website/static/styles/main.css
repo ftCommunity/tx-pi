@@ -24,8 +24,9 @@ body > header {
 
 body > header nav {
   font-size: 90%;
-  background-color: #E9F2FA;
+  background-color: #448acc;
   border-bottom: 1px solid #ccc;
+  color: #fff !important;
 }
 
 body > header nav .brand {
