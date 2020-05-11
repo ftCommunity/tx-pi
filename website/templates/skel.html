@@ -20,8 +20,8 @@
     <input id="bmenub" type="checkbox" class="show">
     <label for="bmenub" class="burger pseudo button">menu</label>
     <div class="menu">
-      {% for name, endpoint in MAIN_MENU %}
-        <a href="{% if '/' not in endpoint %}{{ url_for(endpoint, lang=LANG) }}{% else %}{{ endpoint }}{% endif %}" class="pseudo button">{{ name }}</a>
+      {% for item in MAIN_MENU %}
+        <a href="{% if '/' not in item.url %}{{ url_for(item.url, lang=LANG) }}{% else %}{{ item.url }}{% endif %}" class="pseudo button{% if item.icon %} {{ item.icon }}{% endif %}">{{ item.name }}</a>
       {% endfor %}
     </div>
   </nav>
