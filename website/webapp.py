@@ -20,6 +20,7 @@ import os
 import uuid
 from flask import Flask, render_template, request
 from flask_misaka import Misaka
+from collections import namedtuple
 import jinja2
 
 app = Flask(__name__)
@@ -113,11 +114,12 @@ def installation(lang):
     """
     return render_template('installation_{0}.html'.format(lang))
 
+MenuItem = namedtuple('MenuItem', ['name', 'url', 'icon'])
 
-_MAIN_MENU = (
-    ('Installation', 'installation'),
-    ('Images', 'images'),
-    ('Github', _GITHUB_URL),
+_MAIN_MENU = ( 
+    MenuItem('Installation', 'installation', icon='icon-install'),
+    MenuItem('Images', 'images', icon='icon-floppy'),
+    MenuItem('Github', _GITHUB_URL, icon='icon-gh'),
 )
 
 @app.context_processor
@@ -128,7 +130,7 @@ def inject_defaults():
     is_en = not request.path.startswith('/de/')
     # Create a (modifiable) copy of the _MAIN_MENU
     main_menu = list(_MAIN_MENU)
-    main_menu.append(('Deutsch', '/de/') if is_en else ('English', '/en/'))
+    main_menu.append(MenuItem('Deutsch', '/de/', icon=None) if is_en else MenuItem('English', '/en/', icon=None))
     # Uses upper case names to distinguish them from variables set by the endpoints
     return { # Variables mainly used for skel.html
             'LANG': 'en' if is_en else 'de',
