@@ -210,11 +210,10 @@ echo "dtoverlay=gpio-poweroff,gpiopin=4,active_low=1" >> /boot/config.txt
 #-- Enable WLAN iff it isn't enabled yet
 if [ "$(wpa_cli -i wlan0 get country)" == "FAIL" ]; then
     msg "Enable WLAN"
+    rfkill unblock wifi
     wpa_cli -i wlan0 set country DE
     wpa_cli -i wlan0 save_config
-    rfkill unblock wifi
-    # Initial network scan
-    wpa_cli -i wlan0 scan
+    ifconfig wlan0 up
 else
     msg "WLAN already configured, don't touch it"
 fi
