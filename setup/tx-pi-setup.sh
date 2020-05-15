@@ -123,8 +123,10 @@ apt-get -y install --no-install-recommends xserver-xorg xinit xserver-xorg-video
 # python and pyqt
 apt-get -y install --no-install-recommends python3 python3-pyqt4 python3-pip python3-numpy python3-dev cmake python3-pexpect
 # python RPi GPIO access
-apt-get -y install -y python3-rpi.gpio
-apt-get -y install -y python-rpi.gpio  #TODO: Still necessary?
+apt-get -y install python3-rpi.gpio
+if [ "$IS_STRETCH" = true ]; then
+    apt-get -y install python-rpi.gpio
+fi
 # misc tools
 apt-get -y install i2c-tools python3-smbus lighttpd git subversion ntpdate usbmount
 # avrdude
