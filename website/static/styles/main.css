@@ -53,15 +53,16 @@ body > main {
 }
 
 .sdimage dt {
-  font-weight: 500;
+  margin-top: .8em;
+  font-weight: 600;
 }
 
 .sdimage dd {
   margin-left: 1em;
 }
 
-.sdimage h3 {
+.sdimage header h3 {
   font-size: 120%;
-  font-weight: 500;
+  line-height: 1.5em;
   color: #1C2833;
 }
