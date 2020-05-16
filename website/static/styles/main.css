@@ -53,7 +53,8 @@ body > main {
 }
 
 .sdimage dt {
-  font-weight: 500;
+  margin-top: .8em;
+  font-weight: 600;
 }
 
 .sdimage dd {
