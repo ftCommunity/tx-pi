@@ -1,1 +1,4 @@
 .idea
+manual/*
+!manual/images/
+!manual/*.tex
