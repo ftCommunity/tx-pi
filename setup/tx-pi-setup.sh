@@ -25,7 +25,7 @@
 # * After running the script, the Pi will boot into the fischertechnik community
 #   firmware.
 #===============================================================================
-
+set -ue
 # Schema: YY.<release-number-within-the-year>.minor(.dev)?
 TX_PI_VERSION='20.1.0.dev'
 
@@ -123,10 +123,7 @@ apt-get -y install --no-install-recommends xserver-xorg xinit xserver-xorg-video
 # python and pyqt
 apt-get -y install --no-install-recommends python3 python3-pyqt4 python3-pip python3-numpy python3-dev cmake python3-pexpect
 # python RPi GPIO access
-apt-get -y install python3-rpi.gpio
-if [ "$IS_STRETCH" = true ]; then
-    apt-get -y install python-rpi.gpio
-fi
+apt-get -y install -y python3-rpi.gpio
 # misc tools
 apt-get -y install i2c-tools python3-smbus lighttpd git subversion ntpdate usbmount
 # avrdude
@@ -276,15 +273,9 @@ apt-get -y install --no-install-recommends mpg123
 
 # ----------------------- user setup ---------------------
 # create ftc user
-groupadd ftc
-useradd -g ftc -m ftc
-usermod -a -G video ftc
-usermod -a -G audio ftc
-usermod -a -G tty ftc
-usermod -a -G dialout ftc
-usermod -a -G input ftc
-usermod -a -G gpio ftc
-usermod -a -G i2c ftc
+groupadd -f ftc
+useradd -g ftc -m ftc || true
+usermod -a -G video,audio,tty,dialout,input,gpio,i2c,ftc ftc
 echo "ftc:ftc" | chpasswd
 
 # special ftc permissions
@@ -322,7 +313,7 @@ chmod 0440 /etc/sudoers.d/ft_bt_remote_server
 cat <<EOF > /etc/sudoers.d/txpiconfig
 ## Permissions for ftc access to programs required
 ## for the TX-Pi config app and the app store (install dependencies via apt-get)
-ftc     ALL = NOPASSWD: ${TXPICONFIG_DIR}/scripts/hostname, ${TXPICONFIG_DIR}/scripts/camera, ${TXPICONFIG_DIR}/scripts/ssh, ${TXPICONFIG_DIR}/scripts/x11vnc, ${TXPICONFIG__DIR}/scripts/display, ${TXPICONFIG_DIR}/scripts/i2cbus, /usr/bin/apt-get
+ftc     ALL = NOPASSWD: ${TXPICONFIG_DIR}/scripts/hostname, ${TXPICONFIG_DIR}/scripts/camera, ${TXPICONFIG_DIR}/scripts/ssh, ${TXPICONFIG_DIR}/scripts/x11vnc, ${TXPICONFIG_DIR}/scripts/display, ${TXPICONFIG_DIR}/scripts/i2cbus, /usr/bin/apt-get
 EOF
 chmod 0440 /etc/sudoers.d/txpiconfig
 
@@ -345,10 +336,7 @@ systemctl enable launcher
 
 
 # Configure X.Org to use /dev/fb1
-x_fbdev_conf="/usr/share/X11/xorg.conf.d/99-fbdev.conf"
-# Patch X.Org to use /dev/fb1
-rm -f ${x_fbdev_conf}
-cat <<EOF > ${x_fbdev_conf}
+cat <<EOF > "/usr/share/X11/xorg.conf.d/99-fbdev.conf"
 Section "Device"
     Identifier      "FBDEV"
     Driver          "fbdev"
