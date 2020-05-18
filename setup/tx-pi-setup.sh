@@ -121,7 +121,7 @@ EOF
 
     cat <<EOF > /etc/apt/preferences.d/tx-pi
 # Added due to issues with the X11 VNC server
-Package: x11vnc
+Package: x11vnc x11vnc-data
 Pin: release n=jessie
 Pin-Priority: 1000
 
@@ -138,7 +138,7 @@ fi
 header "Update Debian"
 apt-get update
 apt --fix-broken -y install
-apt-get -y upgrade
+apt-get -y --allow-downgrades upgrade
 
 
 # X11
@@ -300,6 +300,8 @@ groupadd -f ftc
 useradd -g ftc -m ftc || true
 usermod -a -G video,audio,tty,dialout,input,gpio,i2c,ftc ftc
 echo "ftc:ftc" | chpasswd
+mkdir -p /home/ftc/apps
+chown -R ftc:ftc /home/ftc/apps
 
 # special ftc permissions
 cd /etc/sudoers.d
@@ -813,8 +815,7 @@ if [ "$IS_STRETCH" = false ]; then
     sed -i "s/www-data/ftc/g" /usr/lib/tmpfiles.d/lighttpd.tmpfile.conf
 fi
 
-mkdir -p /home/ftc/apps
-chown -R ftc:ftc /home/ftc/apps
+
 
 # disable the TXTs default touchscreen timeout as the waveshare isn't half
 # as bad as the TXTs one
