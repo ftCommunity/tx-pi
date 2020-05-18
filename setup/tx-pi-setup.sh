@@ -111,12 +111,35 @@ else
    header "Setup for Waveshare 3.2 inch screen"
 fi
 
+# Update Debian sources
+if [ "$IS_BUSTER" = true ]; then
+    cat <<EOF > /etc/apt/sources.list.d/tx-pi.list
+# TX-Pi sources used to solve issues with newer packages provided by Buster
+deb http://raspbian.raspberrypi.org/raspbian/ jessie main contrib non-free rpi
+deb http://raspbian.raspberrypi.org/raspbian/ stretch main contrib non-free rpi
+EOF
+
+    cat <<EOF > /etc/apt/preferences.d/tx-pi
+# Added due to issues with the X11 VNC server
+Package: x11vnc
+Pin: release n=jessie
+Pin-Priority: 1000
+
+# Added due to issues with libroboint and Raspberry Pi 4
+Package: libusb-0.1-4 libusb-dev
+Pin: release n=stretch
+Pin-Priority: 1000
+EOF
+fi
+
+
 # ----------------------- package installation ---------------------
 
 header "Update Debian"
 apt-get update
 apt --fix-broken -y install
 apt-get -y upgrade
+
 
 # X11
 apt-get -y install --no-install-recommends xserver-xorg xinit xserver-xorg-video-fbdev xserver-xorg-legacy unclutter
@@ -436,27 +459,8 @@ if [ "$IS_BUSTER" = true ]; then
     # VNC support in Buster is broken / may deliver distorted output
     # Remove libvncserver1 if any
     apt-get -y remove libvncserver1 x11vnc-data libvncclient1
-    cat <<EOF > /etc/apt/preferences.d/buster.pref
-# Added by TX-Pi setup to solve VNC problems with Buster.
-Package: *
-Pin: release a=buster
-Pin-Priority: 900
-EOF
-    cat <<EOF > /etc/apt/preferences.d/jessie.pref
-# Added by TX-Pi setup to solve VNC problems with Buster.
-Package: *
-Pin: release a=jessie
-Pin-Priority: 50
-EOF
-    if [[ $( cat /etc/apt/sources.list ) != *"Jessie"* ]]; then
-        echo "# Jessie repository added by TX-Pi setup to solve VNC problems" >> /etc/apt/sources.list
-        echo "deb http://raspbian.raspberrypi.org/raspbian/ jessie main contrib non-free rpi" >> /etc/apt/sources.list
-    fi
-    apt-get update
-    apt-get -y install -t=jessie x11vnc
-else
-    apt-get -y install x11vnc
 fi
+apt-get -y install x11vnc
 cat <<EOF > /etc/systemd/system/x11vnc.service
 [Unit]
 Description=X11 VNC service
