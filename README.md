@@ -86,7 +86,7 @@ The entire installation consists of three main steps:
 
 Get an SD card image of e.g.  [Raspbian Stretch
 Lite](https://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2019-04-09/2019-04-08-raspbian-stretch-lite.zip)
-or [Raspbian Buster Lite](https://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2020-02-14/2020-02-13-raspbian-buster-lite.zip)
+or [Raspberry Pi OS Buster Lite]( http://downloads.raspberrypi.org/raspios_lite_armhf/images/raspios_lite_armhf-2020-05-28/2020-05-27-raspios-buster-lite-armhf.zip)
 (required for Raspberry 4 and recommended in general) and install it onto SD card. Other versions may work as well but the
 aforementioned ones have been tested. More information on installing Raspbian on SD card can be found
 [here](https://www.raspberrypi.org/documentation/installation/installing-images/README.md).
