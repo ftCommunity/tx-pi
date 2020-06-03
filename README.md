@@ -184,7 +184,7 @@ before running it.
 
 # Optional I2C breakout
 
-Since the RPi already has a builtin I2C interface, the TX-Pi I2C breakout was developed. It's an additional case part to be put inbetween RPi and display. It holds a prototype HAT board which provides enough soldering eyes to connect to the 3V3 RPi I2C bus. Additionally, the top part could hold a step-down power converter and an I2C level shifter. Thus the RPi could be powered via printed fischertechnik flush sleeves in the breakout case, and an 5V I2C port can be provieded.
+Since the RPi already has a builtin I2C interface, the TX-Pi I2C breakout was developed. It's an additional case part to be put inbetween RPi and display. It holds a prototype HAT board which provides enough soldering eyes to connect to the 3V3 RPi I2C bus. Additionally, the top part could hold a step-down power converter and an I2C level shifter. Thus the RPi could be powered via printed fischertechnik flush sleeves in the breakout case, and an 5V I2C port can be provided.
 All related information is stored [here on thingiverse.com](https://www.thingiverse.com/thing:3478004).
 
 ![I2C breakout](https://thingiverse-production-new.s3.amazonaws.com/assets/dd/97/2e/72/57/TX-Pi2c_Geh01.JPG)
