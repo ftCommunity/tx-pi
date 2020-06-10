@@ -15,7 +15,9 @@
 \usepackage{listings}
 \usepackage{color}
 \usepackage{fontspec}
-\usepackage{paratype}
+\ifx\HCode\undefined % detect tex4ht
+  \usepackage{paratype}
+\fi
 \setmainfont{PT Sans}
 \setsansfont{PT Sans}
 \setmonofont{PT Mono}[Scale=0.88]
@@ -94,7 +96,7 @@ Zählereingänge        & 4                & -                   & -
 \end{table}
 
 
-\chapter{TX-Pi und der Raspberry Pi 4}
+\chapter{TX-Pi und der Raspberry Pi 4}\label{raspi-4}
 
 Grundsätzlich funktioniert der TX-Pi in Kombination mit dem Raspberry Pi 4, jedoch gibt
 es ein paar Einschränkungen. fischertechnik-Geräte, die per USB mit dem Raspberry Pi
@@ -115,8 +117,7 @@ und ausgeführt wird.
 Noch einfacher gelingt die Installation mit einem der Betriebssystem-Images,
 die unter \url{https://tx-pi.de/images/} angeboten werden.
 
-\section{Installation via Betriebssystem-Image}
-\label{sec:image}
+\section{Installation via Betriebssystem-Image}\label{sec:image}
 
 Am einfachsten gelingt die Installation mit einem der Betriebssystem-Images,
 die unter \url{https://tx-pi.de/images/} abrufbar sind.
