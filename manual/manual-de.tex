@@ -94,6 +94,18 @@ Zählereingänge        & 4                & -                   & -
 \end{table}
 
 
+\chapter{TX-Pi und der Raspberry Pi 4}
+
+Grundsätzlich funktioniert der TX-Pi in Kombination mit dem Raspberry Pi 4, jedoch gibt
+es ein paar Einschränkungen. fischertechnik-Geräte, die per USB mit dem Raspberry Pi
+verbunden werden, funktionieren u.U. nicht zuverlässig. Dieses Problem wurde in
+Zusammenhang mit der libroboint festgestellt; die Ursache ist derzeit noch nicht
+vollständig geklärt. 
+
+Wer auf die libroboint oder auf Anwendungen, die auf dieser Bibliothek aufbauen,
+angewiesen ist, sollte einen Raspberry Pi 3B oder 3B+ verwenden.
+
+
 \chapter{Installation}
 
 Jeder Raspberry Pi mit einem aktuellen Betriebssystem (Stretch oder Buster) läßt 
