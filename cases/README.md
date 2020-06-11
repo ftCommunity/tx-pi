@@ -1,6 +1,6 @@
 # Raspberry Pi case
 
-![Standard case](../images/tx-pi-cases.jpg)
+![Standard case](./images/tx-pi-cases.jpg)
 
   - Raspberry Pi
     - [Raspberry Pi2 and Pi3](pi/pi2_pi3/)
