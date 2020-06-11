@@ -11,7 +11,7 @@ top of the HAT.
 
 | Regular bottom |
 |:---:|
-| ![Bottom](.images/displ_ws40A_bottom.png) |
+| ![Bottom](./images/displ_ws40A_bottom.png) |
 | [View](displ_ws40A_bottom.stl) |
 | [Download](displ_ws40A_bottom.stl?raw=true) |
 
