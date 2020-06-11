@@ -7,6 +7,8 @@ use in conjunction with version of the raspberry pi top case with camera and dis
 
 The taller version is required for some older 3.2" V3 displays.
 
+### For use directly on top of Raspberry Pi2 and 3
+
 The following are used when the display is places directly on top of the Raspberry Pi 2 or 3 (without TX-Pi HAT in between) since they have cutouts for the USB and Ethernet connectors of the Raspberry Pi Model 2 or 3.
 
 | Regular bottom | Bottom with cable slot | Taller bottom |
