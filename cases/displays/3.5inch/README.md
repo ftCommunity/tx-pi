@@ -12,9 +12,9 @@ have cutouts for the USB and Ethernet connectors of the Raspberry Pi Model 2 or 
 
 | Regular bottom | Bottom with cable slot |
 |:---:|:---:|
-| ![Bottom](./images/display_v4_bottom.png) | ![Bottom](./images/display_v4_bottom_with_ribbon_slot.png) |
-| [View](display_v4_bottom.stl) | [View](display_v4_bottom_with_ribbon_slot.stl) |
-| [Download](display_v4_bottom.stl?raw=true) | [Download](display_v4_bottom.stl?raw=true) |
+| ![Bottom](../common/images/display_v4_bottom.png) | ![Bottom](../common/images/display_v4_bottom_with_ribbon_slot.png) |
+| [View](../common/display_v4_bottom.stl) | [View](../common/display_v4_bottom_with_ribbon_slot.stl) |
+| [Download](../common/display_v4_bottom.stl?raw=true) | [Download](../common/display_v4_bottom.stl?raw=true) |
 
 ## 3.5" top
 
