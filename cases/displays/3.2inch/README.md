@@ -5,7 +5,9 @@
 The version with ribbon cable slot allows to route the camera ribbon cable from the pi through the display case. This is usually 
 use in conjunction with version of the raspberry pi top case with camera and display slot.
 
-The taller version is required for some 3.2" V3 displays.
+The taller version is required for some older 3.2" V3 displays.
+
+The following are used when the display is places directly on top of the Raspberry Pi 2 or 3 (without TX-Pi HAT in between) since they have cutouts for the USB and Ethernet connectors of the Raspberry Pi Model 2 or 3.
 
 | Regular bottom | Bottom with cable slot | Taller bottom |
 |:---:|:---:|:---:|
