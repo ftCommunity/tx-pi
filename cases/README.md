@@ -14,3 +14,4 @@
     - [TX-Pi I2C breakout and power supply](hats/i2c_pwr)
   - Accessories
     - [Clips, stands, ...](accessories/clips_stands)
+    - [PiPower power supply](accessories/pipower)
