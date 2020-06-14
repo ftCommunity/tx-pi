@@ -2,6 +2,9 @@
 
 ![Standard case](./images/tx-pi-cases.jpg)
 
+More information helpful to support you in selecting the
+right cases can be found [here](selection).
+
   - Raspberry Pi
     - [Raspberry Pi2 and Pi3](pi/pi2_pi3/)
     - [Raspberry Pi4](pi/pi4)
