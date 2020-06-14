@@ -1,0 +1,1 @@
+FreeCAD data of the Expander HAT case is contained in the TX-Pi4_Case.FCStd file
