@@ -12,6 +12,7 @@
   - HATs
     - [TX-Pi HAT/ft-HAT](hats/tx-pi-hat)
     - [TX-Pi I2C breakout and power supply](hats/i2c_pwr)
+    - [Pi4 cooling HAT](hats/CoolerHAT)
   - Accessories
     - [Clips, stands, ...](accessories/clips_stands)
     - [PiPower power supply](accessories/pipower)
