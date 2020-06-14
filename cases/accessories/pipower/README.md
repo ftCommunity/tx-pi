@@ -1,6 +1,6 @@
 # ft PiPower
 
-![pipower](./images/popower.jpg)
+![pipower](./images/pipower.jpg)
 
 This is a design for a very cheap and simple power adapter. It
 converts the approx. 9V DC typically used with fischertechnik models
