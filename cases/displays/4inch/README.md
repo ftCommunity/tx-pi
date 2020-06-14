@@ -1,5 +1,7 @@
 # Display cases for Waveshare 4" and compatible
 
+<img src="./images/display4.jpg"/>
+
 This case is for 4 inch displays. This design can also be found
 on [Thingiverse](https://www.thingiverse.com/thing:3605290).
 
