@@ -1,5 +1,7 @@
 # I2C breakout and power supply
 
+<img src="./images/pi2c.jpg"/>
+
 This design can also be found on
 [Thingiverse](https://www.thingiverse.com/thing:3478004).
 
