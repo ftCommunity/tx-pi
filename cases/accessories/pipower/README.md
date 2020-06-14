@@ -5,8 +5,7 @@
 This is a design for a very cheap and simple power adapter. It
 converts the approx. 9V DC typically used with fischertechnik models
 to the 5V required by the Raspberry Pi. If only a power supply is
-needed it can be used e.g. instead of the (TX-Pi
-HAT)[../../hats/tx-pi-hat].
+needed it can be used e.g. instead of the [TX-Pi HAT](../../hats/tx-pi-hat).
 
 The PiPower mainly consists of one of those ubiquitous LM2596 based
 DC-DC converters which can easily be found on ebay and similar sites.
