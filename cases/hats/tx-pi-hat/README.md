@@ -17,6 +17,8 @@ HAT must be choosen to fit the connectors of the Raspberry Pi below.
 | [View](Exp_Wanne.stl) | [View](Exp_Wanne_Pi3.stl) | [View](Exp_Deckel.stl) |
 | [Download](Exp_Wanne.stl?raw=true) | [Download](Exp_Wanne_Pi3.stl?raw=true) | [Download](Exp_Deckel.stl?raw=true) |
 
+You will also need four M2.5x12mm countersunk screws.
+
 You may have to bend the part of the top covering the power button a
 little bit to prevent it from permanently pressing the button.
 
