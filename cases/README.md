@@ -4,6 +4,7 @@
 
   - Raspberry Pi
     - [Raspberry Pi2 and Pi3](pi/pi2_pi3/)
+    - [Raspberry Pi4](pi/pi4)
   - Displays
     - [Waveshare 3.2" and compatible](displays/3.2inch)
     - [Waveshare 3.5" and compatible](displays/3.5inch)
