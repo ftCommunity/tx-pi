@@ -18,8 +18,8 @@ Below is an example of a Raspberry Pi4 in the matching case:
 ![Pi4](./images/pi4.jpg)
 
 Choose the Raspberry Pi case from:
-  - [Raspberry Pi2 and Pi3](pi/pi2_pi3/)
-  - [Raspberry Pi4](pi/pi4)
+  - [Raspberry Pi2 and Pi3](../pi/pi2_pi3/)
+  - [Raspberry Pi4](../pi/pi4)
     
 ## The HAT
 
@@ -41,7 +41,7 @@ Below is an example of a Raspberry Pi4 with a HAT on top:
 ![Pi4 with HAT](./images/pi4_hat.jpg)
 
 Choose the HAT case from:
-  - [TX-Pi HAT/ft-HAT](hats/tx-pi-hat)
+  - [TX-Pi HAT/ft-HAT](../hats/tx-pi-hat)
   
 ## The display
 
@@ -73,6 +73,6 @@ display is unaffected by the Raspberry Pi and uses the same bottom
 shell in both setups.
 
 Choose the display case from:
-  - [Waveshare 3.2" and compatible](displays/3.2inch)
-  - [Waveshare 3.5" and compatible](displays/3.5inch)
-  - [Waveshare 4" and compatible](displays/4inch)
+  - [Waveshare 3.2" and compatible](../displays/3.2inch)
+  - [Waveshare 3.5" and compatible](../displays/3.5inch)
+  - [Waveshare 4" and compatible](../displays/4inch)
