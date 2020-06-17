@@ -27,7 +27,7 @@
 #===============================================================================
 set -ue
 # Schema: YY.<release-number-within-the-year>.minor(.dev)?
-TX_PI_VERSION='20.1.0.dev'
+TX_PI_VERSION='20.1.1.dev'
 
 DEBUG=false
 ENABLE_SPLASH=true
@@ -99,12 +99,15 @@ if [ "$#" -gt 0 ]; then
         header "Setup for Waveshare 3.5 inch (B) IPS screen"
     elif [ "$1" == "LCD35BV2" ]; then
         header "Setup for Waveshare 3.5 inch (B) IPS rev. 2 screen"
+    elif [ "$1" == "NODISP" ]; then
+        header "Setup without display driver installation"
     else
         error "Unknown parameter \"$1\""
         error "Allowed parameters:"
         error "LCD35    - create 3.5\" setup (instead of 3.2\")"
         error "LCD35B   - create 3.5\" IPS setup"
         error "LCD35BV2 - create 3.5\" IPS rev. 2 setup"
+        error "NODISP   - do not install a display driver (Install manually first!)"
         exit 2
     fi
 else
@@ -171,33 +174,38 @@ sed -i "s/#retry 60;/retry 20;/g" /etc/dhcp/dhclient.conf
 
 # ---------------------- display setup ----------------------
 header "Install screen driver"
-cd /root
-wget -N https://www.waveshare.com/w/upload/0/00/LCD-show-170703.tar.gz
-tar xvfz LCD-show-170703.tar.gz
-if [ ${LCD} == "LCD35BV2" ]; then
-    # Support for Waveshare 3.5" "B" rev. 2.0
-    # This display is not supported by the LCD-show-170703 driver but by
-    # the Waveshare GH repository.
-    # We won't switch to the GH repository soon since it causes more problems
-    # than blessing (2019-04)
-    cp ./LCD-show/LCD35B-show ./LCD-show/$LCD-show
-    wget https://github.com/waveshare/LCD-show/raw/master/waveshare35b-v2-overlay.dtb -P ./LCD-show/
-    sed -i "s/waveshare35b/waveshare35b-v2/g" ./LCD-show/$LCD-show
-fi
-# supress automatic reboot after installation
-sed -i "s/sudo reboot/#sudo reboot/g" LCD-show/$LCD-show
-sed -i "s/\"reboot now\"/\"not rebooting yet\"/g" LCD-show/$LCD-show
-cd LCD-show
-./$LCD-show $ORIENTATION
-# Clean up
-cd ..
-rm -f ./LCD-show-170703.tar.gz
-if [ "$DEBUG" = false ]; then
-    rm -rf ./LCD-show
-fi
-if [ $LCD == "LCD35BV2" ]; then
-    # Support for Waveshare 3.5" "B" rev. 2.0
-    sed -i "s/waveshare35b/waveshare35b-v2/g" /boot/config.txt
+
+if [ ${LCD} == "NODISP" ]; then
+    header "  --> Skipped by user request <--"
+else
+    cd /root
+    wget -N https://www.waveshare.com/w/upload/0/00/LCD-show-170703.tar.gz
+    tar xvfz LCD-show-170703.tar.gz
+    if [ ${LCD} == "LCD35BV2" ]; then
+        # Support for Waveshare 3.5" "B" rev. 2.0
+        # This display is not supported by the LCD-show-170703 driver but by
+        # the Waveshare GH repository.
+        # We won't switch to the GH repository soon since it causes more problems
+        # than blessing (2019-04)
+        cp ./LCD-show/LCD35B-show ./LCD-show/$LCD-show
+        wget https://github.com/waveshare/LCD-show/raw/master/waveshare35b-v2-overlay.dtb -P ./LCD-show/
+        sed -i "s/waveshare35b/waveshare35b-v2/g" ./LCD-show/$LCD-show
+    fi
+    # supress automatic reboot after installation
+    sed -i "s/sudo reboot/#sudo reboot/g" LCD-show/$LCD-show
+    sed -i "s/\"reboot now\"/\"not rebooting yet\"/g" LCD-show/$LCD-show
+    cd LCD-show
+    ./$LCD-show $ORIENTATION
+    # Clean up
+    cd ..
+    rm -f ./LCD-show-170703.tar.gz
+    if [ "$DEBUG" = false ]; then
+        rm -rf ./LCD-show
+    fi
+    if [ $LCD == "LCD35BV2" ]; then
+        # Support for Waveshare 3.5" "B" rev. 2.0
+        sed -i "s/waveshare35b/waveshare35b-v2/g" /boot/config.txt
+    fi
 fi
 
 # Driver installation changes "console=serial0,115200" to "console=ttyAMA0,115200"
