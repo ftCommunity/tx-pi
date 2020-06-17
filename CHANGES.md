@@ -12,6 +12,7 @@
 * Updated libroboint to 0.5.5 / master branch
 * Config app provides a dialog to enable / disable the Raspberry Pi 
   camera port
+* Added option to omit the display driver installation (NODISP)
 
 
 ## 2019-05-04
