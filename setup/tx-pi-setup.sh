@@ -589,6 +589,7 @@ sed -i "s/category: System/category: /g" /opt/ftc/apps/system/power/manifest
 #
 header "Install TS Cal"
 apt-get -y install --no-install-recommends xinput-calibrator
+touch /usr/share/X11/xorg.conf.d/99-calibration.conf
 chmod og+rw /usr/share/X11/xorg.conf.d/99-calibration.conf
 
 # Remove legacy app
