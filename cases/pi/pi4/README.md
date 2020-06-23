@@ -14,3 +14,12 @@ Pi2 or Pi3 then please have a look [here](../pi2_pi3).
 
 There are no variants of this case. This version already has the slot for
 the PI camera flex cable in the lid.
+
+A cover for the GPIO slot can be used to protect the GPIO slot when no HAT
+or display is being placed in top of the Pi.
+
+| Cover |
+|:---:|
+| ![Cover for GPIO slot](../common/images/GPIO-Abdeckung.png) |
+| [View](../common/GPIO-Abdeckung.stl) |
+| [Download](../common/GPIO-Abdeckung.stl?raw=true) |
