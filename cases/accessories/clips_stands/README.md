@@ -16,7 +16,7 @@
 |:---:|:---:|
 | ![Clip](./images/TX-Pi-clip_15x30x4.png) | ![Clip](./images/Abdeckplatte_15x45_TX-Pi_v3.png) |
 | [View](TX-Pi-clip_15x30x4.stl) | [View](Abdeckplatte_15x45_TX-Pi_v3.stl) |
-| [Download](TX-Pi-clip_15x30x4.stl?raw=true) [Download](Abdeckplatte_15x45_TX-Pi_v3.stl?raw=true)
+| [Download](TX-Pi-clip_15x30x4.stl?raw=true) | [Download](Abdeckplatte_15x45_TX-Pi_v3.stl?raw=true)
 
 ## A complete mounting plate
 
