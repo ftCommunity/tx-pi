@@ -17,3 +17,11 @@
 | ![Clip](./images/TX-Pi-clip_15x30x4.png) |
 | [View](TX-Pi-clip_15x30x4.stl) |
 | [Download](TX-Pi-clip_15x30x4.stl?raw=true)
+
+## A complete mounting plate
+
+| Mounting plate |
+|:---:|
+| ![Clip](./images/mountingplate.png) |
+| [View](mountingplate.stl) |
+| [Download](mountingplate.stl?raw=true)
