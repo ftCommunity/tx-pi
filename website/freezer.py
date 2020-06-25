@@ -42,8 +42,8 @@ def home():
 def cases():
      yield '/de/cases/'
      yield '/en/cases/'
-     yield '/de/cases/pi/pi4'
-     yield '/en/cases/pi/pi4'
+     yield '/de/cases/pi/pi4/'
+     yield '/en/cases/pi/pi4/'
 
 if __name__ == '__main__':
     freezer.freeze()

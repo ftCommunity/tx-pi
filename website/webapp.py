@@ -99,7 +99,7 @@ def cases(lang):
     """
     return render_template('cases_{0}.html'.format(lang))
 
-@app.route('/<lang>/cases/pi/pi4')
+@app.route('/<lang>/cases/pi/pi4/')
 def pi4(lang):
     """\
     Case for Pi4
