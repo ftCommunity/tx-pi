@@ -65,7 +65,6 @@ def index():
 </html>
 '''
 
-
 @app.route('/images/')
 def images_root():
     """\
@@ -93,6 +92,19 @@ def home(lang):
     """
     return render_template('home_{0}.html'.format(lang))
 
+@app.route('/<lang>/cases/')
+def cases(lang):
+    """\
+    3d printable case designs.
+    """
+    return render_template('cases_{0}.html'.format(lang))
+
+@app.route('/<lang>/cases/pi/pi4')
+def pi4(lang):
+    """\
+    Case for Pi4
+    """
+    return render_template('pi4_{0}.html'.format(lang))
 
 @app.route('/<lang>/images/')
 def images(lang):
