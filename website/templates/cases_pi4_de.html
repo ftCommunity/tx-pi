@@ -1,0 +1,32 @@
+{% extends "skel.html" %}
+{% block page_title %}Pi4-Gehäuse{% endblock %}
+{% block main %}
+{% filter markdown %}
+
+# Gehäuse für Raspberry-Pi4
+
+{{image('cases/pi/pi4',"./images/pi4.jpg")}}
+
+Dies ist das Gehäuse für den Raspberry-Pi4 selbst (den mit den blauen
+USB-Buchsen in der Mitte). Ein Gehäuse für den Raspberry-Pi2 oder Pi3
+findet sich [hier](../pi2_pi3).
+
+{{ stltable( {"path": "cases/pi/pi4",
+  "names": [ "PI4-Wanne", "PI4-Deckel" ],
+  "stls":  [ "TX-Pi4-Wanne", "TX-Pi4-Deckel" ]
+})}}
+
+Es gibt keine Varianten dieses Gehäuses. Diese Version hat bereits
+die Öffnung für das Flex-Kabel der Pi-Kamera im Deckel.
+
+Eine Abdeckung für den GPIO-Anschluss kann verwendet werden, um
+den GPIO-Anschluss zu schützen, wenn kein HAT und kein Bildschirm
+auf den Raspberry-Pi gesteckt wird:
+
+{{ stltable( {"path": "cases/pi/common",
+  "names": [ "Abdeckung" ],
+  "stls":  [ "GPIO-Abdeckung" ]
+})}}
+
+{% endfilter %}
+{% endblock %}

@@ -65,7 +65,6 @@ def index():
 </html>
 '''
 
-
 @app.route('/images/')
 def images_root():
     """\
@@ -93,6 +92,26 @@ def home(lang):
     """
     return render_template('home_{0}.html'.format(lang))
 
+@app.route('/<lang>/cases/')
+def cases(lang):
+    """\
+    3d printable case designs.
+    """
+    return render_template('cases_{0}.html'.format(lang))
+
+@app.route('/<lang>/cases/pi/pi4/')
+def cases_pi4(lang):
+    """\
+    Case for Pi4
+    """
+    return render_template('cases_pi4_{0}.html'.format(lang))
+
+@app.route('/<lang>/cases/pi/pi2_pi3/')
+def cases_pi2_pi3(lang):
+    """\
+    Case for Pi2 and Pi3
+    """
+    return render_template('cases_pi2_pi3_{0}.html'.format(lang))
 
 @app.route('/<lang>/images/')
 def images(lang):
@@ -130,7 +149,7 @@ def inject_defaults():
     is_en = not request.path.startswith('/de/')
     # Create a (modifiable) copy of the _MAIN_MENU
     main_menu = list(_MAIN_MENU)
-    main_menu.append(MenuItem('Deutsch', '/de/', icon=None) if is_en else MenuItem('English', '/en/', icon=None))
+    main_menu.append(MenuItem('Deutsch', '/de/'+request.path[4:], icon=None) if is_en else MenuItem('English', '/en/'+request.path[4:], icon=None))
     # Uses upper case names to distinguish them from variables set by the endpoints
     return { # Variables mainly used for skel.html
             'LANG': 'en' if is_en else 'de',

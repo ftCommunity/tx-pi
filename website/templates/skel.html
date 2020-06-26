@@ -1,3 +1,26 @@
+{% macro image(base,file) %}
+<img src="https://raw.githubusercontent.com/ftCommunity/tx-pi/master/{{base}}/{{file}}">
+{% endmacro %}
+{% macro stltable(data) %}
+<table><tr>
+    {% for i in range(data["names"]|length): %}
+    <th>{{data["names"][i]}}</th>
+    {% endfor %}
+    </tr><tr>
+    {% for i in range(data["stls"]|length): %}
+    <td><img src="https://raw.githubusercontent.com/ftCommunity/tx-pi/master/{{data["path"]}}/images/{{data["stls"][i]}}.png"></td>
+    {% endfor %}
+    </tr><tr>
+    {% for i in range(data["stls"]|length): %}
+    <td><a href="https://github.com/ftCommunity/tx-pi/blob/master/{{data["path"]}}/{{data["stls"][i]}}.stl">View</a></td>
+    {% endfor %}
+    </tr><tr>
+    {% for i in range(data["stls"]|length): %}
+    <td><a href="https://raw.githubusercontent.com/ftCommunity/tx-pi/master/{{data["path"]}}/{{data["stls"][i]}}.stl">Download</a></td>
+    {% endfor %}
+  </tr>
+</table>
+{% endmacro %}
 <!DOCTYPE html>
 <html lang="{{ LANG }}">
 <head>

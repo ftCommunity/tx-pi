@@ -1,0 +1,35 @@
+{% extends "skel.html" %}
+{% block page_title %}Gehäuse{% endblock %}
+{% block main %}
+{% filter markdown %}
+
+# Gehäuse
+
+Der TX-Pi ist besonders in der fischertechnik-Welt recht ungeschützt und
+die 9V-Spannungen mit denen dort hantiert werden können für den Raspberry-Pi
+und die übrigen Komponenten fatal sein. Ein Gehäuse schützt den Pi und
+die anderen Komponenten und ermöglicht zusätzlich die stabile Befestigung
+am übrigen Modell.
+
+{{ image('cases', 'images/tx-pi-cases.jpg')}}
+
+Mehr hilfreiche Informationen zur Unterstützung bei der Auswahl
+des richtigen Gehäuses finden sich [hier](selection).
+
+  - Raspberry Pi
+    - [Raspberry Pi2 und Pi3](pi/pi2_pi3/)
+    - [Raspberry Pi4](pi/pi4)
+  - Displays
+    - [Waveshare 3.2" und kompatible](displays/3.2inch)
+    - [Waveshare 3.5" und kompatible](displays/3.5inch)
+    - [Waveshare 4" und kompatible](displays/4inch)
+  - HATs
+    - [TX-Pi-HAT/ft-HAT](hats/tx-pi-hat)
+    - [TX-Pi-I2C-Breakout und Spannungsversorgung](hats/i2c_pwr)
+    - [Pi4 Kühl-HAT](hats/CoolerHAT)
+  - Zubehör
+    - [Clips, Ständer, ...](accessories/clips_stands)
+    - [PiPower-Spannungsversorung](accessories/pipower)
+
+{% endfilter %}
+{% endblock %}
