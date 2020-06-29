@@ -14,22 +14,22 @@ am übrigen Modell.
 {{ image('cases', 'images/tx-pi-cases.jpg')}}
 
 Mehr hilfreiche Informationen zur Unterstützung bei der Auswahl
-des richtigen Gehäuses finden sich [hier](selection).
+des richtigen Gehäuses finden sich [hier]({{url_for('cases_selection',lang=LANG)}}).
 
-  - Raspberry Pi
-    - [Raspberry Pi2 und Pi3](pi/pi2_pi3/)
-    - [Raspberry Pi4](pi/pi4)
+  - Raspberry-Pi
+    - [Raspberry-Pi2 und Pi3]({{ url_for('cases_pi2_pi3', lang=LANG) }})
+    - [Raspberry-Pi4]({{ url_for('cases_pi4', lang=LANG) }})
   - Displays
-    - [Waveshare 3.2" und kompatible](displays/3.2inch)
-    - [Waveshare 3.5" und kompatible](displays/3.5inch)
-    - [Waveshare 4" und kompatible](displays/4inch)
+    - [Waveshare-3,2-Zoll und kompatibel]({{ url_for('cases_displays_32inch', lang=LANG) }})
+[//]: # (     - [Waveshare-3,5-Zoll und kompatibel]({-{ url_for('cases_displays_3.5inch', lang=LANG) }}) )
+[//]: # (     - [Waveshare-4-Zoll und kompatibel]({-{ url_for('cases_displays_4inch', lang=LANG) }}) )
   - HATs
-    - [TX-Pi-HAT/ft-HAT](hats/tx-pi-hat)
-    - [TX-Pi-I2C-Breakout und Spannungsversorgung](hats/i2c_pwr)
-    - [Pi4 Kühl-HAT](hats/CoolerHAT)
+[//]: # (     - [TX-Pi-HAT/ft-HAT]({-{ url_for('cases_hats_tx_pi_hat', lang=LANG) }}))
+[//]: # (     - [TX-Pi-I2C-Breakout und Spannungsversorgung]({-{ url_for('cases_hats_i2c_pwr', lang=LANG) }}))
+[//]: # (     - [Pi4-Kühl-HAT]({-{ url_for('cases_hats_cooler', lang=LANG) }}))
   - Zubehör
-    - [Clips, Ständer, ...](accessories/clips_stands)
-    - [PiPower-Spannungsversorung](accessories/pipower)
+[//]: # (     - [Clips, Ständer, ...]({-{ url_for('cases_accessories_clips_stands', lang=LANG) }}))
+[//]: # (     - [PiPower-Spannungsversorgung]({-{ url_for('cases_accessories_pipower', lang=LANG) }}))
 
 {% endfilter %}
 {% endblock %}

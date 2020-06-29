@@ -12,23 +12,22 @@ and allows to mount the setup firmly to the fischertechnik model.
 {{image('cases', 'images/tx-pi-cases.jpg') }}
 
 More information helpful to support you in selecting the
-right cases can be found [here](selection).
+right cases can be found [here]({{url_for('cases_selection',lang=LANG)}}).
 
   - Raspberry Pi
-    - [Raspberry Pi2 and Pi3](pi/pi2_pi3/)
-    - [Raspberry Pi4](pi/pi4)
+    - [Raspberry Pi2 and Pi3]({{ url_for('cases_pi2_pi3', lang=LANG) }})
+    - [Raspberry Pi4]({{ url_for('cases_pi4', lang=LANG) }})
   - Displays
-    - [Waveshare 3.2" and compatible](displays/3.2inch)
-    - [Waveshare 3.5" and compatible](displays/3.5inch)
-    - [Waveshare 4" and compatible](displays/4inch)
+    - [Waveshare 3.2" and compatible]({{ url_for('cases_displays_32inch', lang=LANG) }})
+[//]: # (    - [Waveshare 3.5" and compatible]({-{ url_for('cases_displays_35inch', lang=LANG) }}))
+[//]: # (    - [Waveshare 4" and compatible]({-{ url_for('cases_displays_4inch', lang=LANG) }}))
   - HATs
-    - [TX-Pi HAT/ft-HAT](hats/tx-pi-hat)
-    - [TX-Pi I2C breakout and power supply](hats/i2c_pwr)
-    - [Pi4 cooling HAT](hats/CoolerHAT)
+[//]: # (    - [TX-Pi HAT/ft HAT]({-{ url_for('cases_hats_tx_pi_hat', lang=LANG) }}))
+[//]: # (    - [TX-Pi I2C breakout and power supply]({-{ url_for('cases_hats_i2c_pwr', lang=LANG) }}))
+[//]: # (    - [Pi4 colling HAT]({-{ url_for('cases_hats_cooler', lang=LANG) }}))
   - Accessories
-    - [Clips, stands, ...](accessories/clips_stands)
-    - [PiPower power supply](accessories/pipower)
-
+[//]: # (    - [Clips, stands, ...]({-{ url_for('cases_accessories_clips_stands', lang=LANG) }}))
+[//]: # (    - [PiPower power supply]({-{ url_for('cases_accessories_pipower', lang=LANG) }}))
 
 {% endfilter %}
 {% endblock %}

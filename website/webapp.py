@@ -99,6 +99,13 @@ def cases(lang):
     """
     return render_template('cases_{0}.html'.format(lang))
 
+@app.route('/<lang>/cases/selection/')
+def cases_selection(lang):
+    """\
+    Case selection helper
+    """
+    return render_template('cases_selection_{0}.html'.format(lang))
+
 @app.route('/<lang>/cases/pi/pi4/')
 def cases_pi4(lang):
     """\
@@ -112,6 +119,13 @@ def cases_pi2_pi3(lang):
     Case for Pi2 and Pi3
     """
     return render_template('cases_pi2_pi3_{0}.html'.format(lang))
+
+@app.route('/<lang>/cases/displays/3.2inch/')
+def cases_displays_32inch(lang):
+    """\
+    Case for 3.2" display
+    """
+    return render_template('cases_displays_3.2inch_{0}.html'.format(lang))
 
 @app.route('/<lang>/images/')
 def images(lang):

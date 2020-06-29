@@ -8,15 +8,15 @@
     {% endfor %}
     </tr><tr>
     {% for i in range(data["stls"]|length): %}
-    <td><img src="https://raw.githubusercontent.com/ftCommunity/tx-pi/master/{{data["path"]}}/images/{{data["stls"][i]}}.png"></td>
+    <td><img src="https://raw.githubusercontent.com/ftCommunity/tx-pi/master/{{data["paths"][i]}}/images/{{data["stls"][i]}}.png"></td>
     {% endfor %}
     </tr><tr>
     {% for i in range(data["stls"]|length): %}
-    <td><a href="https://github.com/ftCommunity/tx-pi/blob/master/{{data["path"]}}/{{data["stls"][i]}}.stl">View</a></td>
+    <td><a href="https://github.com/ftCommunity/tx-pi/blob/master/{{data["paths"][i]}}/{{data["stls"][i]}}.stl">View</a></td>
     {% endfor %}
     </tr><tr>
     {% for i in range(data["stls"]|length): %}
-    <td><a href="https://raw.githubusercontent.com/ftCommunity/tx-pi/master/{{data["path"]}}/{{data["stls"][i]}}.stl">Download</a></td>
+    <td><a href="https://raw.githubusercontent.com/ftCommunity/tx-pi/master/{{data["paths"][i]}}/{{data["stls"][i]}}.stl">Download</a></td>
     {% endfor %}
   </tr>
 </table>

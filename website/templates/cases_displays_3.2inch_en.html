@@ -1,0 +1,65 @@
+{% extends "skel.html" %}
+{% block page_title %}Cases for 3.2" displays{% endblock %}
+{% block main %}
+{% filter markdown %}
+
+# Display cases for Waveshare 3.2" display and compatible
+
+{{image('cases/displays/3.2inch', 'images/display32.jpg') }}
+
+## Bottom
+
+### For use directly on top of Raspberry Pi4
+
+The following is used when the display is placed directly on top of the Raspberry Pi4 (without TX-Pi HAT in between) since it has cutouts for the USB and Ethernet connectors of the Raspberry Pi4.
+
+{{ stltable( {
+  "paths": [ "cases/displays/common" ],
+  "names": [ "Bottom" ],
+  "stls":  [ "Pi4_Display-Wanne" ]
+})}}
+
+### For use directly on top of Raspberry Pi2 and Pi3
+
+The following are used when the display is places directly on top of
+the Raspberry Pi2 or Pi3 (without TX-Pi HAT in between) since they
+have cutouts for the USB and Ethernet connectors of the Raspberry Pi
+Model 2 or 3.
+
+The version with ribbon cable slot allows to route the camera ribbon
+cable from the pi through the display case. This is usually use in
+conjunction with version of the raspberry pi top case with camera and
+display slot.
+
+The taller version is required for some older 3.2" V3 displays.
+
+{{ stltable( {
+  "paths": [ "cases/displays/common", "cases/displays/3.2inch", "cases/displays/3.2inch" ],
+  "names": [ "Regular bottom","Bottom with cable slot","Taller bottom" ],
+  "stls":  [ "display_v4_bottom","display_v4_bottom_with_ribbon_slot","display32_v3_bottom" ]
+})}}
+
+### For use with a HAT between the Pi and the Display
+
+If a HAT is being used then the Ethernet and USB connectors do not protrude
+into the area of the display case. Thus the display case does not need any
+openings on the bottom in this case.
+
+{{ stltable( {
+  "paths": [ "cases/displays/common" ],
+  "names": [ "Bottom" ],
+  "stls":  [ "Display-Wanne_ohne_Öffnungen" ]
+})}}
+
+## Top
+
+Top case for 3.2" display with three buttons:
+
+{{ stltable( {
+  "paths": [ "cases/displays/3.2inch", "cases/displays/3.2inch" ],
+  "names": [ '3.2" top',"buttons" ],
+  "stls":  [ "display32_top","buttons" ]
+})}}
+
+{% endfilter %}
+{% endblock %}

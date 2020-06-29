@@ -10,7 +10,8 @@
 Dies ist das Gehäuse für den Raspberry-Pi2 und Pi3 selbst. Ein Gehäuse
 für den Raspberry-Pi4 findet sich [hier](../pi4).
 
-{{ stltable( {"path": "cases/pi/pi2_pi3",
+{{ stltable( {
+  "paths": [ "cases/pi/pi2_pi3", "cases/pi/pi2_pi3" ],
   "names": [ "PI2/PI3-Wanne", "PI2/PI3-Deckel" ],
   "stls":  [ "pi_bottom", "pi_top" ]
 })}}
@@ -19,7 +20,8 @@ Deckel-Varianten mit einem Schlitz für die Raspberry-Pi-Kamera und
 DSI-Display sowie eines mit erweiterter GPIO-Öffnung in die der
 Stecker eines 40-poligen Verlängerungskabels passt:
 
-{{ stltable( {"path": "cases/pi/pi2_pi3",
+{{ stltable( {
+  "paths": [ "cases/pi/pi2_pi3", "cases/pi/pi2_pi3" ],
   "names": [ "Schlitz für Kamera und Display", "Erweiterte GPIO-Öffnung" ],
   "stls":  [ "pi_top_with_ribbon_slot", "top_extended" ]
 })}}
@@ -28,7 +30,8 @@ Eine Abdeckung für den GPIO-Anschluss kann verwendet werden, um
 den GPIO-Anschluss zu schützen, wenn kein HAT und kein Bildschirm
 auf den Raspberry-Pi gesteckt wird:
 
-{{ stltable( {"path": "cases/pi/common",
+{{ stltable( {
+  "paths": [ "cases/pi/common" ],
   "names": [ "Abdeckung" ],
   "stls":  [ "GPIO-Abdeckung" ]
 })}}
