@@ -1,0 +1,24 @@
+{% extends "skel.html" %}
+{% block page_title %}Cases for 4" displays{% endblock %}
+{% block main %}
+{% filter markdown %}
+
+# Cases for Waveshare 4" display and compatible
+
+{{image('cases/displays/4inch', 'images/display4.jpg') }}
+
+This case is for 4 inch displays. This design can also be found
+on [Thingiverse](https://www.thingiverse.com/thing:3605290).
+
+The case has no coutouts for the USB and Ethernet sockets of the
+Raspberry Pi. It can thus only be used with an extender cable or on
+top of the HAT.
+
+{{ stltable( {
+  "paths": [ "cases/displays/4inch", "cases/displays/4inch" ],
+  "names": [ "Bottom","Top" ],
+  "stls":  [ "displ_ws40A_bottom","displ_ws40A_top" ]
+})}}
+
+{% endfilter %}
+{% endblock %}

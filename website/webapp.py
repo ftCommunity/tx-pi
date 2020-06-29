@@ -123,16 +123,23 @@ def cases_pi2_pi3(lang):
 @app.route('/<lang>/cases/displays/3.2inch/')
 def cases_displays_32inch(lang):
     """\
-    Case for 3.2" display
+    Case for 3.2" displays
     """
     return render_template('cases_displays_3.2inch_{0}.html'.format(lang))
 
 @app.route('/<lang>/cases/displays/3.5inch/')
 def cases_displays_35inch(lang):
     """\
-    Case for 3.5" display
+    Case for 3.5" displays
     """
     return render_template('cases_displays_3.5inch_{0}.html'.format(lang))
+
+@app.route('/<lang>/cases/displays/4inch/')
+def cases_displays_4inch(lang):
+    """\
+    Case for 4" displays
+    """
+    return render_template('cases_displays_4inch_{0}.html'.format(lang))
 
 @app.route('/<lang>/images/')
 def images(lang):

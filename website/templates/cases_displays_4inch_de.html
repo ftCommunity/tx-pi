@@ -1,0 +1,26 @@
+{% extends "skel.html" %}
+{% block page_title %}Gehäuse für 4-Zoll-Bildschirme{% endblock %}
+{% block main %}
+{% filter markdown %}
+
+# Bildschirmgehäuse für Waveshare-4-Zoll und kompatibel
+
+{{image('cases/displays/4inch', 'images/display4.jpg') }}
+
+Dieses Gehäuse eignet sich für 4-Zoll-Bildschirme. Dieses Design
+findet sich auch auf
+[Thingiverse](https://www.thingiverse.com/thing:3605290).
+
+Das Gehäuse hat keine Ausschnitte für die USB- und Ethernet-Buchsen
+eines Raspberry-Pi. Es kann also nicht direkt auf dem Raspberry-Pi
+montiert werden sondern nur aufgesteckt auf einen HAT oder direkt
+am Raspberry-Pi mit einem Verlängerungskabel.
+
+{{ stltable( {
+  "paths": [ "cases/displays/4inch", "cases/displays/4inch" ],
+  "names": [ "Wanne","Deckel" ],
+  "stls":  [ "displ_ws40A_bottom","displ_ws40A_top" ]
+})}}
+
+{% endfilter %}
+{% endblock %}
