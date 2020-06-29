@@ -1,11 +1,11 @@
 {% extends "skel.html" %}
-{% block page_title %}Gehäuse für 3,2-Zoll-Bildschirme{% endblock %}
+{% block page_title %}Gehäuse für 3,5-Zoll-Bildschirme{% endblock %}
 {% block main %}
 {% filter markdown %}
 
-# Bildschirmgehäuse für Waveshare-3,2-Zoll und kompatibel
+# Bildschirmgehäuse für Waveshare-3,5-Zoll und kompatibel
 
-{{image('cases/displays/3.2inch', 'images/display32.jpg') }}
+{{image('cases/displays/3.5inch', 'images/display35.jpg') }}
 
 ## Wanne
 
@@ -34,12 +34,10 @@ Flachkabel der Raspberry-Pi-Kamera durch das Gehäuse zu führen. Dies
 wird üblicherweise im Zusammenspiel mit einem Deckel für den Raspberry-Pi
 verwendet, der ebenfalls einen Ausschnitt für das Kabel hat.
 
-Die höhere Version wird für einige ältere V3-Bildschirme benötigt.
-
 {{ stltable( {
-  "paths": [ "cases/displays/common", "cases/displays/common", "cases/displays/3.2inch" ],
-  "names": [ "Normale Wanne","Wanne mit Kabelschlitz","Höhere Wanne" ],
-  "stls":  [ "display_v4_bottom","display_v4_bottom_with_ribbon_slot","display32_v3_bottom" ]
+  "paths": [ "cases/displays/common", "cases/displays/common" ],
+  "names": [ "Normale Wanne","Wanne mit Kabelschlitz" ],
+  "stls":  [ "display_v4_bottom","display_v4_bottom_with_ribbon_slot" ]
 })}}
 
 ### Zur Verwendung mit einem HAT zwischen Pi und Bildschirm
@@ -57,12 +55,14 @@ Bildschirmgehäuses in dem Fall keine Ausschnitte für die Buchsen.
 
 ## Deckel
 
-Gehäusedeckel für 3,2-Zoll-Bildschirm mit drei Tasten:
+Die verschiedenen 3,5-Zoll-Bildschirme haben die zur Anzeige verwendete
+akive Fläche an unterschiedlichen Positionen. Den Deckel gibt es daher
+in drei Versionen für die A, B und andere Bildschirme von Drittherstellern.
 
 {{ stltable( {
-  "paths": [ "cases/displays/3.2inch", "cases/displays/3.2inch" ],
-  "names": [ '3,2-Zoll-Deckel',"Tasten" ],
-  "stls":  [ "display32_top","buttons" ]
+  "paths": [ "cases/displays/3.5inch", "cases/displays/3.5inch", "cases/displays/3.5inch" ],
+  "names": [ '3,5-Zoll-Deckel "noname"' , '3,5-Zoll-Deckel Typ A', '3,5"-Zoll-Deckel Typ B' ],
+  "stls":  [ "display35_top", "display_ws35a_top", "display_ws35b_top" ]
 })}}
 
 {% endfilter %}

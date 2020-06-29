@@ -1,11 +1,11 @@
 {% extends "skel.html" %}
-{% block page_title %}Cases for 3.2" displays{% endblock %}
+{% block page_title %}Cases for 3.5" displays{% endblock %}
 {% block main %}
 {% filter markdown %}
 
-# Cases for Waveshare 3.2" display and compatible
+# Cases for Waveshare 3.5" display and compatible
 
-{{image('cases/displays/3.2inch', 'images/display32.jpg') }}
+{{image('cases/displays/3.5inch', 'images/display35.jpg') }}
 
 ## Bottom
 
@@ -31,12 +31,10 @@ cable from the pi through the display case. This is usually use in
 conjunction with version of the raspberry pi top case with camera and
 display slot.
 
-The taller version is required for some older 3.2" V3 displays.
-
 {{ stltable( {
-  "paths": [ "cases/displays/common", "cases/displays/common", "cases/displays/3.2inch" ],
-  "names": [ "Regular bottom","Bottom with cable slot","Taller bottom" ],
-  "stls":  [ "display_v4_bottom","display_v4_bottom_with_ribbon_slot","display32_v3_bottom" ]
+  "paths": [ "cases/displays/common", "cases/displays/common" ],
+  "names": [ "Regular bottom","Bottom with cable slot" ],
+  "stls":  [ "display_v4_bottom","display_v4_bottom_with_ribbon_slot" ]
 })}}
 
 ### For use with a HAT between the Pi and the Display
@@ -53,12 +51,14 @@ openings on the bottom in this case.
 
 ## Top
 
-Top case for 3.2" display with three buttons:
+The 3.5" displays have the visible area of the screen at different
+position. There are different versions for the 3.5" waveshare version
+A and B displays and noname displays.
 
 {{ stltable( {
-  "paths": [ "cases/displays/3.2inch", "cases/displays/3.2inch" ],
-  "names": [ '3.2" top',"buttons" ],
-  "stls":  [ "display32_top","buttons" ]
+  "paths": [ "cases/displays/3.5inch", "cases/displays/3.5inch", "cases/displays/3.5inch" ],
+  "names": [ '3.5" top noname' , '3.5" top A', '3.5" top B' ],
+  "stls":  [ "display35_top", "display_ws35a_top", "display_ws35b_top" ]
 })}}
 
 {% endfilter %}
