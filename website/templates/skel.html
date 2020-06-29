@@ -4,7 +4,7 @@
 {% macro stltable(data) %}
 <table><tr>
     {% for i in range(data["names"]|length): %}
-    <th>{{data["names"][i]}}</th>
+    <th style="text-align:center">{{data["names"][i]}}</th>
     {% endfor %}
     </tr><tr>
     {% for i in range(data["stls"]|length): %}
@@ -12,11 +12,11 @@
     {% endfor %}
     </tr><tr>
     {% for i in range(data["stls"]|length): %}
-    <td><a href="https://github.com/ftCommunity/tx-pi/blob/master/{{data["paths"][i]}}/{{data["stls"][i]}}.stl">View</a></td>
+    <td style="text-align: center;"><a class="button" href="https://github.com/ftCommunity/tx-pi/blob/master/{{data["paths"][i]}}/{{data["stls"][i]}}.stl">View</a></td>
     {% endfor %}
     </tr><tr>
     {% for i in range(data["stls"]|length): %}
-    <td><a href="https://raw.githubusercontent.com/ftCommunity/tx-pi/master/{{data["paths"][i]}}/{{data["stls"][i]}}.stl">Download</a></td>
+    <td style="text-align: center;"><a class="button" href="https://raw.githubusercontent.com/ftCommunity/tx-pi/master/{{data["paths"][i]}}/{{data["stls"][i]}}.stl">Download</a></td>
     {% endfor %}
   </tr>
 </table>
