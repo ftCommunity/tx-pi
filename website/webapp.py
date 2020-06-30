@@ -157,6 +157,10 @@ def cases_hats_cooler(lang):
 def cases_accessories_clips_stands(lang):
     return render_template('cases_accessories_clips_stands_{0}.html'.format(lang))
 
+@app.route('/<lang>/cases/accessories/pipower/')
+def cases_accessories_pipower(lang):
+    return render_template('cases_accessories_pipower_{0}.html'.format(lang))
+
 @app.route('/<lang>/images/')
 def images(lang):
     """\
