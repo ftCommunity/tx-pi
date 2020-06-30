@@ -1,0 +1,24 @@
+{% extends "skel.html" %}
+{% block page_title %}I2C-Pwr-HAT{% endblock %}
+{% block main %}
+{% filter markdown %}
+
+# I2C-Erweiterung und Spannungsversorgung
+
+{{image('cases/hats/i2c_pwr', 'images/pi2c.jpg', "I2C- und Spannungsversorgung") }}
+
+Dieses Gehäuse findet sich auch auf
+[Thingiverse](https://www.thingiverse.com/thing:3478004).
+
+Dieses Gehäuse hat Ausschnitte für die USB- und Ethernet-Buchsen
+des Raspberry-Pi2 und Pi3. Es lässt sich daher nur auf dem
+Raspberry-Pi2 und Pi3 nutzen, aber nicht auf dem Raspberry-Pi4.
+
+{{ stltable( {
+  "paths": [ "cases/hats/i2c_pwr", "cases/hats/i2c_pwr" ],
+  "names": [ "Wanne", "Deckel" ],
+  "stls":  [ "TX-Pi2C_Wanne","TX-Pi2C_Deckel" ]
+})}}
+
+{% endfilter %}
+{% endblock %}

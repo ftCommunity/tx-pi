@@ -143,10 +143,11 @@ def cases_displays_4inch(lang):
 
 @app.route('/<lang>/cases/hats/tx-pi-hat/')
 def cases_hats_tx_pi_hat(lang):
-    """\
-    Case for TX Pi HAT
-    """
     return render_template('cases_hats_tx_pi_hat_{0}.html'.format(lang))
+
+@app.route('/<lang>/cases/hats/i2c_pwr/')
+def cases_hats_i2c_pwr(lang):
+    return render_template('cases_hats_i2c_pwr_{0}.html'.format(lang))
 
 @app.route('/<lang>/images/')
 def images(lang):

@@ -42,7 +42,7 @@
   <nav>
     <a href="{{ url_for('home', lang=LANG) }}" class="brand"><span>TX-Pi</span></a>
     <input id="bmenub" type="checkbox" class="show">
-    <label for="bmenub" class="burger pseudo button">menu</label>
+    <label for="bmenub" style="font-size:1.4em;font-weight:700" class="burger pseudo button">&#9776;</label>
     <div class="menu">
       {% for item in MAIN_MENU %}
         <a href="{% if '/' not in item.url %}{{ url_for(item.url, lang=LANG) }}{% else %}{{ item.url }}{% endif %}" class="pseudo button{% if item.icon %} {{ item.icon }}{% endif %}">{{ item.name }}</a>
