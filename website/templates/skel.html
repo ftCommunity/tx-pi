@@ -1,22 +1,25 @@
-{% macro image(base,file) %}
-<img src="https://raw.githubusercontent.com/ftCommunity/tx-pi/master/{{base}}/{{file}}">
+{% macro image(base,file,caption=None) %}
+{% if caption == None: %}
+<div align="center"><img style="max-width: 90%;" src="https://raw.githubusercontent.com/ftCommunity/tx-pi/master/{{base}}/{{file}}"></div>
+{% else %}
+<div align="center"><img style="max-width: 90%;" src="https://raw.githubusercontent.com/ftCommunity/tx-pi/master/{{base}}/{{file}}"><br><small>{{caption}}</small></div>
+{% endif %}
 {% endmacro %}
 {% macro stltable(data) %}
-<div class="flex two-600 three-900 four-1200">
-{% for i in range(data["names"]|length): %}
-<div>
+<div class="flex two-600 three-900 four-1200">{% for i in range(data["names"]|length): %}
+  <div>
   <article class="card">
     <header>
-      <h3>{{data["names"][i]}}</h3>
-    </header><center>
-    <img src="https://raw.githubusercontent.com/ftCommunity/tx-pi/master/{{data["paths"][i]}}/images/{{data["stls"][i]}}.png"></center>
+      <div align="center">{{data["names"][i]}}</div>
+    </header>
+    <center><img src="https://raw.githubusercontent.com/ftCommunity/tx-pi/master/{{data["paths"][i]}}/images/{{data["stls"][i]}}.png"></center>
+    <div align="center"><small>{{data["stls"][i]}}.stl</small></div>
     <footer>
       <button onclick="location.href='https://github.com/ftCommunity/tx-pi/blob/master/{{data["paths"][i]}}/{{data["stls"][i]}}.stl'">View</button>
-      <button data-tooltip="Download {{data["stls"][i]}}.stl" class="tooltip-top" onclick="location.href='https://raw.githubusercontent.com/ftCommunity/tx-pi/master/{{data["paths"][i]}}/{{data["stls"][i]}}.stl'">Download</button>
+      <button style="float:right;" onclick="location.href='https://raw.githubusercontent.com/ftCommunity/tx-pi/master/{{data["paths"][i]}}/{{data["stls"][i]}}.stl'">Download</button>
     </footer>
   </article>
-</div>
-{% endfor %}
+  </div>{% endfor %}
 </div>
 {% endmacro %}
 <!DOCTYPE html>
