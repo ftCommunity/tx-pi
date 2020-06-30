@@ -153,6 +153,10 @@ def cases_hats_i2c_pwr(lang):
 def cases_hats_cooler(lang):
     return render_template('cases_hats_cooler_{0}.html'.format(lang))
 
+@app.route('/<lang>/cases/accessories/clips_stands/')
+def cases_accessories_clips_stands(lang):
+    return render_template('cases_accessories_clips_stands_{0}.html'.format(lang))
+
 @app.route('/<lang>/images/')
 def images(lang):
     """\

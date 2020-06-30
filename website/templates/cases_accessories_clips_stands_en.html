@@ -1,0 +1,35 @@
+{% extends "skel.html" %}
+{% block page_title %}Stand{% endblock %}
+{% block main %}
+{% filter markdown %}
+
+# A stand for the TX-Pi
+
+{{image('cases/accessories/clips_stands', 'images/TX-Pi_with_stand.JPG', "TX-Pi with stand") }}
+
+## The stand itself
+
+{{ stltable( {
+  "paths": [ "cases/accessories/clips_stands","cases/accessories/clips_stands","cases/accessories/clips_stands" ],
+  "names": [ "Bracket","Left support","Right support" ],
+  "stls":  [ "TX-Pi_stand_bracket_v2.1","TX-Pi_stand_support_left","TX-Pi_stand_support_right" ]
+})}}
+
+## A TX-Pi labeled clip/plate
+
+{{ stltable( {
+  "paths": [ "cases/accessories/clips_stands","cases/accessories/clips_stands" ],
+  "names": [ "30mm TX-Pi Clip","45mm TX-Pi Clip"  ],
+  "stls":  [ "TX-Pi-clip_15x30x4","Abdeckplatte_15x45_TX-Pi_v3" ]
+})}}
+
+## A complete mounting plate
+
+{{ stltable( {
+  "paths": [ "cases/accessories/clips_stands" ],
+  "names": [ "Mounting plate"  ],
+  "stls":  [ "mountingplate" ]
+})}}
+
+{% endfilter %}
+{% endblock %}
