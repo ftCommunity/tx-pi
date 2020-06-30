@@ -47,42 +47,27 @@ _GITHUB_URL = 'https://github.com/ftCommunity/tx-pi'
 
 
 @app.route('/')
-def index():
-    """\
-    The root page.
-    """
-    return '''<!DOCTYPE html>
-<html>
-  <head>
-    <script type="text/javascript">
-      var lang = (navigator.language || navigator.userLanguage);
-      if (lang && lang.substr(0, 2).toLowerCase() === "de") {
-        window.location = "/de/"
-      }
-    </script>
-    <meta http-equiv="refresh" content="0; url=/en/">
-  </head>
-</html>
-'''
-
+@app.route('/cases/')
 @app.route('/images/')
-def images_root():
+def lang_bridge():
     """\
-    Handle /images/ and redirect to /en/images/ or /de/images/
+    Generic paths which redirect to language-specific paths.
     """
+    path_de = '/de' + request.path
+    path_en = '/en' + request.path
     return '''<!DOCTYPE html>
 <html>
   <head>
     <script type="text/javascript">
       var lang = (navigator.language || navigator.userLanguage);
       if (lang && lang.substr(0, 2).toLowerCase() === "de") {
-        window.location = "/de/images/"
+        window.location = "%s"
       }
     </script>
-    <meta http-equiv="refresh" content="0; url=/en/images/">
+    <meta http-equiv="refresh" content="0; url=%s">
   </head>
 </html>
-'''
+''' % (path_de, path_en)
 
 
 @app.route('/<lang>/')

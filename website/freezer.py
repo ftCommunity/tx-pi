@@ -35,8 +35,12 @@ freezer = Freezer(app)
 # Since the root contains no url_for invocation but JS only, it's necessary
 # to help the freezer to generate everything in /de/ and /en/
 @freezer.register_generator
-def home():
-    return ({'lang': lang} for lang in ('en', 'de'))
+def language_bridges():
+    for path in ('/', '/cases/', '/images/'):
+        yield path
+        for lang in ('de', 'en'):
+            yield '/{}{}'.format(lang, path)
+
 
 if __name__ == '__main__':
     freezer.freeze()
