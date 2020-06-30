@@ -1,0 +1,46 @@
+{% extends "skel.html" %}
+{% block page_title %}Pi4-Kühl-HAT{% endblock %}
+{% block main %}
+{% filter markdown %}
+
+# Pi4-Kühl-HAT
+
+{{image('cases/hats/CoolerHAT', 'images/CoolerHAT_01.jpg', "Kühl-HAT") }}
+
+Wird ein Raspberry-Pi ohne Bildschirm oder HAT direkt auf dem Pi
+betrieben, dann bietet sich der Einsatz des Kühl-HATs an. Besonders
+der Pi4 profitiert von einer zusätzlichen Kühlung und drosselt unter
+Last die Geschwindigkeit seltener.
+
+Der Kühl-HAT bietet eine Befestigung für einen gängigen
+30x30x10mm-Lüfter.  Falls ein 30x30x8mm-Lüfter verwendet werden soll
+muss der seperat zu druckende Lüfteradapter verwendet werden. Der
+Lüfter muss mit 5V betrieben werden können und sollte so eingebaut
+werden, dass die Luft von unten eintritt und nach oben ausgeblasen
+wird.
+
+Ein Lüfter mit zwei-poligem Anschluss wird so an den GPIO-Anschluss
+des Pi angeschlossen, dass (+) mit Pin4 am GPIO-Stecker verbunden wird
+und (-) mit Pin 6.
+
+Es gibt vier Versionen der Wanne. Zwei für die Benutzung auf dem
+Raspberry-Pi2 und Pi3 und zwei zur Verwendung auf dem Raspberry-Pi4.
+Es gibt jeweils eine Variante mit zusätzlichen Schlitzen für das
+Kabel einer Raspberry-Pi4-Kamera.
+
+{{ stltable( {
+  "paths": [ "cases/hats/CoolerHAT", "cases/hats/CoolerHAT", "cases/hats/CoolerHAT", "cases/hats/CoolerHAT" ],
+  "names": [ "Wanne für Pi3","Wanne mit Kabelschlitz für Pi3","Wanne für Pi4","Wanne mit Kabelschlitz für Pi4" ],
+  "stls":  [ "TX-Pi3_CoolerHAT_Wanne","TX-Pi3_CoolerHAT_Wanne_Kabelschlitz","TX-Pi4_CoolerHAT_Wanne","TX-Pi4_CoolerHAT_Wanne_Kabelschlitz" ]
+})}}
+
+Vom Lüfteradapter und dem Deckel gibt es jeweils nur eine Variante.
+
+{{ stltable( {
+  "paths": [ "cases/hats/CoolerHAT", "cases/hats/CoolerHAT" ],
+  "names": [ "8mm-Lüfteradapter", "Deckel" ],
+  "stls":  [ "TX-Pi_CoolerHAT_Spacer","TX-Pi_CoolerHAT_Deckel" ]
+})}}
+
+{% endfilter %}
+{% endblock %}

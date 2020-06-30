@@ -149,6 +149,10 @@ def cases_hats_tx_pi_hat(lang):
 def cases_hats_i2c_pwr(lang):
     return render_template('cases_hats_i2c_pwr_{0}.html'.format(lang))
 
+@app.route('/<lang>/cases/hats/CoolerHAT/')
+def cases_hats_cooler(lang):
+    return render_template('cases_hats_cooler_{0}.html'.format(lang))
+
 @app.route('/<lang>/images/')
 def images(lang):
     """\
