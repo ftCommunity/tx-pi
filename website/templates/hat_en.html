@@ -1,0 +1,36 @@
+{% extends "skel.html" %}
+{% block page_title %}ft HAT{% endblock %}
+{% block main %}
+<h1>TX Pi HAT / ft HAT</h1>
+
+<p>The TX Pi HAT / ft HAT is the latest of the TX Pi hardware
+addons available from 
+<a href="https://gundermann-software.de/produkt/ft-hat-fischertechnik-hat-fuer-den-raspberry-pi/">Gundermann</a>
+or <a href="https://santjohanser.de/fischertechnik/spielen/robotics/1622/ft-hat">Santjohanser</a>!
+
+<ul>
+  <li>Raspberry Pi power supply from any fischertechnik 9 volt source</li>
+  <ul>
+    <li>Power controlled by Pi itself (auto power off)</li>
+    <li>Power controlled by RTC (timer controlled wake-up)</li>
+  </ul>
+  <li>Four digital fischertechnik compatible inputs I1-I4</li>
+  <li>Two analogue fischertechnik compatible motor outputs M1+M2</li>
+  <li>Two fischertechik TX, TXT and ftDuino compatible I²C ports</li>
+</ul>
+</p>
+
+<p>
+<div class="flex two-1200 center demo" width="100%">
+  <div align="center"><img src="/static/images/ft-hat_only.jpg" height="315" /></div>  
+  <div align="center"><iframe width="560" height="315" src="https://www.youtube.com/embed/8ZXmgCrltn4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+</div>
+</p>
+
+<p>More information:
+<ul>
+  <li><a href="https://www.tx-pi.de/static/docs/tx-pi-hat_kurz_de.pdf">German quick start guide</a></li>
+  <li><a href="https://www.tx-pi.de/static/docs/tx-pi-hat_en.pdf">English manual</a></li>
+</ul></p>
+  
+{% endblock %}

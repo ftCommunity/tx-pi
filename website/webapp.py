@@ -150,6 +150,10 @@ def cases_accessories_pipower(lang):
 def electrical(lang):
     return render_template('electrical_{0}.html'.format(lang))
 
+@app.route('/<lang>/hat/')
+def hat(lang):
+    return render_template('hat_{0}.html'.format(lang))
+
 @app.route('/<lang>/images/')
 def images(lang):
     """\
