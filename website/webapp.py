@@ -146,6 +146,10 @@ def cases_accessories_clips_stands(lang):
 def cases_accessories_pipower(lang):
     return render_template('cases_accessories_pipower_{0}.html'.format(lang))
 
+@app.route('/<lang>/electrical/')
+def electrical(lang):
+    return render_template('electrical_{0}.html'.format(lang))
+
 @app.route('/<lang>/images/')
 def images(lang):
     """\

@@ -1,0 +1,52 @@
+{% extends "skel.html" %}
+{% block page_title %}TX-Pi elektrisch{% endblock %}
+{% block main %}
+<h1>TX-Pi – elektrische Integration</h1>
+
+<p>Die fischertechnik-Konstruktionsbaukästen betreiben die meisten
+  der elektrischen Komponenten aus 9-Volt-Spannungsquellen. Das
+  schließt Motoren und Lampen ein, aber auch Kompressoren, Ventile
+  und die fischertechnik-eigenen Robotik-Controller.</p>
+
+<p>Der Raspberry-Pi wird dagegen mit 5 Volt aus einer
+  USB-Spannungsquelle betrieben und die meisten seiner EA-Anschlüsse
+  sind sogar nur auf 3,3 Volt begrenzt. Eine direkte Verbindung
+  zwischen fischertechnik-Komponenten und dem Raspberry-Pi würde
+  entweder nicht wie gewünscht funktionieren und kann dem Pi sogar
+  schaden.</p>
+
+<p>Das TX-Pi-Projekt bietet daher diverse Komponenten, um den
+  Raspberry-Pi in die 9-Volt-Welt von fischertechnik zu integrieren.</p>
+
+{{ slideshow([
+  [ "breakout.jpg", "ft-HAT-Breakout-Board" ],
+  [ "breakout_on_plate.jpg", "ft-HAT-Breakout-Board" ],
+  [ "ft-hat.jpg", "ft-HAT auf dem Raspberry-Pi" ],
+  [ "fth_set.jpg", "Lieferunfang ft-HAT" ],
+  [ "pcbs.jpg", "ft-HAT-Platinen" ],
+])}}
+
+<h2>TX-Pi-HAT / ft-HAT</h2>
+
+<p>Der TX-Pi-HAT ist ein kommerzielles Zusatzgerät für den
+  Raspberry-Pi, das es u.a. erlaubt, den Raspberry-Pi aus üblichen
+  fischertechnik 9-Volt-Spannungsquellen zu versorgen, ihn
+  mit fischertechnik-Tastern, Schaltern, Motoren, Lampen und
+  ähnlich zu verbinden und ihn an fischertechnik-I²C-Sensoren
+  anzuschließen.</p>
+
+<h2>I2C breakout and power supply</h2>
+
+Der <a href="https://www.thingiverse.com/thing:3478004">I2C-Breakout
+  und Power-Supply</a> ist ein Selbstbauprojekt, das eine
+  fischertechnik-kompatible Spannungsversorgung und
+  fischertechnik-kompatible I²C-Anschlüssen für den Pi
+  bereitstellt.</p>
+
+<h2>PiPower Module</h2>
+
+<p>Das <a href="{{url_for('cases_accessories_pipower', lang=LANG)}}">PiPower-Modul</a>
+  ist ein sehr einfaches Selbstbaumodul, das die Versorung eines Raspvberry-Pi
+  aus einer fischertechnik-Spannungsquelle ermöglicht.</p>
+
+{% endblock %}
