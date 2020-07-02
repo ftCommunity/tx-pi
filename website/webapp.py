@@ -49,6 +49,9 @@ _GITHUB_URL = 'https://github.com/ftCommunity/tx-pi'
 @app.route('/')
 @app.route('/cases/')
 @app.route('/images/')
+@app.route('/hat/')
+@app.route('/electrical/')
+@app.route('/software/')
 def lang_bridge():
     """\
     Generic paths which redirect to language-specific paths.
