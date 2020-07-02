@@ -32,11 +32,26 @@ for img_name in TXPI_IMAGES:
 
 freezer = Freezer(app)
 
-# Since the root contains no url_for invocation but JS only, it's necessary
-# to help the freezer to generate everything in /de/ and /en/
+
 @freezer.register_generator
-def language_bridges():
-    for path in ('/', '/cases/', '/images/', '/electrical/', '/hat/', '/software/'):
+def all_routes():
+    """\
+    Generator which yields all pathes with no arguments available in the app.
+
+    This generator yields routes which wouldn't be available since
+    they are not linked by url_for.
+
+    Additionally, it may yield be available paths but it does no harm if a
+    route is reported multiple times.
+
+    Simplifies website freezing.
+    """
+    def has_no_params(rule):
+        defaults = rule.defaults if rule.defaults is not None else ()
+        arguments = rule.arguments if rule.arguments is not None else ()
+        return len(defaults) >= len(arguments)
+
+    for path in (str(r) for r in app.url_map.iter_rules() if has_no_params(r)):
         yield path
         for lang in ('de', 'en'):
             yield '/{}{}'.format(lang, path)
