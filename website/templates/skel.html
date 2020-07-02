@@ -1,4 +1,6 @@
-{% macro slideshow(list) %}
+{% macro title(a,b) %}
+<h1><small>{{a}}</small><br>{{b}}</h1>
+{% endmacro %}{% macro slideshow(list) %}
 <div class="slideshow-container" style="max-width: 600px; margin: auto;">
   {% for i in range(list|length): %}<div class="slide fade">
     <img src="/static/images/{{list[i][0]}}" style="width:100%">
@@ -45,7 +47,6 @@
       dots[slideIndex-1].className += " active";
 
       if(window.timer != undefined) {
-	  console.log("Timer:", window.timer);
 	  clearTimeout(window.timer);
       }
       window.timer = setTimeout(nextSlide, 5000)
