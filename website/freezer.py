@@ -36,13 +36,13 @@ freezer = Freezer(app)
 @freezer.register_generator
 def all_routes():
     """\
-    Generator which yields all pathes with no arguments available in the app.
+    Generator which yields all paths with no arguments available in the app.
 
     This generator yields routes which wouldn't be available since
     they are not linked by url_for.
 
-    Additionally, it may yield be available paths but it does no harm if a
-    route is reported multiple times.
+    Additionally, it may yield available paths but it does no harm if a
+    route / path is reported multiple times.
 
     Simplifies website freezing.
     """
