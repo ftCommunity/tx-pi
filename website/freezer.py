@@ -36,7 +36,7 @@ freezer = Freezer(app)
 # to help the freezer to generate everything in /de/ and /en/
 @freezer.register_generator
 def language_bridges():
-    for path in ('/', '/cases/', '/images/'):
+    for path in ('/', '/cases/', '/images/', '/electrical/', '/hat/', '/software/'):
         yield path
         for lang in ('de', 'en'):
             yield '/{}{}'.format(lang, path)
