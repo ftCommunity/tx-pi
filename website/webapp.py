@@ -154,6 +154,10 @@ def electrical(lang):
 def hat(lang):
     return render_template('hat_{0}.html'.format(lang))
 
+@app.route('/<lang>/software/')
+def software(lang):
+    return render_template('software_{0}.html'.format(lang))
+
 @app.route('/<lang>/images/')
 def images(lang):
     """\
@@ -177,9 +181,10 @@ def installation(lang):
 MenuItem = namedtuple('MenuItem', ['name', 'url', 'icon'])
 
 _MAIN_MENU = ( 
-    MenuItem('Installation', 'installation', icon='icon-install'),
-    MenuItem('Images', 'images', icon='icon-floppy'),
-    MenuItem('Github', _GITHUB_URL, icon='icon-gh'),
+    MenuItem({ "en": 'Software', "de": 'Software' }, 'software', icon='icon-puzzle'),
+    MenuItem({ "en": 'Hardware', "de": 'Hardware' }, 'electrical', icon='icon-install'),
+    MenuItem({ "en": 'Cases', "de": 'Gehäuse' }, 'cases', icon='icon-cube'),
+    MenuItem({ "en": 'Github', "de": 'Github' }, _GITHUB_URL, icon='icon-gh'),
 )
 
 @app.context_processor
@@ -189,8 +194,13 @@ def inject_defaults():
     """
     is_en = not request.path.startswith('/de/')
     # Create a (modifiable) copy of the _MAIN_MENU
-    main_menu = list(_MAIN_MENU)
+    main_menu = [ ]
+    for m in _MAIN_MENU:
+        print("m", m)
+        main_menu.append( MenuItem(m[0]['en' if is_en else 'de'], m[1], icon=m[2]) );
+        #list(_MAIN_MENU)
     main_menu.append(MenuItem('Deutsch', '/de/'+request.path[4:], icon=None) if is_en else MenuItem('English', '/en/'+request.path[4:], icon=None))
+
     # Uses upper case names to distinguish them from variables set by the endpoints
     return { # Variables mainly used for skel.html
             'LANG': 'en' if is_en else 'de',

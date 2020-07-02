@@ -1,0 +1,40 @@
+{% extends "skel.html" %}
+{% block page_title %}Software{% endblock %}
+{% block main %}
+
+{{ title("logical integration", "TX Pi Software") }}
+
+<p>The TX Pi project comes with a complete software setup for the
+  Raspberry Pi. It includes a easy to use touch screen friendly user
+  interface with pre-installed applications as well as the ability
+  to download more from app stores.</p>
+
+{{ slideshow([
+[ "p4_4inch_gui.jpg", "Pi4 running the TX Pi GUI" ],
+[ "launcher_320x240.png", "Touch friendly user interface" ],
+[ "busscanner.png", "System Tools" ],
+[ "3dprint.png", "Productivity Apps" ]
+])}}
+
+<p>The TX Pi software setup reuses many elements developed for the
+  <a href="https://cfw.ftcommunity.de/">community firmware for the
+    fischertechnik TXT controller</a> and can run the majority of the
+    application written for that controller.</p>
+
+<p>With its much higher performance the TX Pi setup can do everything
+  the TXT controller does plus much much more. By using Python as the
+  preferred programming environment beginners as well as experienced
+  will be able
+  to <a href="https://cfw.ftcommunity.de/ftcommunity-TXT/en/programming/">write
+  their own apps</a> immediately.</p>
+
+<h2>Getting started</h2>
+
+<p>
+  Currently there are two ways to setup the TX Pi software environment:
+  <ul>
+    <li>Using prepared <a href="{{ url_for('images', lang=LANG) }}">SD card images</a> for an easy installation.</li>
+    <li>Manual installation using the <a href="{{ url_for('installation', lang=LANG) }}">setup script</a> for advanced users.</li>
+  </ul>
+</p>
+{% endblock %}
