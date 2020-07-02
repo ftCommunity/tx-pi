@@ -199,7 +199,7 @@ def inject_defaults():
     # Create a (modifiable) copy of the _MAIN_MENU
     main_menu = [ ]
     for m in _MAIN_MENU:
-        print("m", m)
+        #print("m", m)
         main_menu.append( MenuItem(m[0]['en' if is_en else 'de'], m[1], icon=m[2]) );
         #list(_MAIN_MENU)
     main_menu.append(MenuItem('Deutsch', '/de/'+request.path[4:], icon=None) if is_en else MenuItem('English', '/en/'+request.path[4:], icon=None))
