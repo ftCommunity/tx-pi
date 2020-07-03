@@ -1,10 +1,13 @@
 {% extends "skel.html" %}
-{% block page_title %}TX-Pi installieren{% endblock %}
+{% block page_title %}TX-Pi manuelle Installation{% endblock %}
 {% block main %}
 {% filter markdown %}
-# TX-Pi Installation
+# TX-Pi manuelle Installation
 
-Die Installation erfordert lediglich drei einfache Schritte:
+Diese Seite beschreibt die manuelle Installation der TX-Pi-Software. Für Anfänger
+eignen sich gegebenenfalls [vorbereitete System-Images]({{url_for('images', lang=LANG)}}) besser.
+
+Die manuelle Installation erfordert lediglich drei einfache Schritte:
 
   1. Installation der Raspbian Distribution auf einer SD-Karte
   2. Manuelle Vorbereitungen

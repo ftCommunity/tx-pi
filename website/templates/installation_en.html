@@ -1,10 +1,13 @@
 {% extends "skel.html" %}
-{% block page_title %}TX-Pi installation{% endblock %}
+{% block page_title %}TX-Pi manual installation{% endblock %}
 {% block main %}
 {% filter markdown %}
-# TX-Pi installation
+# TX-Pi manual installation
 
-The entire installation consists of three main steps:
+This page describes the manual installation of the TX Pi software setup. Beginners
+may prefer to use [prepared system images]({{url_for('images', lang=LANG)}}) instead.
+
+The entire manual installation consists of three main steps:
 
   1. Install a standard raspbian operating system image onto SD card
   2. Do some minor manual preparations
