@@ -161,6 +161,10 @@ def hat(lang):
 def software(lang):
     return render_template('software_{0}.html'.format(lang))
 
+@app.route('/<lang>/prerequisites/')
+def prerequisites(lang):
+    return render_template('prerequisites_{0}.html'.format(lang))
+
 @app.route('/<lang>/images/')
 def images(lang):
     """\
