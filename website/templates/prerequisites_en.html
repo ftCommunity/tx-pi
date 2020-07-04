@@ -28,147 +28,182 @@ This setup is supported by the system image
 
 Obviously a Raspberry Pi is need at least when setting up the TX
 Pi. In theory it should be possible to use any version of the
-Raspberry Pi. However, there are advantages and disadvantages:
+Raspberry Pi. However, there are advantages and disadvantages.
 
-<h3>Raspberry Pi Model A and Zero</h3>
+<details>
+<summary style="outline: 0" ><a class="button">Show/hide details</a></summary>
 
-The <a href="https://www.raspberrypi.org/products/raspberry-pi-3-model-a-plus/">Model
-A</a> as well as
-the <a href="https://www.raspberrypi.org/products/raspberry-pi-zero/">Zero
-version</a> of any revision of the Raspberry Pi have a smaller
-formfactor and lack the USB end ethernet connectors of the different
-Model B version. No Model A nor any Zero of any revision will thus fit
-into the <a href="{{url_for('cases',lang=LANG)}}">TX-Pi cases</a>. It
-is not recommended to use them in a TX-Pi setup.
-
-<h3>Raspberry Pi 1 Model B</h3>
-
-The Raspberry Pi Model A and B were the first version of the Raspberry
-Pi. They had a different form factor and a different 26 pin GPIO
-expansion connector. It will thus neither fit into
-the <a href="{{url_for('cases',lang=LANG)}}">TX-Pi cases</a> nor can
-it be used in conjunction with
-the <a href="{{url_for('hat',lang=LANG)}}">TX-Pi HAT</a>. It is not
-recommended to use the in a TX-Pi setup.
-
-<h3>Raspberry Pi 1 Model B+</h3>
-
-The <a href="https://www.raspberrypi.org/products/raspberry-pi-1-model-b-plus/">Raspberry
-Pi Model B+</a> was the first one in the current form factor and with
-the current 40 GPIO expansion connector. It is thus the oldest version
-that fits into the <a href="{{url_for('cases',lang=LANG)}}">TX-Pi
-cases</a> and which can probably be used in conjunction with
-the <a href="{{url_for('hat',lang=LANG)}}">TX-Pi HAT</a>. While this
-might work, it is totally untested. It is thus not recommended to use
-it in a TX-Pi setup.
-
-<h3>Raspberry Pi 2 and 3 Model B and B+</h3>
-
-The <a href="https://www.raspberrypi.org/products/raspberry-pi-2-model-b/">Raspberry
-Pi 2 Model B</a>,
-the <a href="https://www.raspberrypi.org/products/raspberry-pi-3-model-b/">Raspberry
-Pi 3 Model B</a> and
-the <a href="https://www.raspberrypi.org/products/raspberry-pi-3-model-b-plus/">Raspberry
-Pi 3 Model B+</a> all have the right form factor for
-the <a href="{{url_for('cases',lang=LANG)}}">TX-Pi cases</a> and
-provides the 40 pin GPIO connector required to use
-the <a href="{{url_for('hat',lang=LANG)}}">TX-Pi HAT</a>. These are
-all recommanded version for a TX-Pi setup. The Pi 3 B+ is the most
-powerful of these and the most recommanded one.
+<article class="card"> 
+  <header><h3>Raspberry Pi Model A and Zero</h3></header>
   
-<h3>Raspberry Pi 4 Model B</h3>
+  <p>The <a href="https://www.raspberrypi.org/products/raspberry-pi-3-model-a-plus/">Model A</a> as well as
+  the <a href="https://www.raspberrypi.org/products/raspberry-pi-zero/">Zero
+  version</a> of any revision of the Raspberry Pi have a smaller
+  formfactor and lack the USB end ethernet connectors of the different
+  Model B version. No Model A nor any Zero of any revision will thus
+  fit into the <a href="{{url_for('cases',lang=LANG)}}">TX-Pi
+  cases</a>. It is not recommended to use them in a TX-Pi setup.</p>
+</article>
+  
+<article class="card">
+  <header><h3>Raspberry Pi 1 Model B</h3></header>
 
-The <a href="https://www.raspberrypi.org/products/raspberry-pi-4-model-b/">Raspberry
-Pi 4 Model B</a> is the newest and most powerful version. It has the
-right form factor for the <a href="{{url_for('cases',lang=LANG)}}">TX
-Pi cases</a> and provides the 40 pin GPIO connector required to use
-the <a href="{{url_for('hat',lang=LANG)}}">TX-Pi HAT</a>. However, the
-<a href="{{url_for('software',lang=LANG)}}">TX-Pi software</a> may
-still be having some minor issues with it. Furthermore the increased
-heat dissipation of the Pi 4 may require active cooling full
-performance. The Pi 4 B is thus recommanded primarily for experienced
-users.
+  <p>The Raspberry Pi Model A and B were the first version of the
+  Raspberry Pi. They had a different form factor and a different 26
+  pin GPIO expansion connector. It will thus neither fit into
+  the <a href="{{url_for('cases',lang=LANG)}}">TX-Pi cases</a> nor can
+  it be used in conjunction with
+  the <a href="{{url_for('hat',lang=LANG)}}">TX-Pi HAT</a>. It is not
+  recommended to use the in a TX-Pi setup.</p>
+</article>
+
+<article class="card">
+<header><h3>Raspberry Pi 1 Model B+</h3></header>
+
+  <p>The <a href="https://www.raspberrypi.org/products/raspberry-pi-1-model-b-plus/">Raspberry
+  Pi Model B+</a> was the first one in the current form factor and
+  with the current 40 GPIO expansion connector. It is thus the oldest
+  version that fits into
+  the <a href="{{url_for('cases',lang=LANG)}}">TX-Pi cases</a> and
+  which can probably be used in conjunction with
+  the <a href="{{url_for('hat',lang=LANG)}}">TX-Pi HAT</a>. While this
+  might work, it is totally untested. It is thus not recommended to
+  use it in a TX-Pi setup.</p>
+</article>
+
+<article class="card">
+  <header><h3>Raspberry Pi 2 and 3 Model B and B+</h3></header>
+
+  <p>The <a href="https://www.raspberrypi.org/products/raspberry-pi-2-model-b/">Raspberry
+  Pi 2 Model B</a>,
+  the <a href="https://www.raspberrypi.org/products/raspberry-pi-3-model-b/">Raspberry
+  Pi 3 Model B</a> and
+  the <a href="https://www.raspberrypi.org/products/raspberry-pi-3-model-b-plus/">Raspberry
+  Pi 3 Model B+</a> all have the right form factor for
+  the <a href="{{url_for('cases',lang=LANG)}}">TX-Pi cases</a> and
+  provides the 40 pin GPIO connector required to use
+  the <a href="{{url_for('hat',lang=LANG)}}">TX-Pi HAT</a>. These are
+  all recommanded for a TX-Pi setup. The Pi 3 B+ is the most powerful
+  of these and is thus being recommanded.</p>
+</article>
+  
+<article class="card">
+  <header><h3>Raspberry Pi 4 Model B</h3></header>
+
+  <p>The <a href="https://www.raspberrypi.org/products/raspberry-pi-4-model-b/">Raspberry
+  Pi 4 Model B</a> is the newest and most powerful version. It has the
+  right form factor for
+  the <a href="{{url_for('cases',lang=LANG)}}">TX Pi cases</a> and
+  provides the 40 pin GPIO connector required to use
+  the <a href="{{url_for('hat',lang=LANG)}}">TX-Pi HAT</a>. However,
+  the <a href="{{url_for('software',lang=LANG)}}">TX-Pi software</a>
+  may still be having some minor issues with it. Furthermore the
+  increased heat dissipation of the Pi 4 may require active cooling
+  full performance. The Pi 4 B is thus recommanded primarily for
+  experienced users.</p>
+</article>
+
+</details>
 
 <h2>Selecting a display</h2>
 
-The <a href="{{url_for('software',lang=LANG)}}">TX-Pi software</a>
+  The <a href="{{url_for('software',lang=LANG)}}">TX-Pi software</a>
 includes software and drivers for certain touch screen displays. The
 user interface is also designed to be used with a touch screen
 display.
-  
-<h3>HDMI screen</h3>
 
-The TX-Pi can be used solely with a (big) HDMI screen even though it
-is meant to be used with a small touch screen. To achieve this the TX
-Pi can mirror the contents of the touch screen onto the HDMI
-output. Both displays can be active at the same time and show the same
-image. This even works without any touch screen connected at
-all. Since HDMI screens connot be controlled by touch a USB computer
-mouse has to be used on conjunction with the HDMI
-output. Furthermore <b>HDMI output is only enabled if a mouse is
-connected at boot time</b>. Addtionally if a mouse is detected the
-mouse pointer is enabled and becomes visible on the HDMI screen as
-well as on the touch screen. This is a rarely used and tested feature
-and it is recommanded to use a small touch screen instead.
+<details>
+<summary style="outline: 0" ><a class="button">Show/hide details</a></summary>
 
-<h3>Waveshare 3.2&quot; touch screen</h3>
+<article class="card"> 
+  <header><h3>HDMI screen</h3></header>
 
-The first versions of
-the <a href="{{url_for('software',lang=LANG)}}">TX-Pi software</a>
-setup was written for
-the <a href="https://www.waveshare.com/wiki/3.2inch_RPi_LCD_(B)">Waveshare
-3.2&quot; touch screen</a> as it has the same video resolution of
-240x320 pixels as
-the <a href="https://www.fischertechnik.de/en/products/playing/robotics/522429-txt-controller">fischertechnik
-TXT controller</a>. This display is suppored by
-the <a href="{{url_for('software',lang=LANG)}}">TX-Pi software</a> and
-matching <a href="{{ url_for('cases_displays_32inch', lang=LANG)}}">
-case designs are available</a>. These displays are not 100% compatible
-with the <a href="{{url_for('hat',lang=LANG)}}">TX-Pi HAT</a> as they
-also make use of some of the same GPIO pins the HAT does. As a result
-pressing the buttons on the display will interfere with the
-fischertechnik IOs of the HAT. These displays are thus only
-recommanded for a TX-Pi setup if the TX-Pi HAT is not to be used.
+  <p>The TX-Pi can be used solely with a (big) HDMI screen even though
+  it is meant to be used with a small touch screen. To achieve this
+  the TX Pi can mirror the contents of the touch screen onto the HDMI
+  output. Both displays can be active at the same time and show the
+  same image. This even works without any touch screen connected at
+  all. Since HDMI screens connot be controlled by touch a USB computer
+  mouse has to be used on conjunction with the HDMI
+  output. Furthermore <b>HDMI output is only enabled if a mouse is
+  connected at boot time</b>. Addtionally if a mouse is detected the
+  mouse pointer is enabled and becomes visible on the HDMI screen as
+  well as on the touch screen. This is a rarely used and tested
+  feature and it is recommanded to use a small touch screen instead.</p>
+</article>
 
-<h3>Waveshare 3.5&quot; (A) touch screen and compatible</h3>
+<article class="card"> 
+  <header><h3>Waveshare 3.2&quot; touch screen</h3></header>
 
-The <a href="https://www.waveshare.com/wiki/3.5inch_RPi_LCD_(A)">Waveshare
-3.5&quot; (A) touch screen</a> has a resolution of 320x480 pixels and
-thus twice the resolution of the 3.2&quot; version. It is fully
-supported by the <a href="{{url_for('software',lang=LANG)}}">TX-Pi
-software</a>, the TX-Pi project privides matching <a href="{{
-url_for('cases_displays_35inch', lang=LANG)}}">case designs</a> and it
-is fully compatible with the <a href="{{url_for('hat',lang=LANG)}}">TX
-Pi HAT</a>. Many cheap copies of this display type are available
-online. The only downside is the low screen update rate which is
-sufficient for simple touch screen user interfaces but lacks when it
-comes to fluid video playback or gaming. This is the display used in
-most test setups and is supported best. It is thus recommended to use
-it in a TX-Pi setup.
+  <p>The first versions of
+  the <a href="{{url_for('software',lang=LANG)}}">TX-Pi software</a>
+  setup was written for
+  the <a href="https://www.waveshare.com/wiki/3.2inch_RPi_LCD_(B)">Waveshare
+  3.2&quot; touch screen</a> as it has the same video resolution of
+  240x320 pixels as
+  the <a href="https://www.fischertechnik.de/en/products/playing/robotics/522429-txt-controller">fischertechnik
+  TXT controller</a>. This display is suppored by
+  the <a href="{{url_for('software',lang=LANG)}}">TX-Pi software</a>
+  and matching <a href="{{ url_for('cases_displays_32inch',
+  lang=LANG)}}"> case designs are available</a>. These displays are
+  not 100% compatible with
+  the <a href="{{url_for('hat',lang=LANG)}}">TX-Pi HAT</a> as they
+  also make use of some of the same GPIO pins the HAT does. As a
+  result pressing the buttons on the display will interfere with the
+  fischertechnik IOs of the HAT. These displays are thus only
+  recommanded for a TX-Pi setup if the TX-Pi HAT is not to be used.</p>
+</article>
 
-<h3>Waveshare 3.5&quot; (B) touch screens</h3>
+<article class="card"> 
+  <header><h3>Waveshare 3.5&quot; (A) touch screen and compatible</h3></header>
 
-The <a href="https://www.waveshare.com/wiki/3.5inch_RPi_LCD_(B)">Waveshare
-3.5&quot; (B) touch screen</a> has a similar form factor as the (A)
-but has a slightly better image quality. The (B) needs a slightly
-different setup and special images and setup options are available for
-the <a href="{{url_for('software',lang=LANG)}}">TX-Pi
-software</a>. This screen may be used in a TX-Pi setup.
+  <p>The <a href="https://www.waveshare.com/wiki/3.5inch_RPi_LCD_(A)">Waveshare
+  3.5&quot; (A) touch screen</a> has a resolution of 320x480 pixels
+  and thus twice the resolution of the 3.2&quot; version. It is fully
+  supported by the <a href="{{url_for('software',lang=LANG)}}">TX-Pi
+  software</a>, the TX-Pi project privides matching <a href="{{
+  url_for('cases_displays_35inch', lang=LANG)}}">case designs</a> and
+  it is fully compatible with
+  the <a href="{{url_for('hat',lang=LANG)}}">TX Pi HAT</a>. Many cheap
+  copies of this display type are available online. The only downside
+  is the low screen update rate which is sufficient for simple touch
+  screen user interfaces but lacks when it comes to fluid video
+  playback or gaming. This is the display used in most test setups and
+  is supported best. It is thus recommended to use it in a TX-Pi
+  setup.</p>
+</article>
 
-<h3>Waveshare 3.5&quot; (C) touch screens and compatible</h3>
+<article class="card"> 
+  <header><h3>Waveshare 3.5&quot; (B) touch screens</h3></header>
 
-The <a href="https://www.waveshare.com/wiki/3.5inch_RPi_LCD_(C)">Waveshare
-3.5&quot; (C) touch screen</a> is software compatible with the (A)
-version and the same setup can be used for both. The (C) version has a
-significantly faster interface and can thus even be used for smooth
-video replay or
-gaming. The <a href="{{url_for('software',lang=LANG)}}">TX-Pi
-software</a> includes a configuration utility that can be used to
-speed the interface up to 125MHz resulting in a 60 Hz refresh rate.
-Be careful: This screen is sometimes difficult to obtain and offerings
-for such &quot;125 Mhz highspeed displays&quot; often result in the
-cheaper and slower variants to be shipped instead. This screen is thus
-only recommended for experienced users.
+  <p>The <a href="https://www.waveshare.com/wiki/3.5inch_RPi_LCD_(B)">Waveshare
+  3.5&quot; (B) touch screen</a> has a similar form factor as the (A)
+  but has a slightly better image quality. The (B) needs a slightly
+  different setup and special images and setup options are available
+  for the <a href="{{url_for('software',lang=LANG)}}">TX-Pi
+  software</a>. This screen may be used in a TX-Pi setup.</p>
+</article>
+
+<article class="card"> 
+  <header><h3>Waveshare 3.5&quot; (C) touch screens and compatible</h3></header>
+
+  <p>The <a href="https://www.waveshare.com/wiki/3.5inch_RPi_LCD_(C)">Waveshare
+  3.5&quot; (C) touch screen</a> is software compatible with the (A)
+  version and the same setup can be used for both. The (C) version has
+  a significantly faster interface and can thus even be used for
+  smooth video replay or
+  gaming. The <a href="{{url_for('software',lang=LANG)}}">TX-Pi
+  software</a> includes a configuration utility that can be used to
+  speed the interface up to 125MHz resulting in a 60 Hz refresh rate.
+  Be careful: This screen is sometimes difficult to obtain and
+  offerings for such &quot;125 Mhz highspeed displays&quot; often
+  result in the cheaper and slower variants to be shipped
+  instead. This screen is thus only recommended for experienced users.</p>
+
+</article>
+
+</details>
+
 
 <h2>Selecting additional hardware</h2>
 
@@ -177,24 +212,34 @@ fischertechnik system at all. The TX-Pi project offers
 <a href="{{url_for('electrical',lang=LANG)}}">various hardware
 addons</a> to deal with this.
 
-<h3>fischertechnik controllers</h3>
+<details>
+<summary style="outline: 0" ><a class="button">Show/hide details</a></summary>
 
-fischertechnik has sold and is still selling several computing and
-robotics interfaces. Most of these can be connected to the Raspberry
-Pi and can thus be used with the TX
-Pi. The <a href="{{url_for('software',lang=LANG)}}">TX-Pi software</a>
-comes with drivers for many of these preinstalled and e.g. comes with
-demo applicatzions for the the Robo LT controller and
-the <a href="https://www.fischertechnik.de/de-de/produkte/spielen/robotics/540586-bt-smart-beginner-set">BT
-Smart Controller</a>. Since this is not officially supported by
-fischertechnik using these controllers with the TX-Pi may not be
-trivial and is thus only recommanded for experienced users.
+<article class="card"> 
+  <header><h3>fischertechnik controllers</h3></header>
+
+  <p>fischertechnik has sold and is still selling several computing
+  and robotics interfaces. Most of these can be connected to the
+  Raspberry Pi and can thus be used with the TX
+  Pi. The <a href="{{url_for('software',lang=LANG)}}">TX-Pi
+  software</a> comes with drivers for many of these preinstalled and
+  e.g. comes with demo applicatzions for the the Robo LT controller
+  and
+  the <a href="https://www.fischertechnik.de/de-de/produkte/spielen/robotics/540586-bt-smart-beginner-set">BT
+  Smart Controller</a>. Since this is not officially supported by
+  fischertechnik using these controllers with the TX-Pi may not be
+  trivial and is thus only recommanded for experienced users.</p>
+</article>
    
-<h3>TX-Pi HAT / ft HAT</h3>
+<article class="card"> 
+  <header><h3>TX-Pi HAT / ft HAT</h3></header>
 
-The <a href="{{url_for('hat',lang=LANG)}}">TX-Pi HAT</a> was designed
-to be used with the TX-Pi. It is actively maintained as part of the TX
-Pi project and is therefore recommanded as the primary hardware addon
-for the TX-Pi.
+  <p>The <a href="{{url_for('hat',lang=LANG)}}">TX-Pi HAT</a> was
+  designed to be used with the TX-Pi. It is actively maintained as
+  part of the TX Pi project and is therefore recommanded as the
+  primary hardware addon for the TX-Pi.</p>
+</article>
+
+</details>
 
 {% endblock %}
