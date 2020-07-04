@@ -187,27 +187,18 @@ def installation(lang):
 
 MenuItem = namedtuple('MenuItem', ['name', 'url', 'icon'])
 
-_MAIN_MENU = ( 
-    MenuItem({ "en": 'Software', "de": 'Software' }, 'software', icon='icon-puzzle'),
-    MenuItem({ "en": 'Hardware', "de": 'Hardware' }, 'electrical', icon='icon-install'),
-    MenuItem({ "en": 'Cases', "de": 'Gehäuse' }, 'cases', icon='icon-cube'),
-    MenuItem({ "en": 'Github', "de": 'Github' }, _GITHUB_URL, icon='icon-gh'),
-)
-
 @app.context_processor
 def inject_defaults():
     """\
     Set some default Jinja variables.
     """
     is_en = not request.path.startswith('/de/')
-    # Create a (modifiable) copy of the _MAIN_MENU
-    main_menu = [ ]
-    for m in _MAIN_MENU:
-        #print("m", m)
-        main_menu.append( MenuItem(m[0]['en' if is_en else 'de'], m[1], icon=m[2]) );
-        #list(_MAIN_MENU)
-    main_menu.append(MenuItem('Deutsch', '/de/'+request.path[4:], icon=None) if is_en else MenuItem('English', '/en/'+request.path[4:], icon=None))
-
+    main_menu = (MenuItem('Software', 'software', icon='icon-puzzle'),
+                 MenuItem('Hardware', 'electrical', icon='icon-install'),
+                 MenuItem('Cases' if is_en else 'Gehäuse', 'cases', icon='icon-cube'),
+                 MenuItem('Github', _GITHUB_URL, icon='icon-gh'),
+                 MenuItem(('Deutsch' if is_en else 'English'),
+                          ('/de/' if is_en else '/en/') + request.path[4:], icon=None))
     # Uses upper case names to distinguish them from variables set by the endpoints
     return { # Variables mainly used for skel.html
             'LANG': 'en' if is_en else 'de',
