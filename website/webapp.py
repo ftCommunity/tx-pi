@@ -18,9 +18,10 @@ user inputs are not checked.
 """
 import os
 import uuid
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, url_for
 from flask_misaka import Misaka
 from collections import namedtuple
+from functools import partial
 import jinja2
 
 app = Flask(__name__)
@@ -199,13 +200,15 @@ def inject_defaults():
                  MenuItem('Github', _GITHUB_URL, icon='icon-gh'),
                  MenuItem('Deutsch' if is_en else 'English',
                           ('/de/' if is_en else '/en/') + request.path[4:], icon=None))
-    # Uses upper case names to distinguish them from variables set by the endpoints
+    language = 'en' if is_en else 'de'
     return { # Variables mainly used for skel.html
-            'LANG': 'en' if is_en else 'de',
+            'LANG': language,
             'MAIN_MENU': main_menu,
             # Variables used by image.html
             'RELEASED': 'Released' if is_en else 'Veröffentlicht',
             'CHECKSUM': 'Checksum (MD5)' if is_en else 'Checksumme (MD5)',
             'SIZE': 'Size' if is_en else 'Größe',
             'RASPBIAN_VERSION': 'Raspbian version' if is_en else 'Raspbian Version',
+            # Function to simplify links
+            'lurl_for': partial(url_for, lang=language)
     }

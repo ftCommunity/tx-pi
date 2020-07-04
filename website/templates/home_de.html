@@ -14,30 +14,30 @@
   </div>
 
   <div>
-    <p>Einige <a href="{{ url_for('prerequisites', lang=LANG)
+    <p>Einige <a href="{{ lurl_for('prerequisites')
       }}">Voraussetzungen</a> sollten erfüllt sein, wenn man ein
       eigenes TX-Pi-System aufsetzen möchte.</p>
     
     <p><h3>Software</h3>
-       Das TX-Pi-Projekt stellt <a href="{{ url_for('software',
-       lang=LANG) }}"> Software</a> bereit, um ein angenehmes
+       Das TX-Pi-Projekt stellt <a href="{{ lurl_for('software')
+        }}"> Software</a> bereit, um ein angenehmes
        Benutzererlebnis zu ermöglichen und Kompatibilität mit dem
        fischertechnik-TXT-Controller herzustellen.</p>
     
     <p><h3>Hardware</h3>
-       Das TX-Pi-Projekt stellt <a href="{{ url_for('electrical',
-       lang=LANG) }}">Hardware</a> für die sichere Verbindung
+       Das TX-Pi-Projekt stellt <a href="{{ lurl_for('electrical')
+       }}">Hardware</a> für die sichere Verbindung
        zwischen dem Raspberry-Pi und den elektrischen
        fischertechnik-Komponenten bereit.</p>
     
     <p><h3>Gehäuse</h3> 
         Das TX-Pi-Projekt stellt 3D-Druckvorlagen für <a href="{{
-	url_for('cases', lang=LANG) }}">Gehäuse</a> für eine stabile
+	lurl_for('cases') }}">Gehäuse</a> für eine stabile
 	mechanische Verbindung zwischen dem Raspberry-Pi und den
 	fischertechnik-Komponenten bereit.</p>
   </div>
 </div>
     
-<p><font color="red"><b>Neu:</b></font> Der <a href="{{ url_for('hat',lang=LANG) }}">TX-Pi-HAT</a> ist verfügbar.</p>
+<p><font color="red"><b>Neu:</b></font> Der <a href="{{ lurl_for('hat') }}">TX-Pi-HAT</a> ist verfügbar.</p>
 
 {% endblock %}
