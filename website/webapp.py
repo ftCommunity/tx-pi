@@ -197,7 +197,7 @@ def inject_defaults():
                  MenuItem('Hardware', 'electrical', icon='icon-install'),
                  MenuItem('Cases' if is_en else 'Gehäuse', 'cases', icon='icon-cube'),
                  MenuItem('Github', _GITHUB_URL, icon='icon-gh'),
-                 MenuItem(('Deutsch' if is_en else 'English'),
+                 MenuItem('Deutsch' if is_en else 'English',
                           ('/de/' if is_en else '/en/') + request.path[4:], icon=None))
     # Uses upper case names to distinguish them from variables set by the endpoints
     return { # Variables mainly used for skel.html
