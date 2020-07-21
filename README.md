@@ -4,11 +4,7 @@ This repository contains the basic requirements to make a Raspberry Pi
 hardware and software compatible with the [community firmware
 for the fischertechnik TXT](http://cfw.ftcommunity.de/).
 
-The image below shows a TX-Pi-XL (with 3.5" display) using an
-[ftDuino](https://github.com/harbaum/ftduino) to connect to 
-fischertechnik actors and sensors.
-
-![TX-Pi with ftDuino](images/tx-pi-xl+ftduino.jpg)
+![TX-Pi with HAT](website/static/images/tx-pi.jpg)
 
 # Features and Highlights
 
