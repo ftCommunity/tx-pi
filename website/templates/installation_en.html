@@ -25,6 +25,9 @@ aforementioned ones have been tested. More information on installing
 rasbian on SD card can be found
 [here](https://www.raspberrypi.org/documentation/installation/installing-images/README.md).
 
+A setup based in the Raspberry Pi4 requires the [Raspberry Pi OS
+Buster Lite](https://www.raspberrypi.org/downloads/raspberry-pi-os/).
+
 Insert the SD card into your Pi and boot it. Unless you are very
 familiar with the Pi and are able to do a headless setup you should
 have a keyboard and HDMI display connected to the Pi.
@@ -60,6 +63,13 @@ wget https://tx-pi.de/tx-pi-setup.sh
 and run the script by typing
 ```
 sudo bash ./tx-pi-setup.sh
+```
+
+In case of a Raspberry Pi4 is currently the development version of the
+script mandatory:
+
+```
+wget https://tx-pi.de/unstable/tx-pi-setup.sh
 ```
 
 This will now take about one hour and download and install a lot of
