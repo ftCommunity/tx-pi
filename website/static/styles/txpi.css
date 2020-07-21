@@ -61,3 +61,90 @@
 .icon-gh:before { content: '\f09b'; } /* '' */
 .icon-puzzle:before { content: '\f12e'; } /* '' */
 .icon-cube:before { content: '\f1b2'; } /* '' */
+
+/* carousel code */
+
+/* Slideshow container */
+.slideshow-container {
+  max-width: 100px;
+  position: relative;
+  margin: auto;
+}
+
+.slide {
+    display: none;
+}
+
+/* Next & previous buttons */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  margin-top: -22px;
+  padding: 16px;
+  color: black;
+  background-color: #ffffff00;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+  background-color: #ffffff80;
+}
+
+/* Caption text */
+.caption {
+    margin: auto;
+    color: #000000;
+    background-color: #ffffff80;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 8px 12px;
+    position: absolute;
+    bottom: 18px;
+    width: 100%;
+    text-align: center;
+}
+
+.dots {
+    position: absolute;
+    top: 10px;
+    width: 100%;
+}
+
+/* The dots/bullets/indicators */
+.dot {
+  cursor: pointer;
+  height: 10px;
+  width: 10px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.active, .dot:hover {
+    background-color: #717171;
+}
+
+/* Fading animation */
+.fade {
+    animation-name: fade;
+    animation-duration: 1.5s;
+}
+
+@keyframes fade {
+    0% {opacity: 0}
+    100% {opacity: 1}
+}

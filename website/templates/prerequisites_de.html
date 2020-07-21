@@ -1,0 +1,259 @@
+{% extends "skel.html" %}
+{% block page_title %}Voraussetzungen{% endblock %}
+{% block main %}
+
+<h1>TX-Pi-Voraussetzungen</h1>
+
+Ein vollständiges TX-Pi-Setup besteht aus verschiedenen
+Komponenten. Diese Seite erklärt, welche Komponenten sich besonders
+gut eignen und welche aus bestimmten Gründen gemieden werden sollten.
+
+<h2>Empfohlenes Setup</h2>
+
+Zur Zeit der Verfassung dieses Texts besteht das empfohlene TX-Pi-Setup
+aus:
+
+<ul>
+  <li>dem <a href="https://www.raspberrypi.org/products/raspberry-pi-3-model-b-plus/">Raspberry-Pi3 Model B+</a>,</li>
+  <li>einem <a href="https://www.waveshare.com/wiki/3.5inch_RPi_LCD_(A)">Waveshare-3,5-Zoll-(A)-Bildschirm</a> und</li>
+  <li>optional dem <a href="{{url_for('hat',lang=LANG)}}">TX-Pi-HAT</a></li> 
+</ul>
+
+Dieses Setup ist geeignet für das
+System-Image <a href="{{url_for('images', lang=LANG)}}">TX-Pi mit
+einem Waveshare 3.5&quot; Typ A Display</a>.
+
+<h2>Auswahl eines Raspberry-Pi</h2>
+
+Offensichtlich wird mindestens ein Raspberry-Pi zur Einrichtung eines TX-Pi benötigt. In
+der Theorie sollte jeder Raspberry-Pi geeignet sein. Aber es gibt Vor- und Nachteile
+der unterschiedlichen Modelle und Versionen.
+
+<details>
+<summary style="outline: 0" ><a class="button">Details anzeigen/verbergen</a></summary>
+
+<article class="card">
+  <header><h3>Raspberry-Pi Model-A und Zero</h3></header>
+
+  <p>Sowohl
+  das <a href="https://www.raspberrypi.org/products/raspberry-pi-3-model-a-plus/">Model-A</a>
+  als auch
+  die <a href="https://www.raspberrypi.org/products/raspberry-pi-zero/">Zero-Version</a>
+  jeglicher Variante des Raspberry-Pi haben einen kleineren Formfaktor
+  und verfügen nicht über die USB- und Ethernet-Anschlüsse der
+  verschiedenen Model-B-Varianten. Keines der Model-A und keine der
+  Zero-Versionen passt daher in
+  die <a href="{{url_for('cases',lang=LANG)}}">TX-Pi-Gehäuse</a>. Es
+  wird daher nicht empfohlen, diese als Basis eines TX-Pi zu wählen.</p>
+</article>
+
+<article class="card">
+  <header><h3>Raspberry-Pi 1 Model B</h3></header>
+
+  <p>Die Raspberry-Pi's Model A und B waren die erste Version des
+  Raspberry-Pi. Sie hatten einen anderen Formfaktor als spätere
+  Modelle und einen anderen 23-poligen GPIO-Anschluss. Auch das Model
+  B passt daher nicht weder in
+  die <a href="{{url_for('cases',lang=LANG)}}">TX-Pi-Gehäuse</a> noch
+  kann es zusammen mit
+  dem <a href="{{url_for('hat',lang=LANG)}}">TX-Pi-HAT</a> verwendet
+  werden. Diese Version wird daher nicht als Basis eines TX-Pi
+  empfohlen.</p>
+</article>
+
+<article class="card">
+  <header><h3>Raspberry-Pi 1 Model B+</h3></header>
+  
+  <p>Der <a href="https://www.raspberrypi.org/products/raspberry-pi-1-model-b-plus/">Raspberry-Pi
+  1 Model B+</a> war die erste Variante im aktuellen Formfaktor und
+  mit dem aktuellen 40-poligen GPIO-Anschluss. Dies ist daher die
+  älteste Version des Raspberry-Pi, die in
+  die <a href="{{url_for('cases',lang=LANG)}}">TX-Pi-Gehäuse</a> passt
+  und die sich wahrscheinlich mit
+  dem <a href="{{url_for('hat',lang=LANG)}}">TX-Pi-HAT</a> einsetzen
+  lässt. Obwohl dieses Setup funktionieren könnte wurde es nie
+  getestet und es wird daher nicht empfohlen, diese Version als Basis
+  eines TX-Pi zu verwenden.</p>
+</article>
+
+<article class="card">
+  <header><h3>Raspberry-Pi 2 und Pi 3 Model B und B+</h3></header>
+
+  <p>Der <a href="https://www.raspberrypi.org/products/raspberry-pi-2-model-b/">Raspberry-Pi
+  2 Model B</a>,
+  der <a href="https://www.raspberrypi.org/products/raspberry-pi-3-model-b/">Raspberry-Pi
+  3 Model B</a> und der
+  <a href="https://www.raspberrypi.org/products/raspberry-pi-3-model-b-plus/">Raspberry-Pi
+  3 Model B+</a> haben alle den gleichen Formfaktor und passen alle in
+  die <a href="{{url_for('cases',lang=LANG)}}">TX-Pi-Gehäuse</a>.  Sie
+  verfügen uber den 40-Pin-GPIO-Anschluss wie er zum Einsatz
+  des <a href="{{url_for('hat',lang=LANG)}}">TX-Pi-HAT</a> benötigt
+  wird. Alles diese Varianten werden daher als Basis eines TX-Pi
+  empfohlen. Der Pi 3 Model B+ ist der leistungsfähigste und wird
+  daher am meisten empfohlen.</p>
+</article>
+  
+<article class="card">
+  <header><h3>Raspberry-Pi 4 Model B</h3></header>
+
+  <p>Der <a href="https://www.raspberrypi.org/products/raspberry-pi-4-model-b/">Raspberry-Pi
+  4 Model B</a> ist die neueste und leistungsstärkste Version des
+  Raspberry-Pi. Er hat den passenden Formfaktor für
+  die <a href="{{url_for('cases',lang=LANG)}}">TX-Pi-Gehäuse</a> und
+  verfügt über den 40-Pin-GPIO-Anschluss wie er zum Einsatz
+  des <a href="{{url_for('hat',lang=LANG)}}">TX-Pi-HAT</a> benötigt
+  wird. Die <a href="{{url_for('software',lang=LANG)}}">TX-Pi-Software</a>
+  kann allerdings an einigen Stellen nicht kleinere Probleme mit
+  dieser Variante aufweisen. Außerdem erfordert die höhere
+  Energieaufnahme des Pi 4 ggf. eine aktive Kühlung, um die volle
+  Leistung zu erhalten. Der Pi 4 wird daher nur erfahrenen Nutzern als
+  Basis eines TX-Pi empfohlen.</p>
+</article>
+
+</details>
+
+<h2>Auswahl eines Bildschirms</h2>
+
+Die <a href="{{url_for('software',lang=LANG)}}">TX-Pi-Software</a>
+beinhaltet bereits Software und Treiber zum Betrieb bestimmter
+kleiner Touchscreen-Bildschirme. Die Benutzeroberfläche wurde
+ebenfalls auf die Bedienung mit einem Touchscreen ausgelegt.
+  
+<details>
+<summary style="outline: 0" ><a class="button">Details anzeigen/verbergen</a></summary>
+
+<article class="card">
+  <header><h3>HDMI-Bildschirm</h3></header>
+
+  <p>Der TX-Pi kann mit einem (großen) HDMI-Bildschirm verwendet
+  werden, obwohl der TX-Pi auf die Benutzung mit einem kleinen
+  Touchscreen ausgelegt wurde. Um dies zu erreichen kann der TX-Pi die
+  Ausgaben des kleinen Bildschirms auf den HDMI-Ausgang
+  spiegeln. Beides Anzeigen sind dann gleichzeitig aktiv und zeigen
+  den gleichen Inhalt. Dies funktioniert sogar, wenn gar kein
+  Touchscreen installiert ist. Da die meisten HDMI-Bildschirme nicht
+  berührungsempfindlich sind wird in dem Fall eine USB-Maus am TX-Pi
+  benötigt. Weiterhin wird <b>der HDMI-Ausgang nur dann aktiviert,
+  wenn eine Maus angeschlossen ist</b>.  Zusätzlich wird in dem Fall
+  die Darstellung eines Mauszeigers sowohl auf dem HDMI-Bildschirm als
+  auch auf dem Touchscreen aktiviert. Dies ist eine eher selten
+  benutzte und gestestete Möglichkeit und es wird daher empfohlen, mit
+  einem kleinen Touchscreen am TX-Pi zu arbeiten.</p>
+</article>
+
+<article class="card">
+  <header><h3>Waveshare 3,2-Zoll Touchscreen</h3></header>
+
+  <p>Die ersten Versionen
+  der <a href="{{url_for('software',lang=LANG)}}">TX-Pi-Software</a>
+  wurden für den Einsatz mit
+  dem <a href="https://www.waveshare.com/wiki/3.2inch_RPi_LCD_(B)">Waveshare
+  3,2-Zoll Touchscreen</a> entworfen, da dessen Bildauflösung von
+  240x320 Pixeln derjenigen
+  des <a href="https://www.fischertechnik.de/en/products/playing/robotics/522429-txt-controller">fischertechnik-TXT-Controllers</a>
+  entspricht. Dieses Display wird von
+  der <a href="{{url_for('software',lang=LANG)}}">TX-Pi-Software</a>
+  unterstützt und es existieren passende <a href="{{
+  url_for('cases_displays_32inch',
+  lang=LANG)}}">Gehäuse-Entwürfe</a>. Diese Bildschirme sind nicht zu
+  100% kompatibel mit dem
+  <a href="{{url_for('hat',lang=LANG)}}">TX-Pi-HAT</a>, da sie einige
+  GPIO-Anschlüsse des Raspberry-Pi verwenden, die auch der HAT
+  benötigt.  Das Drücken der Tasten am Bildschirm hat dabei Einfluss
+  auf die Ansteuerung der fischertechnik-Ein- und Ausgänge des
+  HAT. Diese Bildschirme werden daher nur dann empfohlen, wenn kein
+  TX-Pi-HAT eingesetzt werden soll.</p>
+</article>
+
+<article class="card">
+  <header><h3>Waveshare 3,5-Zoll-(A)-Touchscreen und kompatibel</h3></header>
+
+  <p>Die <a href="https://www.waveshare.com/wiki/3.5inch_RPi_LCD_(A)">Waveshare
+  3,5-Zoll (A) Touchscreen</a>s haben eine Bildauflöäsung von 320x480
+  Pixeln und damit die doppelte Auflösung der 3,2-Zoll-Version. Sie
+  werden durch
+  die <a href="{{url_for('software',lang=LANG)}}">TX-Pi-Software</a>
+  vollständig unterstützt, werden mit passenden <a href="{{
+  url_for('cases_displays_35inch', lang=LANG)}}">Gehäusedesigns</a>
+  versorgt und sind uneingeschränkt kompatibel mit dem
+  <a href="{{url_for('hat',lang=LANG)}}">TX-Pi-HAT</a>. Viele billige
+  Kopien dieses Bildschirms sind im Vesandhandel verfügbar. Der
+  einzige Nachteil dieser Bildschirme ist die geringe Rate bei
+  Aktualisierungen des Bildinhaltes. Für die Bedienoberfläche ist
+  dieses vollkommen ausreichend, aber eine flüssige Darstellung von
+  Videos oder Spielen ist damit nicht möglich. Dieser Bildschirm wird
+  in den meisten TX-Pi-Setups verwendet und wird daher als Basis eine
+  TX-Pi empfohlen.</p>
+</article>
+
+<article class="card">
+  <header><h3>Waveshare 3,5-Zoll-(B)-Touchscreens</h3></header>
+
+  <p>Der <a href="https://www.waveshare.com/wiki/3.5inch_RPi_LCD_(B)">Waveshare
+  3,5-Zoll-(B)-Touchscreen</a> hat den gleichen Formfaktor wie die
+  (A)-Version aber hat eine etwas bessere Bildqualität. Das (B)-Modell
+  benötigt eine etwas andere Initialisierung und wird daher durch
+  spezielle <a href="{{url_for('software',lang=LANG)}}">TX-Pi-Software</a>-Images
+  und Setup-Optionen ünterstützt.  Dieser Bildschirm lässt sich daher
+  auch als Basis eines TX-Pi butzen.</p>
+</article>
+
+<article class="card">
+  <header><h3>Waveshare 3,5-Zoll-(C)-Touchscreens und kompatibel</h3></header>
+
+  <p>Der <a href="https://www.waveshare.com/wiki/3.5inch_RPi_LCD_(C)">Waveshare-3,5-Zoll-(C)-Touchscreen</a>
+  ist Software-kompatibel mit der (A)-Version und das gleiche
+  Software-Setup kann daher mit beiden verwendet werden. Die
+  (C)-Version hat eine deutlich schnellere Schnittstelle zum
+  Raspberry-Pi und eignet sich auch für die Darstellung von flüssigem
+  Video und Spielen.
+  Die <a href="{{url_for('software',lang=LANG)}}">TX-Pi-Software</a>
+  beinhaltet ein Einstellung-Werkzeug, um die
+  Schnittstellengeschwindigkeit auf bis zu 125 Mhz zu erhöhen und so
+  eine flüssige Bildwiedergabe mit 60 Hz zu ermöglichen. Vorsicht:
+  Dieser Bidlschirmtyp ist manchmal schwierig zu beziehen und wird
+  häufig als "125 Mhz Highspeed-Bildschirm" angeboten während die
+  billigere und langsamere Variante geliefert wird. Dieser Bildschirm
+  wird daher erfahrenen Nutzern empfohlen.</p>
+</article>
+
+</details>
+
+<h2>Auswahl von Zusatzhardware</h2>
+
+Der Raspberry-Pi ist elektrisch nicht kompatibel zum
+fischertechnik-System.  Das TX-Pi-Projekt bietet
+daher <a href="{{url_for('electrical',lang=LANG)}}">diverse
+Hardware-Zusätze</a>, um diese Beschränkung zu umgehen.
+
+<details>
+<summary style="outline: 0" ><a class="button">Details anzeigen/verbergen</a></summary>
+
+<article class="card">
+  <header><h3>fischertechnik-Controller</h3></header>
+
+  <p>fischertechnik selbst hatte und hat einige entsprechenden Geräte
+  im Angebot. Die meisten davon können and den Raspberry-Pi
+  angeschlossen werden und sind daher am TX-Pi nutzbar.
+  Die <a href="{{url_for('software',lang=LANG)}}">TX-Pi-Software</a>
+  bringt für viele dieser Geräte die passenden Treiber bereits mit und
+  es finden sich z.B. Demo-Anwendungen für den Robo-LT-Controller oder
+  den <a href="https://www.fischertechnik.de/de-de/produkte/spielen/robotics/540586-bt-smart-beginner-set">BT
+  Smart Controller</a> im Lieferumfang. Da diese Verwendung nicht
+  offiziell von fischertechnik unterstützt wird ist die Verwendung am
+  TX-Pi ggf. nicht trivial und wird nur erfahrenen Nutzern
+  empfohlen.</p>
+</article>
+   
+<article class="card">
+  <header><h3>TX-Pi-HAT / ft-HAT</h3></header>
+
+  <p>Der <a href="{{url_for('hat',lang=LANG)}}">TX-Pi-HAT</a> wurde
+  speziell zum Einsatz im TX-Pi entwickelt.  Er wird aktiv als Teil
+  des TX-Pi-Projekts entwickelt und ist der bevorzugte Hardware-Zusatz
+  zum TX-Pi.</p>
+</article>
+
+</details>
+
+{% endblock %}

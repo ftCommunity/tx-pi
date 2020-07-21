@@ -1,10 +1,13 @@
 {% extends "skel.html" %}
-{% block page_title %}TX-Pi installieren{% endblock %}
+{% block page_title %}TX-Pi manuelle Installation{% endblock %}
 {% block main %}
 {% filter markdown %}
-# TX-Pi Installation
+# TX-Pi manuelle Installation
 
-Die Installation erfordert lediglich drei einfache Schritte:
+Diese Seite beschreibt die manuelle Installation der TX-Pi-Software. Für Anfänger
+eignen sich gegebenenfalls [vorbereitete System-Images]({{url_for('images', lang=LANG)}}) besser.
+
+Die manuelle Installation erfordert lediglich drei einfache Schritte:
 
   1. Installation der Raspbian Distribution auf einer SD-Karte
   2. Manuelle Vorbereitungen
@@ -20,11 +23,16 @@ Lite](https://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2017-
 Weitere Hinweise zur Installation von Raspbian Lite findet man
 [hier](https://www.raspberrypi.org/documentation/installation/installing-images/README.md).
 
+Falls ein Raspberry-Pi4 verwendet wird ist der Verwendung von
+[Raspberry Pi OS Buster
+Lite](https://www.raspberrypi.org/downloads/raspberry-pi-os/)
+erforderlich und es muss die aktuelle Entwicklungsversion des
+Installier-Scripts verwendet werden wie weiter unten genauer erklärt.
+
 Lege die SD-Karte in den Raspberry Pi ein und starte diesen.
 Die nächsten Schritte können am einfachsten mit einem direkt angeschlossenen
 Bildschirm sowie einer Tastatur ausgeführt werden. Alternativ funktioniert
 das auch über SSH.
-
 
 ## Schritt 2: Manuelle Vorbereitungen
 
@@ -72,6 +80,14 @@ Installation wird der Raspberry Pi automatisch neu gestartet und die
 [fischertechnik Community Firmware](http://cfw.ftcommunity.de/) wird
 nach dem Neustart angezeigt.
 
+### Hinweise zum Raspberry- Pi4
+
+Für den Raspberry-Pi4 wird z.Zt. die Entwicklungsversion des Scripts
+benötigt. Diese "unstable"-Version findet sich unter:
+
+```
+wget https://tx-pi.de/unstable/tx-pi-setup.sh
+```
 
 # Unterstützung für 3.5" Displays
 

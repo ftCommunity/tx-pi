@@ -1,0 +1,69 @@
+{% extends "skel.html" %}
+{% block page_title %}Gehäuse für 3,2-Zoll-Bildschirme{% endblock %}
+{% block main %}
+{% filter markdown %}
+
+# Bildschirmgehäuse für Waveshare-3,2-Zoll und kompatibel
+
+{{image('cases/displays/3.2inch', 'images/display32.jpg') }}
+
+## Wanne
+
+### Zur Verwendung direkt auf einem Raspberry-Pi4
+
+Die folgende Gehäusewanne wird verwendet, wenn der Bildschirm direkt
+auf einem Raspberry-Pi4 (ohne HAT dazwischen) verwendet wird, da diese
+Wanne Ausschnitte für die USB- und Ethernet-Buchsen des Raspberry-Pi4
+hat.
+
+{{ stltable( {
+  "paths": [ "cases/displays/common" ],
+  "names": [ "Wanne" ],
+  "stls":  [ "Pi4_Display-Wanne" ]
+})}}
+
+### Zur Verwendung direkt auf einem Raspberry-Pi2 oder Pi3
+
+Die folgende Gehäusewanne wird verwendet, wenn der Bildschirm direkt
+auf einem Raspberry-Pi2 oder Pi3 (ohne HAT dazwischen) verwendet wird,
+da diese Wanne Ausschnitte für die USB- und Ethernet-Buchsen des
+Raspberry-Pi2 oder Pi3 hat.
+
+Die Version mit dem Schlitz für das Kamerakabel ermöglicht es, das
+Flachkabel der Raspberry-Pi-Kamera durch das Gehäuse zu führen. Dies
+wird üblicherweise im Zusammenspiel mit einem Deckel für den Raspberry-Pi
+verwendet, der ebenfalls einen Ausschnitt für das Kabel hat.
+
+Die höhere Version wird für einige ältere V3-Bildschirme benötigt.
+
+{{ stltable( {
+  "paths": [ "cases/displays/common", "cases/displays/common", "cases/displays/3.2inch" ],
+  "names": [ "Normale Wanne","Wanne mit Kabelschlitz","Höhere Wanne" ],
+  "stls":  [ "display_v4_bottom","display_v4_bottom_with_ribbon_slot","display32_v3_bottom" ]
+})}}
+
+### Zur Verwendung mit einem HAT zwischen Pi und Bildschirm
+
+Wenn ein HAT eingesetzt wird, dann ragen die USB- und Ethernet-Buchsen
+des Raspberry-Pi in dessen Gehäusewanne hinein und reichen nicht bis
+in den Bereich des Bildschirmgehäuses. Daher benötigt die Wanne des
+Bildschirmgehäuses in dem Fall keine Ausschnitte für die Buchsen.
+
+{{ stltable( {
+  "paths": [ "cases/displays/common" ],
+  "names": [ "Wanne" ],
+  "stls":  [ "Display-Wanne_ohne_Öffnungen" ]
+})}}
+
+## Deckel
+
+Gehäusedeckel für 3,2-Zoll-Bildschirm mit drei Tasten:
+
+{{ stltable( {
+  "paths": [ "cases/displays/3.2inch", "cases/displays/3.2inch" ],
+  "names": [ '3,2-Zoll-Deckel',"Tasten" ],
+  "stls":  [ "display32_top","buttons" ]
+})}}
+
+{% endfilter %}
+{% endblock %}

@@ -1,34 +1,50 @@
 {% extends "skel.html" %}
 {% block page_title %}Cases{% endblock %}
 {% block main %}
-{% filter markdown %}
-# Cases
 
-Especially in the world of fischertechnik the TX Pi is rather unprotected
-and the voltage of 9 volt being used can be fatal to the Raspberry Pi
-and the other components. A case protects the Raspberry Pi and the components
-and allows to mount the setup firmly to the fischertechnik model.
+{{ title("mechanical integration", "TX-Pi Cases") }}
 
-{{image('cases', 'images/tx-pi-cases.jpg') }}
+<p>Especially in the world of fischertechnik the TX-Pi is rather
+  unprotected and the voltage of 9 volt being used can be fatal to the
+  Raspberry Pi and the other components. A case protects the Raspberry
+  Pi and the components and allows to mount the setup firmly to the
+  fischertechnik model.</p>
 
-More information helpful to support you in selecting the
-right cases can be found [here](selection).
+{{ slideshow([
+  [ "cases.jpg", "3d printed cases" ],
+  [ "complete_cased.jpg", "A complete setup" ],
+  [ "parts_in_cases.jpg", "Cased components" ],
+  [ "pi3_cased.jpg", "Pi3 in case" ],
+  [ "pi_hat_dsp_cased.jpg", "Pi, HAT and display in case" ],
+  [ "pi_hat_dsp_case_stacked.jpg", "Stacked components" ]
+])}}
 
-  - Raspberry Pi
-    - [Raspberry Pi2 and Pi3](pi/pi2_pi3/)
-    - [Raspberry Pi4](pi/pi4)
-  - Displays
-    - [Waveshare 3.2" and compatible](displays/3.2inch)
-    - [Waveshare 3.5" and compatible](displays/3.5inch)
-    - [Waveshare 4" and compatible](displays/4inch)
-  - HATs
-    - [TX-Pi HAT/ft-HAT](hats/tx-pi-hat)
-    - [TX-Pi I2C breakout and power supply](hats/i2c_pwr)
-    - [Pi4 cooling HAT](hats/CoolerHAT)
-  - Accessories
-    - [Clips, stands, ...](accessories/clips_stands)
-    - [PiPower power supply](accessories/pipower)
+<p>More information helpful to support you in selecting the right
+cases can be found <a href="{{url_for('cases_selection',lang=LANG)}}">here</a>.
 
-
-{% endfilter %}
+  <ul>
+    <li>Raspberry Pi</li>
+    <ul>
+      <li><a href="{{ url_for('cases_pi2_pi3', lang=LANG)}}">Raspberry Pi2 and Pi3</a></li>
+      <li><a href="{{ url_for('cases_pi4', lang=LANG)}}">Raspberry Pi4</a></li>
+    </ul>
+    <li>Displays</li>
+    <ul>
+      <li><a href="{{ url_for('cases_displays_32inch', lang=LANG) }}">Waveshare 3.2 and compatible</a></li>
+      <li><a href="{{ url_for('cases_displays_35inch', lang=LANG) }}">Waveshare 3.5 and compatible</a></li>
+      <li><a href="{{ url_for('cases_displays_4inch', lang=LANG) }}">Waveshare 4 and compatible</a></li>
+    </ul>
+    <li>HATs</li>
+    <ul>
+      <li><a href="{{ url_for('cases_hats_tx_pi_hat', lang=LANG) }}">TX-Pi HAT/ft HAT</a></li>
+      <li><a href="{{ url_for('cases_hats_i2c_pwr', lang=LANG) }}">TX-Pi I2C breakout and power supply</a></li>
+      <li><a href="{{ url_for('cases_hats_cooler', lang=LANG) }}">Pi4 colling HAT</a></li>
+    </ul>
+    <li>Accessories</li>
+    <ul>
+      <li><a href="{{ url_for('cases_accessories_clips_stands', lang=LANG) }}">Clips, stands, ...</a></li>
+      <li><a href="{{ url_for('cases_accessories_pipower', lang=LANG) }}">PiPower power supply</a></li>
+    </ul>
+  </ul>
+</p>
 {% endblock %}

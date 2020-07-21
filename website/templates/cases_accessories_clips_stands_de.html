@@ -1,0 +1,35 @@
+{% extends "skel.html" %}
+{% block page_title %}Ständer{% endblock %}
+{% block main %}
+{% filter markdown %}
+
+# Ein Ständer für den TX-Pi
+
+{{image('cases/accessories/clips_stands', 'images/TX-Pi_with_stand.JPG', "TX-Pi mit Ständer") }}
+
+## Der Ständer
+
+{{ stltable( {
+  "paths": [ "cases/accessories/clips_stands","cases/accessories/clips_stands","cases/accessories/clips_stands" ],
+  "names": [ "Verbinder","Linke Stütze","Rechte Stütze" ],
+  "stls":  [ "TX-Pi_stand_bracket_v2.1","TX-Pi_stand_support_left","TX-Pi_stand_support_right" ]
+})}}
+
+## Klipps/Platte mit TX-Pi-Beschriftung
+
+{{ stltable( {
+  "paths": [ "cases/accessories/clips_stands","cases/accessories/clips_stands" ],
+  "names": [ "30mm TX-Pi-Klipps","45mm TX-Pi-Klipps"  ],
+  "stls":  [ "TX-Pi-clip_15x30x4","Abdeckplatte_15x45_TX-Pi_v3" ]
+})}}
+
+## Komplette Befestigungsplatte
+
+{{ stltable( {
+  "paths": [ "cases/accessories/clips_stands" ],
+  "names": [ "Befestigungsplatte"  ],
+  "stls":  [ "mountingplate" ]
+})}}
+
+{% endfilter %}
+{% endblock %}

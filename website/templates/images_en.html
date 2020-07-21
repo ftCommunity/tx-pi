@@ -2,7 +2,19 @@
 {% block page_title %}TX-Pi images{% endblock %}
 {% block main %}
 <h1>TX-Pi images</h1>
-<p>To install the image onto SD card, please follow the <a href="https://www.raspberrypi.org/documentation/installation/installing-images/README.md">instructions given on the Raspbian site</a> except to use the TX-Pi image instead of the Raspbian image.</p>
+
+<p>This page describes the installation of prepared system
+images. Advanced users may also use
+the <a href="{{url_for('installation', lang=LANG)}}">manual
+installation</a>. This is primarily needed if a different one than
+<a href="{{url_for('prerequisites', lang=LANG)}}">recommanded setup</a> is
+being used.</p>
+
+<p>To install the image onto SD card, please follow
+the <a href="https://www.raspberrypi.org/documentation/installation/installing-images/README.md">instructions
+given on the Raspbian site</a> except to use the TX-Pi image instead
+of the Raspbian image.</p>
 <p>Download prepared TX-Pi images:</p>
+
 {% include "images.html" %}
 {% endblock %}

@@ -1,0 +1,97 @@
+{% extends "skel.html" %}
+{% block page_title %}Gehäuseauswahl{% endblock %}
+{% block main %}
+{% filter markdown %}
+
+# Auswahl der richtigen Gehäuse für ein TX-Pi-System
+
+## Der Raspberry-Pi 
+
+Die Auswahl der Gehäuse beginnt mit dem Raspberry-Pi selbt. Der TX-Pi
+unterstützt alle Versionen des Raspberry-Pi mit 40-poligem
+Erweiterungsstecker. Dies schließt u.a. den Raspberry-Pi2, Pi3 und
+Pi4 ein.
+
+Im Falle eines Raspberry-Pi2 oder Pi3 erfolgt die Auswahl
+des passenden Gehäuses [hier](../pi/pi2_pi3).
+
+Bei Verwendung eines Raspberry-Pi4 (der Pi mit zwei blauen
+USB-3-Anschlüssen in der Mitte) findet man die passenden Gehäuse
+[hier](../pi/pi4). Einige Gehäuse für den Pi haben zusätzliche
+Öffnungen für das Flex-Kabel der Raspberry-Pi-Kamera. Soll die Kamera
+eingesetzt werden, so sollte die entsprechende Gehäusevariante gewählt
+werden.
+
+Das folgendene Bild zeige einen Raspberry-Pi4 im passenden Gehäuse:
+
+{{ image('cases/selection', 'images/pi4.jpg', "Raspberry-Pi4")}}
+
+Die Auswahl des passenden Gehäuses für den Raspberry-Pi erfolgt unter:
+
+  - [Raspberry-Pi2 und Pi3](../pi/pi2_pi3/)
+  - [Raspberry-Pi4](../pi/pi4)
+    
+## Der HAT
+
+Soll das TX-Pi-System einen ft-HAT nutzen, um den TX-Pi
+aus einer fischertechnik-Spannungsquelle zu versorgen oder
+um fischertechnik-kompatible Modellanschlüsse zu verwenden, dann muss
+als nächstes das Gehäuse für den HAT ausgewählt werden. Falls
+kein HAT eingesetzt werden soll, dann geht duie Auswahl stattdessen
+direkt mit dem Bildschirmgehäuse im nächsten Abschnitt weiter.
+
+Wie auf dem Bild oben zu sehen ragen die USB- und Ethernet-Buchsen
+etwas nach oben aus dem Gehäuse des Rapberry-Pi4 hinaus. Dies muss
+beim Gehäuse des HATs berücksichtigt werden, da dessen Wanne die
+passenden Ausschnitte haben muss, um die USB- und Ethernet-Buchsen
+aufzunehmen. Unterschiedliche passende Gehäusewannen für den HAT
+exisitieren ja nachdem, ob er auf einem Raspberry-Pi2/Pi3 oder einem
+Raspberry-Pi4 eingesetzt werden soll.
+
+Das folgenden Beispiel zeigt einen Raspberry-Pi4 mit montiertem HAT in
+passenden Gehäusen.
+
+{{ image('cases/selection', 'images/pi4_hat.jpg', "Pi4 mit HAT")}}
+
+Die Auswahl des passenden Gehäuses für den HAT erfolgt unter:
+
+  - [TX-Pi-HAT/ft-HAT](../hats/tx-pi-hat)
+  
+## Der Bildschirm
+
+Soll direkt auf dem Raspberry-Pi und ohne zwischenliegendem HAT
+ein Bildschirm verwendet werden, so müssen die Ausschnitte in
+der Wann des Bildschirmgehäuses den USB- und Ethernetbuchsen des
+darunterliegenden Raspberry-Pi entsprechenden Platz bieten.
+Daher gibt es unterschiedliche Wannen für das Bildschirmgehäuse.
+
+Im folgenden Beispiel ist ein Raspberry-Pi3 mit direkt
+aufgestecktem 3,5-Zoll-Waveshare-Bildschirm zu sehen:
+
+{{ image('cases/selection', 'images/pi3_display35.jpg', "Pi3 mit Bildschirm")}}
+
+Soll ein HAT zwischen Raspberry-Pi und Bildschirm eingesetzt werden,
+so sollte eine Bildschirmwanne gewählt werden, die keine Ausschnitte
+für den Raspberry-Pi enthält, da dessen Buchsen bereist vollständig
+vom HAT verdeckt werden.
+
+Hier abgebildet ist ein Raspberry-Pi3 mit HAT und 3,5-Zoll-Bildschirm.
+
+{{ image('cases/selection', 'images/pi3_hat_display35.jpg', "Pi3 mit HAT und Bildschirm")}}
+
+Und hier ein vergleichbares Setup auf Basis des Raspberry-Pi4:
+
+{{ image('cases/selection', 'images/pi4_hat_display35.jpg', "Pi4 mit HAT und Bildschirm")}}
+
+Da in diesen beiden Beispielen die Buchsen des Raspberry-Pi nur in
+den HAT ragen kommt in beiden Fällen die gleiche Gehäusewanne für
+den Bildschirm zum Einsatz.
+
+Die Auswahl des passenden Gehäuses für den Bildschirm erfolgt unter:
+
+  - [Waveshare-3.2-Zoll und kompatibel](../displays/3.2inch)
+  - [Waveshare-3.5-Zoll und kompatibel](../displays/3.5inch)
+  - [Waveshare-4-Zoll und kompatibel](../displays/4inch)
+
+{% endfilter %}
+{% endblock %}

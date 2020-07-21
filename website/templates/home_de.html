@@ -1,19 +1,43 @@
 {% extends "skel.html" %}
-{% block page_title %}TX-Pi – Raspberry Pi für fischertechnik{% endblock %}
+{% block page_title %}TX-Pi – Raspberry-Pi für fischertechnik{% endblock %}
 {% block main %}
-<h1>TX-Pi – Raspberry Pi für fischertechnik</h1>
-<p>Das Ziel des TX-Pi-Projekts ist die Integration des <a href="https://www.raspberrypi.org/">Raspberry-Pi</a>
-  in das <a href="http://www.fischertechnik.de">fischertechnik-Konstruktionsspielzeug</a>.
-  Das Projekt bietet daher Gehäuse-Entwürfe für die mechanische Integration, Betriebssystemimages für
-  die Software-Integration und Hardware-Entwürfe für die elektrische Integration.</p>
-<p>Das TX-Pi-Projekt bietet ein <a href="{{ url_for('installation', lang=LANG) }}">Setup-Script</a>,
-  welches die <a href="https://cfw.ftcommunity.de/">Community Firmware für den fischertechnik TXT</a>
-  auf einem Raspberry Pi installiert.</p>
-<p>Zudem bieten wir vorgefertigte <a href="{{ url_for('images', lang=LANG) }}">SD-Karten-Images</a>
-  zum Download an, die eine manuelle Installation überflüssig machen.</p>
-<p><font color="red"><b>Neu:</b></font> Der <a href="https://www.tx-pi.de/static/docs/tx-pi-hat_kurz_de.pdf">TX-Pi-HAT</a> (<a href="https://www.tx-pi.de/static/docs/tx-pi-hat_en.pdf">englische Anleitung</a>) integriert den Raspberry-Pi in die 9V-fischertechnik-Welt (verfügbar über <a href="https://gundermann-software.de/produkt/ft-hat-fischertechnik-hat-fuer-den-raspberry-pi/">Gundermann</a> und <a href="https://santjohanser.de/fischertechnik/spielen/robotics/1622/ft-hat">Santjohanser</a>).</p>
-<hr>
-<p><center><img src="https://thingiverse-production-new.s3.amazonaws.com/assets/dd/97/2e/72/57/TX-Pi2c_Geh01.JPG" width="90%"><br>
-<b>Die TX-Pi Komponenten:</b> Displaymodul, <a href="https://www.thingiverse.com/thing:3478004">optionales I2C Breakout Modul</a> und Raspberry Pi Modul.</center></p>
-<p>Die Daten für den <a href="./cases/">3D-Druck der Gehäuse</a> finden sich im <a href="https://github.com/ftCommunity/tx-pi">GitHub-Repository</a>.</p>
+<h1>TX-Pi – Raspberry-Pi für fischertechnik</h1>
+<p>Das Ziel des TX-Pi-Projekts ist es,
+  den <a href="https://www.raspberrypi.org/">Raspberry-Pi</a> mit
+  den <a href="http://www.fischertechnik.de">fischertechnik-Konstruktionsbaukästen</a>
+  zu kombinieren.</p>
+
+<div class="flex two-900 center">
+
+  <div><p><center><img src="/static/images/tx-pi.jpg" style="max-width: 500px; width: 90%">
+	<br>Ein komplettes TX-Pi-Setup</center></p>
+  </div>
+
+  <div>
+    <p>Einige <a href="{{ lurl_for('prerequisites')
+      }}">Voraussetzungen</a> sollten erfüllt sein, wenn man ein
+      eigenes TX-Pi-System aufsetzen möchte.</p>
+    
+    <p><h3>Software</h3>
+       Das TX-Pi-Projekt stellt <a href="{{ lurl_for('software')
+        }}"> Software</a> bereit, um ein angenehmes
+       Benutzererlebnis zu ermöglichen und Kompatibilität mit dem
+       fischertechnik-TXT-Controller herzustellen.</p>
+    
+    <p><h3>Hardware</h3>
+       Das TX-Pi-Projekt stellt <a href="{{ lurl_for('electrical')
+       }}">Hardware</a> für die sichere Verbindung
+       zwischen dem Raspberry-Pi und den elektrischen
+       fischertechnik-Komponenten bereit.</p>
+    
+    <p><h3>Gehäuse</h3> 
+        Das TX-Pi-Projekt stellt 3D-Druckvorlagen für <a href="{{
+	lurl_for('cases') }}">Gehäuse</a> für eine stabile
+	mechanische Verbindung zwischen dem Raspberry-Pi und den
+	fischertechnik-Komponenten bereit.</p>
+  </div>
+</div>
+    
+<p><font color="red"><b>Neu:</b></font> Der <a href="{{ lurl_for('hat') }}">TX-Pi-HAT</a> ist verfügbar.</p>
+
 {% endblock %}

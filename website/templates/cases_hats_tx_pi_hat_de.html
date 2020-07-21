@@ -1,0 +1,52 @@
+{% extends "skel.html" %}
+{% block page_title %}TX-Pi-HAT{% endblock %}
+{% block main %}
+{% filter markdown %}
+
+# TX-Pi-HAT / ft-HAT
+
+{{image('cases/hats/tx-pi-hat', 'images/tx-pi-hat.jpg', "HAT mit Breakout-Board") }}
+
+Der [TX-Pi-HAT]({{url_for('hat',lang=LANG)}}) kann mit dem
+Raspberry-Pi2, Pi3 und Pi4 verwendet werden.  Die USB- und
+Ethernet-Buchsen des Raspberry-Pi ragen dann in den Bereich der
+Gehäusewanne des HAT. Das Gehäuse des HAT benötigt daher passende
+Ausschnitte, um die Buchsen des Pi aufzunehmen. Da der Pi2 und der Pi3
+ihre Buchsen in einer anderen Anordnung haben als der Pi4 muss die
+Gehäusewanne des HAT zu den Buchsen des Raspberry-Pi darunter passend
+ausgewählt werden.
+
+{{ stltable( {
+  "paths": [ "cases/hats/tx-pi-hat","cases/hats/tx-pi-hat","cases/hats/tx-pi-hat" ],
+  "names": [ "Wanne zur Verwendung mit dem Pi4", "Wanne zur Verwendung mit dem Pi2/Pi3","Deckel" ],
+  "stls":  [ "Exp_Wanne","Exp_Wanne_Pi3","Exp_Deckel" ]
+})}}
+
+Zusätzlich werden vier M2.5x12mm-Senkkopfschrauben benötigt.
+
+Es kann nötig sein, den Teil des Deckels, der den Power-Taster des
+HATs abdeckt etwas nach außen zu biegen, so dass der Taster nicht
+durch das Gehäuse permanent gedrückt wird.
+
+## Breakout-Board
+
+Da der Platz über dem HAT nicht genutzt werden kann, wenn ein Bildschirm
+montiert ist wurden die fischertechnik-Anschlüsse auf das sogenannte
+Breakout-Baord verlegt.
+
+Ein Befestigungsplatte für das Breakout-Board erlaubt es, das Board im
+Modell zu fixieren. Die Befestigungsplatte existiert in zwei
+Varianten. Eine kommt mit einem seperaten Deckel und schützt Platine
+und Stecker etwas besser und folgt dem Stil der übrigen Gehäuse.
+Abgebildet ist die einfache Version ohne Deckel.
+
+{{image('cases/hats/tx-pi-hat', 'images/breakout_mounted.jpg', "Breakout auf einfacher Befestigungsplatte") }}
+
+{{ stltable( {
+  "paths": [ "cases/hats/tx-pi-hat","cases/hats/tx-pi-hat","cases/hats/tx-pi-hat" ],
+  "names": [ "Einfache Befestigungsplatte", "Wanne der Befestigungsplatte","Deckel der Befestigungsplatte" ],
+  "stls":  [ "breakout_base","Breakout_Platine_Unterteil","Breakout_Platine_Deckel" ]
+})}}
+
+{% endfilter %}
+{% endblock %}

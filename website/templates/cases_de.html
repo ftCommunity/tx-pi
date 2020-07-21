@@ -1,35 +1,51 @@
 {% extends "skel.html" %}
 {% block page_title %}Gehäuse{% endblock %}
 {% block main %}
-{% filter markdown %}
 
-# Gehäuse
+{{ title("mechanische Integration", "TX-Pi-Gehäuse") }}
 
-Der TX-Pi ist besonders in der fischertechnik-Welt recht ungeschützt und
-die 9V-Spannungen mit denen dort hantiert werden können für den Raspberry-Pi
-und die übrigen Komponenten fatal sein. Ein Gehäuse schützt den Pi und
-die anderen Komponenten und ermöglicht zusätzlich die stabile Befestigung
-am übrigen Modell.
+<p>Der TX-Pi ist besonders in der fischertechnik-Welt recht
+  ungeschützt und die 9V-Spannungen mit denen dort hantiert werden,
+  können für den Raspberry-Pi und die übrigen Komponenten fatal
+  sein. Ein Gehäuse schützt den Pi und die anderen Komponenten und
+  ermöglicht zusätzlich die stabile Befestigung am übrigen Modell.</p>
 
-{{ image('cases', 'images/tx-pi-cases.jpg')}}
+{{ slideshow([
+[ "cases.jpg", "3D-gedruckte Gehäuse" ],
+[ "complete_cased.jpg", "Ein komplettes System" ],
+[ "parts_in_cases.jpg", "Komponenten im Gehäuse" ],
+[ "pi3_cased.jpg", "Pi3 im Gehäuse" ],
+[ "pi_hat_dsp_cased.jpg", "Pi, HAT und Bildschirm" ],
+[ "pi_hat_dsp_case_stacked.jpg", "Gestapelte Komponenten" ]
+])}}
 
-Mehr hilfreiche Informationen zur Unterstützung bei der Auswahl
-des richtigen Gehäuses finden sich [hier](selection).
+<p>Mehr hilfreiche Informationen zur Unterstützung bei der Auswahl des
+  richtigen Gehäuses finden sich
+  <a href="{{url_for('cases_selection',lang=LANG)}}">hier</a>.
 
-  - Raspberry Pi
-    - [Raspberry Pi2 und Pi3](pi/pi2_pi3/)
-    - [Raspberry Pi4](pi/pi4)
-  - Displays
-    - [Waveshare 3.2" und kompatible](displays/3.2inch)
-    - [Waveshare 3.5" und kompatible](displays/3.5inch)
-    - [Waveshare 4" und kompatible](displays/4inch)
-  - HATs
-    - [TX-Pi-HAT/ft-HAT](hats/tx-pi-hat)
-    - [TX-Pi-I2C-Breakout und Spannungsversorgung](hats/i2c_pwr)
-    - [Pi4 Kühl-HAT](hats/CoolerHAT)
-  - Zubehör
-    - [Clips, Ständer, ...](accessories/clips_stands)
-    - [PiPower-Spannungsversorung](accessories/pipower)
-
-{% endfilter %}
+  <ul>
+    <li>Raspberry-Pi</li>
+    <ul>
+      <li><a href="{{ url_for('cases_pi2_pi3', lang=LANG) }}">Raspberry-Pi2 und Pi3</a></li>
+      <li><a href="{{ url_for('cases_pi4', lang=LANG) }}">Raspberry-Pi4</a></li>
+    </ul>
+    <li>Bildschirme</li>
+    <ul>
+      <li><a href="{{ url_for('cases_displays_32inch', lang=LANG) }}">Waveshare-3,2-Zoll und kompatibel</a></li>
+      <li><a href="{{ url_for('cases_displays_35inch', lang=LANG) }}">Waveshare-3,5-Zoll und kompatibel</a></li>
+      <li><a href="{{ url_for('cases_displays_4inch', lang=LANG) }}">Waveshare-4-Zoll und kompatibel</a></li>
+    </ul>
+    <li>HATs</li>
+    <ul>
+      <li><a href="{{ url_for('cases_hats_tx_pi_hat', lang=LANG) }}">TX-Pi-HAT/ft-HAT</a></li>
+      <li><a href="{{ url_for('cases_hats_i2c_pwr', lang=LANG) }}">TX-Pi-I2C-Breakout und Spannungsversorgung</a></li>
+      <li><a href="{{ url_for('cases_hats_cooler', lang=LANG) }}">Pi4-Kühl-HAT</a></li>
+    </ul>
+    <li>Zubehör</li>
+    <ul>
+      <li><a href="{{ url_for('cases_accessories_clips_stands', lang=LANG) }}">Clips, Ständer, ...</a></li>
+      <li><a href="{{ url_for('cases_accessories_pipower', lang=LANG) }}">PiPower-Spannungsversorgung</a></li>
+    </ul>
+  </ul>
+</p>
 {% endblock %}

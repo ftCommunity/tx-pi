@@ -1,0 +1,58 @@
+{% extends "skel.html" %}
+{% block page_title %}TX-Pi electrical{% endblock %}
+{% block main %}
+<h1><small>electrial Integration</small><br>TX-Pi Hardware</h1>
+
+<p>The fischertechnik construction toy operates the majority of its
+  eletrical components from 9 volt sources. This includes motors and
+  lamps as well as air compressors, valves and fischertechniks own
+  robotics controllers.</p>
+
+<p>The Raspberry Pi on the other hand is operated from a 5 volt USB
+  power source and most of its IOs are further limited to 3.3 volts. A
+  direct connection between fischertechnik components and the
+  Raspberry Pi would either not work at all or even be harmful to the
+  Pi.</p>
+
+<p>The TX-Pi project thus provides several components to integrate the
+  Raspberry Pi into the 9 volt world of fischertechnik.</p>
+
+{{ slideshow([
+  [ "breakout.jpg", "ft HAT breakout board" ],
+  [ "breakout_on_plate.jpg", "ft HAT breakout board" ],
+  [ "ft-hat.jpg", "ft HAT on Raspberry Pi" ],
+  [ "fth_set.jpg", "ft HAT package contents" ],
+  [ "pi_ftduino.jpg", "TX-Pi with ftDuino" ],
+  [ "pcbs.jpg", "ft HAT PCBs" ],
+])}}
+
+<h2>TX-Pi HAT / ft HAT</h2>
+
+<p>The <a href="{{url_for('hat', lang=LANG)}}">TX-Pi HAT</a> is a
+  commercial hardware add-on for the Raspberry Pi2, Pi3 and Pi4 to
+  power the Pi from regular 9 volt fischertechnik power sources, to
+  interface it with fischertechnik buttons, switches, motors, lamps
+  and similar and to connect it to fischertechnik I²C sensors.</p>
+
+<h2>ftDuino</h2>
+
+<p>The <a href="http://ftduino.de/en">ftDuino</a> is an Arduino
+  compatible controller designed for fischertechnik. Connected to the
+  TX-Pi gives it 12 fischertechnik compatible inputs and 8
+  outputs.</p>
+
+<h2>I2C breakout and power supply</h2>
+
+<p>The <a href="https://www.thingiverse.com/thing:3478004">I2C
+  breakout and power supply</a> is a DIY project providing a
+  fischertechnik compatible power supply for the Raspberry Pi as well
+  as fischertechnik compatible I²C ports.</p>
+
+<h2>PiPower Module</h2>
+
+<p>The <a href="{{url_for('cases_accessories_pipower',
+  lang=LANG)}}">PiPower Module</a> is a very simple DIY module
+  allowing to power the Raspberry Pi from a fischertechnik power
+  source.</p>
+
+{% endblock %}

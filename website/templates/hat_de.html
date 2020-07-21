@@ -1,0 +1,36 @@
+{% extends "skel.html" %}
+{% block page_title %}ft-HAT{% endblock %}
+{% block main %}
+<h1>TX-Pi-HAT / ft-HAT</h1>
+
+<p>Der TX-Pi-HAT / ft-HAT ist die neueste unter den
+  TX-Pi-Hardwareerweiterungen erhältlich
+  bei <a href="https://gundermann-software.de/produkt/ft-hat-fischertechnik-hat-fuer-den-raspberry-pi/">Gundermann</a>
+  oder <a href="https://santjohanser.de/fischertechnik/spielen/robotics/1622/ft-hat">Santjohanser</a>!
+
+<ul>
+  <li>Raspberry-Pi-Versorgung aus jeder fischertechnik-9-Volt-Spannungsquelle</li>
+  <ul>
+    <li>Versorgung durch Pi selbst kontrolliert (Selbstabschaltung)</li>
+    <li>Versorgung durch RTC kontrolliert (zeitgesteuertes Aufwachen)</li>
+  </ul>
+  <li>Vier digitale fischertechnik-kompatible Eingänge I1-I4</li>
+  <li>Zwei analoge fischertechnik-kompatible Motorausgänge M1+M2</li>
+  <li>Zwei fischertechik-TX, TXT und ftDuino-kompatible I²C-Anschlüsse</li>
+</ul>
+</p>
+
+<p>
+<div class="flex two-1200 center" width="100%">
+  <div align="center" style="max-width:100%;"><img src="/static/images/ft-hat.jpg" style="width:420px; max-width:100%;"/></div>
+  <div align="center" style="max-width:100%;"><iframe src="https://www.youtube-nocookie.com/embed/8ZXmgCrltn4?rel=0" width="560" height="315" style="max-width:100%;max-height:calc(100vw/(16/9));" frameborder="0" allowfullscreen="allowfullscreen"></iframe></div>
+</div>
+</p>
+
+<p>Mehr Information:
+<ul>
+  <li><a href="https://www.tx-pi.de/static/docs/tx-pi-hat_kurz_de.pdf">Deutsche Kurzanleitung</a></li>
+  <li><a href="https://www.tx-pi.de/static/docs/tx-pi-hat_en.pdf">Englische Anleitung</a></li>
+</ul></p>
+  
+{% endblock %}

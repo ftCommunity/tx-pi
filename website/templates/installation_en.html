@@ -1,10 +1,13 @@
 {% extends "skel.html" %}
-{% block page_title %}TX-Pi installation{% endblock %}
+{% block page_title %}TX-Pi manual installation{% endblock %}
 {% block main %}
 {% filter markdown %}
-# TX-Pi installation
+# TX-Pi manual installation
 
-The entire installation consists of three main steps:
+This page describes the manual installation of the TX-Pi software setup. Beginners
+may prefer to use [prepared system images]({{url_for('images', lang=LANG)}}) instead.
+
+The entire manual installation consists of three main steps:
 
   1. Install a standard raspbian operating system image onto SD card
   2. Do some minor manual preparations
@@ -21,6 +24,11 @@ and install it onto SD card. Other versions may work as well but the
 aforementioned ones have been tested. More information on installing
 rasbian on SD card can be found
 [here](https://www.raspberrypi.org/documentation/installation/installing-images/README.md).
+
+If the Raspberry Pi4 is being used then [Raspberry Pi OS
+Buster Lite](https://www.raspberrypi.org/downloads/raspberry-pi-os/)
+should be used. Furthermore the development version of the
+install script is needed as explained below.
 
 Insert the SD card into your Pi and boot it. Unless you are very
 familiar with the Pi and are able to do a headless setup you should
@@ -64,6 +72,15 @@ programs from the internet onto your Pi. Once the installation is done
 your Pi will automatically reboot and it will boot into the user
 interface of the [fischertechnik community
 firmware](http://cfw.ftcommunity.de/).
+
+### Raspberry Pi4
+
+If a Raspberry Pi4 is being used then the development version of the
+script has to be used. It can downloaded from:
+
+```
+wget https://tx-pi.de/unstable/tx-pi-setup.sh
+```
 
 
 # Support for 3.5" screens

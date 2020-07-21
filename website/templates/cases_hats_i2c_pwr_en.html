@@ -1,0 +1,24 @@
+{% extends "skel.html" %}
+{% block page_title %}I2C Pwr HAT{% endblock %}
+{% block main %}
+{% filter markdown %}
+
+# I2C breakout and power supply
+
+{{image('cases/hats/i2c_pwr', 'images/pi2c.jpg', "I2C and Power Supply") }}
+
+This design can also be found on
+[Thingiverse](https://www.thingiverse.com/thing:3478004).
+
+The case has cutouts for the USB and Ethernet sockets of the
+Raspberry Pi2 and Pi3. It will thus only fit on top of the
+Raspberry Pi2 and Pi3 but not on top of the Pi4.
+
+{{ stltable( {
+  "paths": [ "cases/hats/i2c_pwr", "cases/hats/i2c_pwr" ],
+  "names": [ "Bottom", "Top" ],
+  "stls":  [ "TX-Pi2C_Wanne","TX-Pi2C_Deckel" ]
+})}}
+
+{% endfilter %}
+{% endblock %}
