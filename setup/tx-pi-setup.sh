@@ -27,7 +27,7 @@
 #===============================================================================
 set -ue
 # Schema: YY.<release-number-within-the-year>.minor(.dev)?
-TX_PI_VERSION='20.1.1.dev'
+TX_PI_VERSION='20.1.0'
 
 DEBUG=false
 ENABLE_SPLASH=true

@@ -1,6 +1,6 @@
 # Changes
 
-## 2020-mm-dd
+## 20.1.0 -- 2020-07-21
 * Removed support for Debian Jessie (v8)
 * Added support for Debian Buster (v10)
 * Removed support of netreq for Buster since its purpose is uncertain,
