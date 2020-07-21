@@ -25,8 +25,10 @@ aforementioned ones have been tested. More information on installing
 rasbian on SD card can be found
 [here](https://www.raspberrypi.org/documentation/installation/installing-images/README.md).
 
-A setup based in the Raspberry Pi4 requires the [Raspberry Pi OS
-Buster Lite](https://www.raspberrypi.org/downloads/raspberry-pi-os/).
+If the Raspberry Pi4 is being used then [Raspberry Pi OS
+Buster Lite](https://www.raspberrypi.org/downloads/raspberry-pi-os/)
+should be used. Furthermore the development version of the
+install script is needed as explained below.
 
 Insert the SD card into your Pi and boot it. Unless you are very
 familiar with the Pi and are able to do a headless setup you should
@@ -65,18 +67,20 @@ and run the script by typing
 sudo bash ./tx-pi-setup.sh
 ```
 
-In case of a Raspberry Pi4 is currently the development version of the
-script mandatory:
-
-```
-wget https://tx-pi.de/unstable/tx-pi-setup.sh
-```
-
 This will now take about one hour and download and install a lot of
 programs from the internet onto your Pi. Once the installation is done
 your Pi will automatically reboot and it will boot into the user
 interface of the [fischertechnik community
 firmware](http://cfw.ftcommunity.de/).
+
+### Raspberry Pi4
+
+If a Raspberry Pi4 is being used then the development version of the
+script has to be used. It can downloaded from:
+
+```
+wget https://tx-pi.de/unstable/tx-pi-setup.sh
+```
 
 
 # Support for 3.5" screens
