@@ -126,6 +126,12 @@ EOF
 Package: x11vnc x11vnc-data
 Pin: release n=jessie
 Pin-Priority: 1000
+
+# Added due to issues with the Raspberry Pi OS kernel and the touch displays
+Package: raspberrypi-kernel
+Pin: version 1.20200512-2
+Pin-Priority: 1000
+
 EOF
 fi
 
