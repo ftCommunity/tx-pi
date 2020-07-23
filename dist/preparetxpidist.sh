@@ -49,6 +49,7 @@ echo "Resetting WLAN configuration (if any)"
 cat <<EOF > ${mount_dir}/etc/wpa_supplicant/wpa_supplicant.conf
 ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
 update_config=1
+country=DE
 EOF
 
 echo "Remove log files"

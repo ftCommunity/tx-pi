@@ -184,7 +184,9 @@ def installation(lang):
     """\
     Installation hints.
     """
-    return render_template('installation_{0}.html'.format(lang))
+    return render_template('installation_{0}.html'.format(lang),
+                           current_os_url='http://downloads.raspberrypi.org/raspios_lite_armhf/images/raspios_lite_armhf-2020-05-28/2020-05-27-raspios-buster-lite-armhf.zip',
+                           legacy_os_url='http://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2019-04-09/2019-04-08-raspbian-stretch-lite.zip')
 
 MenuItem = namedtuple('MenuItem', ['name', 'url', 'icon'])
 
