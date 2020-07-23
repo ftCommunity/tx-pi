@@ -1,0 +1,16 @@
+<div>
+  <article class="card sdimage">
+    <header>
+      <h3>{{ image.descr }}</h3>
+    </header>
+    <section>
+      <dl>
+        <dt>{{ checksum }}</dt><dd>{{ image.checksum }}</dd>
+        <dt>{{ released }}</dt><dd>{{ image.date }}</dd>
+        <dt>{{ size }}</dt><dd>{{ image.size }}</dd>
+        <dt>{{ os_version }}</dt><dd>{{ image.raspbian_version }}</dd>
+      </dl>
+    </section>
+    <footer><a href="{{ image.download_url }}"><button>Download</button></a></footer>
+  </article>
+</div>

@@ -171,12 +171,23 @@ def images(lang):
     """\
     Renders a page about the images.
     """
-    images = []
+    pi3_images = []
+    pi4_images = []
+    is_en = lang == 'en'
     for name, img in TXPI_IMAGES.items():
         img['download_url'] = '/images/latest_{0}'.format(name)
         img['descr'] = img['descr_de'] if lang == 'de' else img['descr_en']
-        images.append(img)
-    return render_template('images_{0}.html'.format(lang), images=images)
+        if name.startswith('pi3'):
+            pi3_images.append(img)
+        else:
+            pi4_images.append(img)
+    return render_template('images_{0}.html'.format(lang), pi3_images=pi3_images,
+                           txpi_version='20.1',
+                           pi4_images=pi4_images,
+                           released='Released' if is_en else 'Veröffentlicht',
+                           checksum='Checksum (MD5)' if is_en else 'Checksumme (MD5)',
+                           size='Size' if is_en else 'Größe',
+                           os_version='Version')
 
 
 @app.route('/<lang>/installation/')
@@ -187,6 +198,7 @@ def installation(lang):
     return render_template('installation_{0}.html'.format(lang),
                            current_os_url='http://downloads.raspberrypi.org/raspios_lite_armhf/images/raspios_lite_armhf-2020-05-28/2020-05-27-raspios-buster-lite-armhf.zip',
                            legacy_os_url='http://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2019-04-09/2019-04-08-raspbian-stretch-lite.zip')
+
 
 MenuItem = namedtuple('MenuItem', ['name', 'url', 'icon'])
 
@@ -206,11 +218,6 @@ def inject_defaults():
     return { # Variables mainly used for skel.html
             'LANG': language,
             'MAIN_MENU': main_menu,
-            # Variables used by image.html
-            'RELEASED': 'Released' if is_en else 'Veröffentlicht',
-            'CHECKSUM': 'Checksum (MD5)' if is_en else 'Checksumme (MD5)',
-            'SIZE': 'Size' if is_en else 'Größe',
-            'RASPBIAN_VERSION': 'Raspbian version' if is_en else 'Raspbian Version',
             # Function to simplify links
             'lurl_for': partial(url_for, lang=language)
     }
