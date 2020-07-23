@@ -1,20 +1,13 @@
+<h2>TX-Pi {{ txpi_version }}</h2>
+<h3>Raspberry Pi 3</h3>
 <div class="flex two-600 four-1200">
-  {% for image in images %}
-<div>
-  <article class="card sdimage">
-    <header>
-      <h3>{{ image.descr }}</h3>
-    </header>
-    <section>
-      <dl>
-        <dt>{{ CHECKSUM }}</dt><dd>{{ image.checksum }}</dd>
-        <dt>{{ RELEASED }}</dt><dd>{{ image.date }}</dd>
-        <dt>{{ SIZE }}</dt><dd>{{ image.size }}</dd>
-        <dt>{{ RASPBIAN_VERSION }}</dt><dd>{{ image.raspbian_version }}</dd>
-      </dl>
-    </section>
-    <footer><a href="{{ image.download_url }}"><button>Download</button></a></footer>
-  </article>
+  {% for image in pi3_images %}
+    {%include 'image_card.html' %}
+  {% endfor %}
 </div>
+<h3>Raspberry Pi 4</h3>
+<div class="flex two-600 four-1200">
+  {% for image in pi4_images %}
+    {%include 'image_card.html' %}
   {% endfor %}
 </div>

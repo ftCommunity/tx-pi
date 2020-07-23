@@ -40,8 +40,16 @@ body > header nav .brand {
 }
 
 body > main {
-  padding-top: 3em;
-  padding-bottom: 3em;
+  padding-top: 2em;
+  padding-bottom: 0em;
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+}
+
+body > footer {
+    background-color: #dddddd;
+  padding-top: 0.25em;
+  padding-bottom: 0.25em;
   padding-left: 1.5em;
   padding-right: 1.5em;
 }
