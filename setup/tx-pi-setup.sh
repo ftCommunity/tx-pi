@@ -115,6 +115,13 @@ else
    header "Setup for Waveshare 3.2 inch screen"
 fi
 
+if [ $HOSTNAME == "raspberrypi" ]; then
+    msg "Found default hostname, change it to 'tx-pi'"
+    raspi-config nonint hostname tx-pi
+    rm -f /etc/ssh/ssh_host_*
+    ssh-keygen -A
+fi
+
 # Update Debian sources
 if [ "$IS_BUSTER" = true ]; then
     cat <<EOF > /etc/apt/sources.list.d/tx-pi.list
