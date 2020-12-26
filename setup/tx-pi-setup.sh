@@ -115,9 +115,10 @@ else
    header "Setup for Waveshare 3.2 inch screen"
 fi
 
-if [ $HOSTNAME == "raspberrypi" ]; then
+if [ "$HOSTNAME" == "raspberrypi" ]; then
     msg "Found default hostname, change it to 'tx-pi'"
-    raspi-config nonint hostname tx-pi
+    sed -i "s/127.0.1.1.*${HOSTNAME}/127.0.1.1\ttx-pi/g" /etc/hosts
+    echo "tx-pi" > /etc/hostname
     rm -f /etc/ssh/ssh_host_*
     ssh-keygen -A
 fi
