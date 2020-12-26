@@ -862,6 +862,9 @@ if [ ! -f "$shop_repositories" ]; then
 EOF
 fi
 
+# Clean up if necessary
+apt -y autoremove
+
 msg "rebooting ..."
 
 sync
