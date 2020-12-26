@@ -27,7 +27,8 @@
 #===============================================================================
 set -ue
 # Schema: YY.<release-number-within-the-year>.minor(.dev)?
-TX_PI_VERSION='20.1.0'
+# See <https://calver.org/> for details
+TX_PI_VERSION='20.1.1'
 
 DEBUG=false
 ENABLE_SPLASH=true
@@ -114,6 +115,13 @@ else
    header "Setup for Waveshare 3.2 inch screen"
 fi
 
+if [ "$HOSTNAME" == "raspberrypi" ]; then
+    msg "Found default hostname, change it to 'tx-pi'"
+    raspi-config nonint do_hostname tx-pi
+    rm -f /etc/ssh/ssh_host_*
+    ssh-keygen -A
+fi
+
 # Update Debian sources
 if [ "$IS_BUSTER" = true ]; then
     cat <<EOF > /etc/apt/sources.list.d/tx-pi.list
@@ -178,6 +186,10 @@ sed -i "s/#timeout 60;/timeout 10;/g" /etc/dhcp/dhclient.conf
 # Reduce this time to 20 sec.
 sed -i "s/#retry 60;/retry 20;/g" /etc/dhcp/dhclient.conf
 
+
+header "Disable wait for network"
+raspi-config nonint do_boot_wait 1
+
 # ---------------------- display setup ----------------------
 header "Install screen driver"
 
@@ -229,6 +241,7 @@ EOF
 
 #-- Support for the TX-Pi HAT
 # Enable I2c
+header "Enable I2C"
 raspi-config nonint do_i2c 0 dtparam=i2c_arm=on
 sed -i "s/dtparam=i2c_arm=on/dtparam=i2c_arm=on\ndtparam=i2c_vc=on/g" /boot/config.txt
 # Disable RTC
@@ -848,6 +861,9 @@ if [ ! -f "$shop_repositories" ]; then
 </repositories>
 EOF
 fi
+
+# Clean up if necessary
+apt -y autoremove
 
 msg "rebooting ..."
 
