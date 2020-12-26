@@ -9,13 +9,22 @@ to create an installable SD card image from a working TX-Pi setup.
 ```
 # read image from SD card reader
 sudo cp /dev/sdb tx-pi-fullsize.img
+# Download the pishrink script
+wget https://raw.githubusercontent.com/harbaum/PiShrink/master/pishrink.sh 
+# Make the script executable
+chmod +x pishrink.sh
 # shrink image
 sudo ./pishrink.sh -c tx-pi-fullsize.img tx-pi.img
 ```
 Afterwards, you have to apply the [preparetxpidist.sh](https://github.com/ftCommunity/tx-pi/raw/master/dist/preparetxpidist.sh) script to the tx-pi.img:
 
 ```
-preparetxpidist.sh tx-pi.img
+# Download the script
+wget https://github.com/ftCommunity/tx-pi/raw/master/dist/preparetxpidist.sh
+# Make the script executable
+chmod +x preparetxpidist.sh
+# Create the TX-Pi image
+sudo ./preparetxpidist.sh tx-pi.img
 ```
 
 This script modifies the image. Do not apply the script to the same image twice!
