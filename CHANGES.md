@@ -1,5 +1,9 @@
 # Changes
 
+## 20.1.1 -- 2020-12-26
+* Change hostname to "tx-pi" if the host uses the default hostname "raspberrypi"
+* Remove obsolete packages automatically
+
 ## 20.1.0 -- 2020-07-21
 * Removed support for Debian Jessie (v8)
 * Added support for Debian Buster (v10)
