@@ -117,8 +117,7 @@ fi
 
 if [ "$HOSTNAME" == "raspberrypi" ]; then
     msg "Found default hostname, change it to 'tx-pi'"
-    sed -i "s/127.0.1.1.*${HOSTNAME}/127.0.1.1\ttx-pi/g" /etc/hosts
-    echo "tx-pi" > /etc/hostname
+    raspi-config nonint do_hostname tx-pi
     rm -f /etc/ssh/ssh_host_*
     ssh-keygen -A
 fi
