@@ -29,7 +29,7 @@ for the fischertechnik TXT](http://cfw.ftcommunity.de/).
 # Website
 
 Please visit our website https://tx-pi.de/ which offers [SD card images](https://www.tx-pi.de/images/), 
-help with [installation](https://www.tx-pi.de/installation/), among other useful information like
+help with [installation](https://www.tx-pi.de/software/), among other useful information like
 [cases](https://www.tx-pi.de/cases/) and compatible [hardware](https://www.tx-pi.de/hardware/)
 like the [TX-Pi HAT](https://www.tx-pi.de/hat/).
 
