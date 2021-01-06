@@ -201,7 +201,7 @@ def images(lang):
     return render_template('images_{0}.html'.format(lang),
                            pi3_images=pi3_images,
                            pi4_images=pi4_images,
-                           txpi_version='20.1',
+                           txpi_version='20.1.1',
                            released='Released' if is_en else 'Veröffentlicht',
                            checksum='Checksum (MD5)' if is_en else 'Checksumme (MD5)',
                            size='Size' if is_en else 'Größe',
