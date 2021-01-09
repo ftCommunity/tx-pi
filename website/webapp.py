@@ -229,7 +229,9 @@ def inject_defaults():
     main_menu = (MenuItem('Software', 'software', icon='icon-puzzle'),
                  MenuItem('Hardware', 'hardware', icon='icon-install'),
                  MenuItem('Cases' if is_en else 'Gehäuse', 'cases', icon='icon-cube'),
-                 MenuItem('Github', _GITHUB_URL, icon='icon-gh'),
+                 MenuItem('Shop', 'https://www.mintronics.de/shop/Raspberry-Pi-TX-Pi-c61868271',
+                          icon='icon-basket'),
+                 MenuItem('Github', _GITHUB_URL, icon='icon-github'),
                  MenuItem('Deutsch' if is_en else 'English',
                           ('/de/' if is_en else '/en/') + request.path[4:], icon=None))
     language = 'en' if is_en else 'de'

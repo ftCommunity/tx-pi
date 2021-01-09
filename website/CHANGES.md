@@ -1,5 +1,8 @@
 # Changes
 
+## 2021-01-09
+* Added link to Mintronics.
+
 ## 2019-05-05
 * Added image of the TX-Pi cases to the index page (PeH)
 * Update of the SD card images (PeH)
