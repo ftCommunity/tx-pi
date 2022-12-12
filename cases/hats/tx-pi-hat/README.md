@@ -18,7 +18,7 @@ The basic version depicted below has no top cover.
 ![Mounted](./images/breakout_mounted.jpg)
 
 | Mounting plate basic |
-|:---:|:---:|:---:|
+|:---:|
 | ![Mounting plate](./images/breakout_base.png) |
 | [View](breakout_base.stl) |
 | [Download](breakout_base.stl?raw=true) |
