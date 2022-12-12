@@ -4,14 +4,9 @@
 
 ## TX-Pi HAT
 
-The TX-Pi HAT can be used with the Raspberry Pi2, Pi3 and Pi4. The USB
+The TX-Pi HAT can be used with the Raspberry Pi2, Pi3 and Pi4.The USB
 and Ethernet connectors of the Pi then protrude into the are of the
-HATs bottom case. The HATs case thus needs cutouts in the bottom to
-accomodate the connectors of the Pi. Since the Pi2 and Pi3 have their
-connectors at different locations then the Pi4. The bottom case of the
-HAT must be choosen to fit the connectors of the Raspberry Pi below.
-
-### No files yet
+HATs bottom case.
 
 ## Breakout board
 
