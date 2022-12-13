@@ -57,3 +57,10 @@ A and B displays and noname displays.
 | ![Top 3.5"](./images/display35_top.png) | ![Top 3.5" A](./images/display_ws35a_top.png) | ![Top 3.5" B](./images/display_ws35b_top.png) |
 | [View](display35_top.stl) | [View](display_ws35a_top.stl) | [View](display_ws35b_top.stl) |
 | [Download](display35_top.stl?raw=true) | [Download](display_ws35a_top.stl?raw=true) | [Download](display_ws35b_top.stl?raw=true) |
+
+
+## License
+
+This work was created by Till Harbaum is licensed under a Creative Commons Attribution 4.0 International License
+[CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/)
+

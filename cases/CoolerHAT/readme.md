@@ -6,3 +6,7 @@ Make sure that your fan runs on 5V. Intake of the fan should be from below, the 
 Use a 2-pin (2 wire) fan and connect the (+) line to pin 4 of the GPIO, the (-) line to pin 6.
 
 
+## License
+
+This work was created by Peter Habermehl is licensed under a Creative Commons Attribution 4.0 International License
+[CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/)

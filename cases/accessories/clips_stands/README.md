@@ -25,3 +25,10 @@
 | ![Clip](./images/mountingplate.png) |
 | [View](mountingplate.stl) |
 | [Download](mountingplate.stl?raw=true)
+
+
+## License
+
+This work was created by Till Harbaum is licensed under a Creative Commons Attribution 4.0 International License
+[CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/)
+
