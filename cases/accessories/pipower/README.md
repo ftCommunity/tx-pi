@@ -32,3 +32,10 @@ close the case using two M3 (3mm) flat head screws with 6-8mm length.
 | ![Top](./images/top.png) | ![Bottom](./images/bottom.png) |
 | [View](top.stl) | [View](bottom.stl) |
 | [Download](top.stl?raw=true) | [Download](bottom.stl?raw=true) |
+
+
+## License
+
+This work was created by Till Harbaum is licensed under a Creative Commons Attribution 4.0 International License
+[CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/)
+

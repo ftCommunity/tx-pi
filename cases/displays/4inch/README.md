@@ -14,3 +14,10 @@ top of the HAT.
 | ![Bottom](./images/displ_ws40A_bottom.png) | ![Top 3.5"](./images/displ_ws40A_top.png) |
 | [View](displ_ws40A_bottom.stl) | [View](displ_ws40A_top.stl) |
 | [Download](displ_ws40A_bottom.stl?raw=true) | [Download](displ_ws40A_top.stl?raw=true) |
+
+
+## License
+
+This work was created by Till Harbaum is licensed under a Creative Commons Attribution 4.0 International License
+[CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/)
+

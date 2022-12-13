@@ -55,3 +55,10 @@ Top case for 3.2" display with three buttons:
 | ![Top 3.2"](./images/display32_top.png) | ![Buttons](./images/buttons.png) |
 | [View](display32_top.stl) | [View](buttons.stl) |
 | [Download](display32_top.stl?raw=true) | [Download](buttons.stl?raw=true) |
+
+
+## License
+
+This work was created by Till Harbaum is licensed under a Creative Commons Attribution 4.0 International License
+[CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/)
+

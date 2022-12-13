@@ -18,6 +18,12 @@ There are four versions of the bottom. Two for use with the Pi2/Pi3 and
 two for use with the Pi4. There's each a version with an additional slot
 for use with a Raspberry Pi camera.
 
+## License
+
+This work was created by Peter Habermehl is licensed under a Creative Commons Attribution 4.0 International License
+[CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/)
+
+
 | Bottom for Pi3 | Bottom with cable slot for Pi3 | Bottom for Pi4 | Bottom with cable slot for Pi4 |
 |:---:|:---:|:---:|:---:|
 | ![Bottom](./images/TX-Pi3_CoolerHAT_Wanne.png) | ![Bottom](./images/TX-Pi3_CoolerHAT_Wanne_Kabelschlitz.png) | ![Bottom](./images/TX-Pi4_CoolerHAT_Wanne.png) | ![Bottom](./images/TX-Pi4_CoolerHAT_Wanne_Kabelschlitz.png) |
