@@ -46,6 +46,10 @@ body > main {
   padding-right: 1.5em;
 }
 
+.license {
+  padding-left: 1.5em;
+}
+
 body > footer {
     background-color: #dddddd;
   padding-top: 0.25em;

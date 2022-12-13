@@ -220,6 +220,7 @@ def installation(lang):
 
 MenuItem = namedtuple('MenuItem', ['name', 'url', 'icon'])
 
+
 @app.context_processor
 def inject_defaults():
     """\
@@ -235,7 +236,7 @@ def inject_defaults():
                  MenuItem('Deutsch' if is_en else 'English',
                           ('/de/' if is_en else '/en/') + request.path[4:], icon=None))
     language = 'en' if is_en else 'de'
-    return { # Variables mainly used for skel.html
+    return {  # Variables mainly used for skel.html
             'LANG': language,
             'MAIN_MENU': main_menu,
             # Function to simplify links
