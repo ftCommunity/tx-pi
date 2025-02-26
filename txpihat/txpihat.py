@@ -4,11 +4,9 @@
 #  Python3 class for TxPiHAT control
 #  (c) Dr. Till Harbaum, Lars Heuer, Peter Habermehl
 #
-
-versionstring = "v2.0 (2025/02/26)"
-
 import RPi.GPIO as GPIO
 
+__version__ = "v2.0 (2025/02/26)"
 
 # board mode uses the pin numbers of the 40 pin connector.
 _BOARD_PINS = {"I1": 32, "I2": 36, "I3": 38, "I4": 40,
@@ -24,10 +22,8 @@ _BCM_PINS = {"I1": 12, "I2": 16, "I3": 20, "I4": 21,
 
 class TxPiHAT:
     def __init__(self, mode="bcm"):
-        self.versionstring = versionstring
-
         if mode not in {"bcm", "board"}:
-            raise ValueError(f"Invalid mode. expected 'board' or 'bcm', got '{mode}'")
+            raise ValueError(f"Invalid mode. Expected 'board' or 'bcm', got '{mode}'")
         self.mode = mode
         self.pins = _BOARD_PINS if mode == "board" else _BCM_PINS
         GPIO.setwarnings(False)
