@@ -21,7 +21,7 @@ except Exception as e: # falls das nicht geklappt hat....
 print()
 print(ansi_red + ansi_ul + "TxPi initialisation test" + ansi_std)
 print()
-print("TxPiHAT module version:", ansi_red, hat.versionstring, ansi_std)dmesg
+print("TxPiHAT module version:", ansi_red, hat.versionstring, ansi_std)
 print("HAT object:", ansi_red, hat, ansi_std)
 
 print()

@@ -46,8 +46,8 @@ class TxPiHAT:
         # ---------------- M1 -----------------------
         # configure h bridge
         GPIO.setup(self.pins["PWMB"], GPIO.OUT)
-        pwm1 = GPIO.PWM(self.pins["PWMB"], 200)  # 200 Hz
-        pwm1.start(0)
+        self.pwm1 = GPIO.PWM(self.pins["PWMB"], 200)  # 200 Hz
+        self.pwm1.start(0)
 
         GPIO.setup(self.pins["BIN1"], GPIO.OUT)
         GPIO.output(self.pins["BIN1"], GPIO.LOW)
