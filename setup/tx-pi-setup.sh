@@ -28,7 +28,7 @@
 set -ue
 # Schema: YY.<release-number-within-the-year>.minor(.dev)?
 # See <https://calver.org/> for details
-TX_PI_VERSION='20.1.1'
+TX_PI_VERSION='21.1.0-dev'
 
 DEBUG=false
 ENABLE_SPLASH=true
