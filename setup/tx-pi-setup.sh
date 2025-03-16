@@ -28,11 +28,10 @@
 set -ue
 # Schema: YY.<release-number-within-the-year>.minor(.dev)?
 # See <https://calver.org/> for details
-TX_PI_VERSION='21.1.0-dev'
+TX_PI_VERSION='25.1.0-dev'
 
 DEBUG=false
 ENABLE_SPLASH=true
-ENABLE_NETREQ=false
 
 function msg {
     echo -e "\033[93m$1\033[0m"
@@ -48,35 +47,33 @@ function error {
 }
 
 #-- Handle Stretch (9.x) vs. Buster (10.x)
-DEBIAN_VERSION=$( cat /etc/debian_version )
-IS_STRETCH=false
-IS_BUSTER=false
+DEBIAN_VERSION=$(cat /etc/debian_version | head -c 2)
+IS_BOOKWORM=false
+IS_TRIXIE=false
 
-if [ "${DEBIAN_VERSION:0:1}" = "9" ]; then
-    IS_STRETCH=true
-    ENABLE_NETREQ=true
-elif [ "${DEBIAN_VERSION:0:2}" = "10" ]; then
-    IS_BUSTER=true
-elif [ "${DEBIAN_VERSION:0:1}" = "8" ]; then
-    error "Debian Jessie is not supported anymore"
-    exit 2
+if [ "${DEBIAN_VERSION}" = "12" ]; then
+    IS_BOOKWORM=true
+elif [ "${DEBIAN_VERSION:0:2}" = "13" ]; then
+    IS_TRIXIE=true
 else
     error "Unknown Raspbian version: '${DEBIAN_VERSION}'"
     exit 2
 fi
 
-if [ "$IS_STRETCH" = true ]; then
-    header "Setting up TX-Pi on Stretch lite"
+if [ "$IS_BOOKWORM" = true ]; then
+    header "Setting up TX-Pi on Bookworm"
 elif [ "$IS_BUSTER" = true ]; then
-    header "Setting up TX-Pi on Buster lite"
+    header "Setting up TX-Pi on Trixie"
 fi
 
 GITBASE="https://raw.githubusercontent.com/ftCommunity/ftcommunity-TXT/master/"
 GITROOT=$GITBASE"board/fischertechnik/TXT/rootfs"
-SVNBASE="https://github.com/ftCommunity/ftcommunity-TXT.git/trunk/"
-SVNROOT=$SVNBASE"board/fischertechnik/TXT/rootfs"
-TSVNBASE="https://github.com/harbaum/TouchUI.git/trunk/"
+FTC_MASTER="https://github.com/ftCommunity/ftcommunity-TXT.git"
+TOUCH_MASTER="https://github.com/harbaum/TouchUI.git"
 LOCALGIT="https://github.com/ftCommunity/tx-pi/raw/master/setup"
+
+INSTALL_DIR="/root/txpi_setup"
+FTC_ROOT=$INSTALL_DIR"/ftcommunity-TXT/board/fischertechnik/TXT/rootfs"
 
 FTDDIRECT="ftduino_direct-1.0.8"
 
@@ -122,73 +119,50 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
     ssh-keygen -A
 fi
 
-# Update Debian sources
-if [ "$IS_BUSTER" = true ]; then
-    cat <<EOF > /etc/apt/sources.list.d/tx-pi.list
-# TX-Pi sources used to solve issues with newer packages provided by Buster
-deb http://raspbian.raspberrypi.org/raspbian/ jessie main contrib non-free rpi
-EOF
+rm -rf $INSTALL_DIR
 
-    cat <<EOF > /etc/apt/preferences.d/tx-pi
-# Added due to issues with the X11 VNC server
-Package: x11vnc x11vnc-data
-Pin: release n=jessie
-Pin-Priority: 1000
-
-# Added due to issues with the Raspberry Pi OS kernel and the touch displays
-Package: raspberrypi-kernel
-Pin: version 1.20200512-2
-Pin-Priority: 1000
-
-EOF
-fi
-
+mkdir $INSTALL_DIR
 
 # ----------------------- package installation ---------------------
 
 header "Update Debian"
-apt-get update
+apt update
 apt --fix-broken -y install
-apt-get -y --allow-downgrades upgrade
+apt -y --allow-downgrades dist-upgrade
 
+# Utilities
+apt -y install neovim mc
 
 # X11
-apt-get -y install --no-install-recommends xserver-xorg xinit xserver-xorg-video-fbdev xserver-xorg-legacy unclutter
+apt -y install --no-install-recommends xserver-xorg xinit xserver-xorg-video-fbdev xserver-xorg-legacy unclutter
+
+
 # python and pyqt
-apt-get -y install --no-install-recommends python3 python3-pyqt4 python3-pip python3-numpy python3-dev cmake python3-pexpect
+apt -y install --no-install-recommends python3 python3-pyqt5 python3-pip python3-numpy python3-dev cmake python3-pexpect
 # python RPi GPIO access
-apt-get -y install -y python3-rpi.gpio
+apt -y install python3-rpi.gpio
 # misc tools
-apt-get -y install i2c-tools python3-smbus lighttpd git subversion ntpdate usbmount
+apt -y install i2c-tools python3-smbus lighttpd git subversion ntpdate
 # avrdude
-apt-get -y install avrdude
+apt -y install avrdude
 # Install Beautiful Soup 4.x
-apt-get install -y python3-bs4
+apt install -y python3-bs4
 
 # some additional python stuff
 header "Install Python libs"
-if [ "$IS_STRETCH" = true ]; then
-    pip3 install -U semantic_version websockets setuptools \
-        wheel  # Needed for zbar
-else
-    apt-get -y install --no-install-recommends python3-semantic-version \
+apt -y install --no-install-recommends python3-semantic-version \
         python3-websockets python3-setuptools python3-wheel
-fi
 
 
 # DHCP client
 header "Setup DHCP client"
 # Remove dhcpcd because it fails to start (isc-dhcp-client is available)
-apt-get -y purge dhcpcd5
+apt -y purge dhcpcd5
 # Do not try too long to reach the DHCPD server (blocks booting)
 sed -i "s/#timeout 60;/timeout 10;/g" /etc/dhcp/dhclient.conf
 # By default, the client retries to contact the DHCP server after five min.
 # Reduce this time to 20 sec.
 sed -i "s/#retry 60;/retry 20;/g" /etc/dhcp/dhclient.conf
-
-
-header "Disable wait for network"
-raspi-config nonint do_boot_wait 1
 
 # ---------------------- display setup ----------------------
 header "Install screen driver"
@@ -196,7 +170,7 @@ header "Install screen driver"
 if [ ${LCD} == "NODISP" ]; then
     header "  --> Skipped by user request <--"
 else
-    cd /root
+    cd $INSTALL_DIR
     wget -N https://www.waveshare.com/w/upload/0/00/LCD-show-170703.tar.gz
     tar xvfz LCD-show-170703.tar.gz
     if [ ${LCD} == "LCD35BV2" ]; then
@@ -214,12 +188,6 @@ else
     sed -i "s/\"reboot now\"/\"not rebooting yet\"/g" LCD-show/$LCD-show
     cd LCD-show
     ./$LCD-show $ORIENTATION
-    # Clean up
-    cd ..
-    rm -f ./LCD-show-170703.tar.gz
-    if [ "$DEBUG" = false ]; then
-        rm -rf ./LCD-show
-    fi
     if [ $LCD == "LCD35BV2" ]; then
         # Support for Waveshare 3.5" "B" rev. 2.0
         sed -i "s/waveshare35b/waveshare35b-v2/g" /boot/config.txt
@@ -245,7 +213,8 @@ header "Enable I2C"
 raspi-config nonint do_i2c 0 dtparam=i2c_arm=on
 sed -i "s/dtparam=i2c_arm=on/dtparam=i2c_arm=on\ndtparam=i2c_vc=on/g" /boot/config.txt
 # Disable RTC
-sed -i "s/exit 0/\# ack pending RTC wakeup\n\/usr\/sbin\/i2cset -y 0 0x68 0x0f 0x00\n\nexit 0/g" /etc/rc.local
+#TODO: 2025-03-16 -- Bookworm has no rc.local anymore. Is this still necessary?
+#sed -i "s/exit 0/\# ack pending RTC wakeup\n\/usr\/sbin\/i2cset -y 0 0x68 0x0f 0x00\n\nexit 0/g" /etc/rc.local
 # Power control via GPIO4
 echo "dtoverlay=gpio-poweroff,gpiopin=4,active_low=1" >> /boot/config.txt
 
@@ -263,8 +232,10 @@ fi
 
 
 # usbmount config
-cd /etc/usbmount
-wget -N https://raw.githubusercontent.com/ftCommunity/ftcommunity-TXT/3de48278d1260c48a0a20b07a35d14572c6248d3/board/fischertechnik/TXT/rootfs/etc/usbmount/usbmount.conf
+#TODO 2025-03-16
+#cd /etc/usbmount
+#wget -N https://raw.githubusercontent.com/ftCommunity/ftcommunity-TXT/3de48278d1260c48a0a20b07a35d14572c6248d3/board/fischertechnik/TXT/rootfs/etc/usbmount/usbmount.conf
+
 
 # create file indicating that this is a tx-pi setup
 touch /etc/tx-pi
@@ -288,32 +259,22 @@ locale-gen
 update-locale --no-checks LANG="de_DE.UTF-8"
 
 # install bluetooth tools required for e.g. bnep
-apt-get -y install --no-install-recommends bluez-tools
+apt -y install --no-install-recommends bluez-tools
 
 # fetch bluez hcitool with extended lescan patch
-cd /root
+cd $INSTALL_DIR
 wget -N $LOCALGIT/hcitool-xlescan.tgz
 tar xvfz hcitool-xlescan.tgz -C /usr/bin
-rm -f hcitool-xlescan.tgz
 
 # Install OpenCV
 header "Install OpenCV"
-if [ "$IS_STRETCH" = true ]; then
-    apt-get -y install --no-install-recommends libatlas3-base libwebp6 libtiff5 libjasper1 libilmbase12 \
-                                               libopenexr22 libilmbase12 libgstreamer1.0-0 \
-                                               libavcodec57 libavformat57 libavutil55 libswscale4 \
-                                               libgtk-3-0 libpangocairo-1.0-0 libpango-1.0-0 libatk1.0-0 \
-                                               libcairo-gobject2 libcairo2 libgdk-pixbuf2.0-0
-    pip3 install -U "opencv-python-headless>=3.0,<4.0.0"
-else
-    apt-get -y install --no-install-recommends python3-opencv
-fi
+apt -y install --no-install-recommends python3-opencv
 
-apt-get -y install --no-install-recommends libzbar0 python3-pil libzbar-dev
-pip3 install zbarlight
+apt -y install --no-install-recommends libzbar0 python3-pil libzbar-dev
+pip3 install --break-system-packages zbarlight
 
 # system wide mpg123 overrides the included mpg123 of some apps
-apt-get -y install --no-install-recommends mpg123
+apt -y install --no-install-recommends mpg123
 
 # ----------------------- user setup ---------------------
 # create ftc user
@@ -396,16 +357,14 @@ EOF
 if [ "$ENABLE_SPLASH" = true ]; then
     # a simple boot splash
     wget -N $LOCALGIT/splash.png -O /etc/splash.png
-    apt-get install -y --no-install-recommends libjpeg-dev
-    cd /root
+    apt install -y --no-install-recommends libjpeg-dev
+    cd $INSTALL_DIR
     wget -N https://github.com/godspeed1989/fbv/archive/master.zip
     unzip -x master.zip
     cd fbv-master/
     FRAMEBUFFER=/dev/fb1 ./configure
     make
     make install
-    cd ..
-    rm -rf master.zip fbv-master
     enable_default_dependencies="yes"
     cmd_line=$( cat /boot/cmdline.txt )
     # These params are needed to show the splash screen and to omit any text output on the LCD
@@ -443,14 +402,13 @@ fi  # End ENABLE_SPLASH
 sed -i 's,^\(allowed_users=\).*,\1'\anybody',' /etc/X11/Xwrapper.config
 
 # install framebuffer copy tool
-cd /root
+apt -y install libraspberrypi-dev
+cd $INSTALL_DIR
 wget -N $LOCALGIT/fbc.tgz
 tar xvfz fbc.tgz
 cd fbc
 make
 cp fbc /usr/bin/
-cd ..
-rm -rf fbc.tgz fbc
 
 # Hide cursor and disable screensaver
 cat <<EOF > /etc/X11/xinit/xserverrc
@@ -476,14 +434,8 @@ done
 exec /usr/bin/X -s 0 dpms \$CUROPT -nolisten tcp "\$@"
 EOF
 
-
 # Install vnc server
-if [ "$IS_BUSTER" = true ]; then
-    # VNC support in Buster is broken / may deliver distorted output
-    # Remove libvncserver1 if any
-    apt-get -y remove libvncserver1 x11vnc-data libvncclient1
-fi
-apt-get -y install x11vnc
+apt -y install x11vnc
 cat <<EOF > /etc/systemd/system/x11vnc.service
 [Unit]
 Description=X11 VNC service
@@ -536,12 +488,19 @@ wget -N $GITROOT/etc/udev/rules.d/40-lego_interfaces.rules
 wget -N $GITROOT/etc/udev/rules.d/60-i2c-tools.rules
 wget -N $GITROOT/etc/udev/rules.d/99-USBasp.rules
 
+
+# Download FTC firmware
+cd $INSTALL_DIR
+git clone --depth 1 $FTC_MASTER
+
+
 # get /opt/ftc
 header "Populating /opt/ftc ..."
 cd /opt
 rm -rf ftc
-svn export $SVNROOT"/opt/ftc"
+mv $FTC_ROOT"/opt/ftc" /opt/ftc
 cd /opt/ftc
+
 # just fetch a copy of ftrobopy to make some programs happy
 wget -N https://raw.githubusercontent.com/ftrobopy/ftrobopy/master/ftrobopy.py
 
@@ -556,17 +515,15 @@ for i in 24:23 28:24 32:24; do
     sed -i "s/^\(\s*font:\)\s*${from}px/\1 ${to}px/" $STYLE
 done
 
+cd $INSTALL_DIR
 
 # install libroboint
 header "Installing libroboint"
 rm -f /usr/local/lib/libroboint.so*
 # install libusb-dev
-apt-get install libusb-dev
-cd /root
-git clone https://gitlab.com/Humpelstilzchen/libroboint.git
+apt -y install libusb-dev
+git clone --depth 1 https://gitlab.com/Humpelstilzchen/libroboint.git
 cd libroboint
-# python3 compatibility 'patch'
-sed -i "s/python2/python3/g" ./CMakeLists.txt
 cmake .
 make
 # install
@@ -576,38 +533,34 @@ ldconfig
 make python
 # udev rules
 cp udev/fischertechnik.rules /etc/udev/rules.d/
-cd ..
-# clean up
-rm -rf libroboint
 
 
 # and ftduino_direct
 header "Installing ftduino_direct.py"
-cd /root
+cd $INSTALL_DIR
 wget -N https://github.com/PeterDHabermehl/ftduino_direct/raw/master/$FTDDIRECT.tar.gz
 tar -xzvf $FTDDIRECT.tar.gz 
 cd $FTDDIRECT
 python3 ./setup.py install
-cd ..
-rm -f $FTDDIRECT.tar.gz
-rm -rf $FTDDIRECT
 rm -f /opt/ftc/ftduino_direct.py
 
 # remove useless ftgui
 rm -rf /opt/ftc/apps/system/ftgui
 
+cd $INSTALL_DIR
+git clone --depth 1 $TOUCH_MASTER
+mv ./TouchUI/touchui/apps/system/power /opt/ftc/apps/system/power
+
 # add power tool from touchui
 cd /opt/ftc/apps/system
-svn export $TSVNBASE"/touchui/apps/system/power"
 # Move power button to home screen
 sed -i "s/category: System/category: /g" /opt/ftc/apps/system/power/manifest
-
 
 #
 # - Add TX-Pi TS-Cal
 #
 header "Install TS Cal"
-apt-get -y install --no-install-recommends xinput-calibrator
+apt -y install --no-install-recommends xinput-calibrator
 touch /usr/share/X11/xorg.conf.d/99-calibration.conf
 chmod og+rw /usr/share/X11/xorg.conf.d/99-calibration.conf
 
@@ -648,67 +601,27 @@ rm -f ./config.zip
 # add robolt support
 # robolt udev rules have already been installed from the main repository
 header "Install robolt"
-cd /root
-git clone https://github.com/ftCommunity/python-robolt.git
+cd $INSTALL_DIR
+git clone --depth 1 https://github.com/ftCommunity/python-robolt.git
 cd python-robolt
 python3 ./setup.py install
-cd ..
-rm -rf python-robolt
 
 # add wedo support
 # wedo udev rules have already been installed from the main repository
 header "Install WeDoMore"
-cd /root
-git clone https://github.com/gbin/WeDoMore.git
+cd $INSTALL_DIR
+git clone --depth 1 https://github.com/gbin/WeDoMore.git
 cd WeDoMore
 python3 ./setup.py install
-cd ..
-rm -rf WeDoMore
 
 # install the BT Control Set server
 header "Install BT Control Set server"
-apt-get -y install --no-install-recommends libbluetooth-dev
-cd /root
-git clone https://github.com/ftCommunity/ft_bt_remote_server.git
+apt -y install --no-install-recommends libbluetooth-dev
+cd $INSTALL_DIR
+git clone  --depth 1 https://github.com/ftCommunity/ft_bt_remote_server.git
 cd ft_bt_remote_server
 make
 make install
-cd ..
-rm -rf ft_bt_remote_server
-
-if [ "$ENABLE_NETREQ" = true ]; then
-    # install netreq
-    apt-get -y install --no-install-recommends libnetfilter-queue-dev
-    cd /root
-    svn export $SVNBASE"/package/netreq"
-    cd netreq
-    make
-    make install
-    cd ..
-    rm -rf netreq
-
-    cat <<EOF > /etc/netreq_permissions
-# netreq permissions
-EOF
-    chmod og+rw /etc/netreq_permissions
-
-    cat <<EOF > /etc/systemd/system/netreq.service
-[Unit]
-Description=Network requester
-Wants=network-online.target
-After=network-online.target
-
-[Service]
-Type=simple
-ExecStart=/usr/bin/netreq
-
-[Install]
-WantedBy=multi-user.target
-EOF
-
-    systemctl daemon-reload
-    systemctl enable netreq
-fi
 
 # build and install i2c-tiny-usb kernel module
 # This doesn't work at this stage since the newly istalled
@@ -737,11 +650,6 @@ fi
 lighttpd_mime_types="/usr/share/lighttpd/create-mime.conf.pl"
 lighttpd_config="include \"/etc/lighttpd/conf-enabled/*.conf\""
 
-if [ "$IS_STRETCH" = true ]; then
-    lighttpd_mime_types="/usr/share/lighttpd/create-mime.assign.pl"
-    lighttpd_config="include_shell \"/usr/share/lighttpd/include-conf-enabled.pl\""
-fi
-
 # adjust lighttpd config
 cat <<EOF > /etc/lighttpd/lighttpd.conf
 server.modules = (
@@ -759,7 +667,7 @@ server.groupname            = "ftc"
 server.port                 = 80
 
 
-index-file.names            = ( "index.php", "index.html", "index.lighttpd.html" )
+index-file.names            = ( "index.py", "index.php", "index.html", "index.lighttpd.html" )
 url.access-deny             = ( "~", ".inc" )
 static-file.exclude-extensions = ( ".php", ".pl", ".fcgi" )
 
@@ -787,7 +695,7 @@ EOF
 header "Populating /var/www ..."
 cd /var
 rm -rf www
-svn export $SVNROOT"/var/www"
+mv $FTC_ROOT"/var/www" /var/www
 touch /var/www/tx-pi
 
 # convert most "fischertechnik TXT" texts to "ftcommunity TX-Pi"
@@ -798,7 +706,7 @@ for i in /var/www/*.html /var/www/*.py; do
 done
 
 # add VNC and TX-Pi homepage link to index page
-sed -i 's#<center><a href="https://github.com/ftCommunity/ftcommunity-TXT" target="ft-community">community edition</a></center>#<center><a href="https://github.com/ftCommunity/ftcommunity-TXT" target="ft-community">ftcommunity</a> - <a href="https://www.tx-pi.de/" target="tx-pi">TX-Pi</a> - <a href="/remote">VNC</a></center>#' /var/www/index.html
+sed -i 's#<center><a href="https://github.com/ftCommunity/ftcommunity-TXT" target="ft-community">community edition</a></center>#<center><a href="https://github.com/ftCommunity/ftcommunity-TXT" target="ft-community">ftcommunity</a> - <a href="https://www.tx-pi.de/" target="tx-pi">TX-Pi</a> - <a href="/remote">VNC</a></center>#' /var/www/index.py
 
 # Fav icon
 wget -N $LOCALGIT/favicon.ico
@@ -820,9 +728,9 @@ rm websockify.tgz
 chown -R ftc:ftc /var/www
 
 # fbgrab needs netpbm to generate png files
-apt-get -y install netpbm
+apt -y install netpbm
 
-apt-get -y install --no-install-recommends fbcat
+apt -y install --no-install-recommends fbcat
 sed -i 's.fbgrab.fbgrab -d /dev/fb1.' /var/www/screenshot.py
 
 # adjust file ownership for changed www user name
@@ -831,11 +739,9 @@ chown -R ftc:ftc /var/log/lighttpd
 chown -R ftc:ftc /var/run/lighttpd
 chown -R ftc:ftc /var/cache/lighttpd
 
-# In Buster, systemd (tmpfiles.d) resets the permissions to www-data if the
+# systemd (tmpfiles.d) resets the permissions to www-data if the
 # system reboots. This ensures that the permissions are kept alive.
-if [ "$IS_STRETCH" = false ]; then
-    sed -i "s/www-data/ftc/g" /usr/lib/tmpfiles.d/lighttpd.tmpfile.conf
-fi
+sed -i "s/www-data/ftc/g" /usr/lib/tmpfiles.d/lighttpd.tmpfile.conf
 
 
 
@@ -864,6 +770,13 @@ fi
 
 # Clean up if necessary
 apt -y autoremove
+
+if [ "$DEBUG" = false ]; then
+   msg "Cleaning up"
+   rm -rf $INSTALL_DIR
+else
+   msg "Running in debug mode, keeping ${INSTALL_DIR}"
+fi
 
 msg "rebooting ..."
 
