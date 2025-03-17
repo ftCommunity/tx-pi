@@ -46,14 +46,13 @@ function error {
     echo -e "\033[0;31m$1\033[0m"
 }
 
-#-- Handle Stretch (9.x) vs. Buster (10.x)
 DEBIAN_VERSION=$(cat /etc/debian_version | head -c 2)
 IS_BOOKWORM=false
 IS_TRIXIE=false
 
 if [ "${DEBIAN_VERSION}" = "12" ]; then
     IS_BOOKWORM=true
-elif [ "${DEBIAN_VERSION:0:2}" = "13" ]; then
+elif [ "${DEBIAN_VERSION}" = "13" ]; then
     IS_TRIXIE=true
 else
     error "Unknown Raspbian version: '${DEBIAN_VERSION}'"
@@ -62,7 +61,7 @@ fi
 
 if [ "$IS_BOOKWORM" = true ]; then
     header "Setting up TX-Pi on Bookworm"
-elif [ "$IS_BUSTER" = true ]; then
+elif [ "$IS_TRIXIE" = true ]; then
     header "Setting up TX-Pi on Trixie"
 fi
 
