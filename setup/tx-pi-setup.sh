@@ -615,9 +615,6 @@ make install
 #make install
 #depmod -a
 
-lighttpd_mime_types="/usr/share/lighttpd/create-mime.conf.pl"
-lighttpd_config="include \"/etc/lighttpd/conf-enabled/*.conf\""
-
 # adjust lighttpd config
 cat <<EOF > /etc/lighttpd/lighttpd.conf
 server.modules = (
@@ -634,16 +631,14 @@ server.username             = "ftc"
 server.groupname            = "ftc"
 server.port                 = 80
 
+include_shell "/usr/share/lighttpd/use-ipv6.pl " + server.port
+include_shell "/usr/share/lighttpd/create-mime.conf.pl"
 
-index-file.names            = ( "index.py", "index.php", "index.html", "index.lighttpd.html" )
+index-file.names            = ( "index.py", "index.php", "index.html")
 url.access-deny             = ( "~", ".inc" )
 static-file.exclude-extensions = ( ".php", ".pl", ".fcgi" )
 
 # default listening port for IPv6 falls back to the IPv4 port
-
-include_shell "/usr/share/lighttpd/use-ipv6.pl " + server.port
-include_shell "${lighttpd_mime_types}"
-${lighttpd_config}
 
 server.modules += ( "mod_ssi" )
 ssi.extension = ( ".html" )
@@ -651,11 +646,11 @@ ssi.extension = ( ".html" )
 server.modules += ( "mod_cgi" )
 
 \$HTTP["url"] =~ "^/cgi-bin/" {
-       cgi.assign = ( "" => "" )
+    cgi.assign = ( "" => "" )
 }
 
-cgi.assign      = (
-       ".py"  => "/usr/bin/python3"
+cgi.assign = (
+    ".py"  => "/usr/bin/python3"
 )
 EOF
 
