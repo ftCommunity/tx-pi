@@ -290,7 +290,7 @@ chmod 0440 /etc/sudoers.d/wifi
 cat <<EOF > /etc/sudoers.d/network
 ## Permissions for ftc access to programs required
 ## for network setup
-ftc     ALL = NOPASSWD: /usr/bin/netreq, /etc/init.d/networking, /sbin/ifup, /sbin/ifdown
+ftc     ALL = NOPASSWD: /etc/init.d/networking, /sbin/ifup, /sbin/ifdown
 EOF
 chmod 0440 /etc/sudoers.d/network
 
@@ -439,20 +439,6 @@ systemctl enable x11vnc
 touch /etc/locale
 chmod 666 /etc/locale
 
-
-cat <<EOF > /etc/network/interfaces
-# /etc/network/interfaces
-
-auto lo
-auto wlan0
-auto eth0
-
-iface eth0 inet dhcp
-iface wlan0 inet dhcp
-        wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf
-iface lo inet loopback
-EOF
-chmod 666 /etc/network/interfaces
 
 # set timezone to Germany
 ln -fs /usr/share/zoneinfo/Europe/Berlin /etc/localtime
