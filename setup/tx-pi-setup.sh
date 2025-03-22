@@ -65,6 +65,14 @@ elif [ "$IS_TRIXIE" = true ]; then
     header "Setting up TX-Pi on Trixie"
 fi
 
+# Libs we want to install
+# These are libs which are required "globally", other apps like libroboint may install additional packages
+declare -a UTIL_LIBS=(git mc neovim cmake lighttpd i2c-tools ntpdate avrdude bluez-tools mpg123 libraspberrypi-dev)
+declare -a X_LIBS=(xserver-xorg xinit xserver-xorg-video-fbdev xserver-xorg-legacy unclutter x11vnc)
+declare -a PY_LIBS=(python3 python3-pyqt5 python3-pip python3-numpy python3-dev python3-pexpect \
+	python3-smbus python3-rpi.gpio python3-bs4 python3-semantic-version python3-websockets \
+	python3-setuptools python3-wheel python3-pil python3-opencv)
+
 GITBASE="https://raw.githubusercontent.com/ftCommunity/ftcommunity-TXT/master/"
 GITROOT=$GITBASE"board/fischertechnik/TXT/rootfs"
 FTC_MASTER="https://github.com/ftCommunity/ftcommunity-TXT.git"
@@ -130,28 +138,14 @@ apt --fix-broken -y install
 apt -y --allow-downgrades dist-upgrade
 
 # Utilities
-apt -y install neovim mc
-
+header "Install utility libs"
+apt -y install "${UTIL_LIBS[@]}"
 # X11
-apt -y install --no-install-recommends xserver-xorg xinit xserver-xorg-video-fbdev xserver-xorg-legacy unclutter
-
-
+header "Install X11 libs"
+apt -y install --no-install-recommends "${X_LIBS[@]}"
 # python and pyqt
-apt -y install --no-install-recommends python3 python3-pyqt5 python3-pip python3-numpy python3-dev cmake python3-pexpect
-# python RPi GPIO access
-apt -y install python3-rpi.gpio
-# misc tools
-apt -y install i2c-tools python3-smbus lighttpd git subversion ntpdate
-# avrdude
-apt -y install avrdude
-# Install Beautiful Soup 4.x
-apt install -y python3-bs4
-
-# some additional python stuff
 header "Install Python libs"
-apt -y install --no-install-recommends python3-semantic-version \
-        python3-websockets python3-setuptools python3-wheel
-
+apt -y install --no-install-recommends "${PY_LIBS[@]}"
 
 # DHCP client
 header "Setup DHCP client"
@@ -257,23 +251,14 @@ locale-gen
 #TODO: May fail if /etc/ssh/ssh_config contains "SendEnv LANG LC_*" (default) and the TX-Pi setup is run headless via SSH
 update-locale --no-checks LANG="de_DE.UTF-8"
 
-# install bluetooth tools required for e.g. bnep
-apt -y install --no-install-recommends bluez-tools
-
 # fetch bluez hcitool with extended lescan patch
 cd $INSTALL_DIR
 wget -N $LOCALGIT/hcitool-xlescan.tgz
 tar xvfz hcitool-xlescan.tgz -C /usr/bin
 
-# Install OpenCV
-header "Install OpenCV"
-apt -y install --no-install-recommends python3-opencv
-
-apt -y install --no-install-recommends libzbar0 python3-pil libzbar-dev
+header "Install zbar and zbarlight"
+apt -y install --no-install-recommends libzbar0 libzbar-dev
 pip3 install --break-system-packages zbarlight
-
-# system wide mpg123 overrides the included mpg123 of some apps
-apt -y install --no-install-recommends mpg123
 
 # ----------------------- user setup ---------------------
 # create ftc user
@@ -401,7 +386,6 @@ fi  # End ENABLE_SPLASH
 sed -i 's,^\(allowed_users=\).*,\1'\anybody',' /etc/X11/Xwrapper.config
 
 # install framebuffer copy tool
-apt -y install libraspberrypi-dev
 cd $INSTALL_DIR
 wget -N $LOCALGIT/fbc.tgz
 tar xvfz fbc.tgz
@@ -433,8 +417,7 @@ done
 exec /usr/bin/X -s 0 dpms \$CUROPT -nolisten tcp "\$@"
 EOF
 
-# Install vnc server
-apt -y install x11vnc
+msg "Setup VNC server"
 cat <<EOF > /etc/systemd/system/x11vnc.service
 [Unit]
 Description=X11 VNC service
