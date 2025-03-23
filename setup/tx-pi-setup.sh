@@ -65,24 +65,12 @@ elif [ "$IS_TRIXIE" = true ]; then
     header "Setting up TX-Pi on Trixie"
 fi
 
-# Libs we want to install
-# These are libs which are required "globally", other apps like libroboint may install additional packages
-declare -a UTIL_LIBS=(git mc neovim cmake lighttpd i2c-tools ntpdate avrdude bluez-tools mpg123 libraspberrypi-dev)
-declare -a X_LIBS=(xserver-xorg xinit xserver-xorg-video-fbdev xserver-xorg-legacy unclutter x11vnc)
-declare -a PY_LIBS=(python3 python3-pyqt5 python3-pip python3-numpy python3-dev python3-pexpect \
-	python3-smbus python3-rpi.gpio python3-bs4 python3-semantic-version python3-websockets \
-	python3-setuptools python3-wheel python3-pil python3-opencv)
-
 GITBASE="https://raw.githubusercontent.com/ftCommunity/ftcommunity-TXT/master/"
 GITROOT=$GITBASE"board/fischertechnik/TXT/rootfs"
-FTC_MASTER="https://github.com/ftCommunity/ftcommunity-TXT.git"
-TOUCH_MASTER="https://github.com/harbaum/TouchUI.git"
 LOCALGIT="https://github.com/ftCommunity/tx-pi/raw/master/setup"
 
 INSTALL_DIR="/root/txpi_setup"
 FTC_ROOT=$INSTALL_DIR"/ftcommunity-TXT/board/fischertechnik/TXT/rootfs"
-
-FTDDIRECT="ftduino_direct-1.0.8"
 
 # TX-Pi app store
 TXPIAPPS_URL="https://github.com/ftCommunity/tx-pi-apps/raw/master/packages/"
@@ -137,15 +125,17 @@ apt update
 apt --fix-broken -y install
 apt -y --allow-downgrades dist-upgrade
 
-# Utilities
 header "Install utility libs"
-apt -y install "${UTIL_LIBS[@]}"
-# X11
+apt -y install git mc neovim cmake lighttpd i2c-tools ntpdate avrdude bluez-tools mpg123 libraspberrypi-dev
+
 header "Install X11 libs"
-apt -y install --no-install-recommends "${X_LIBS[@]}"
-# python and pyqt
+apt -y install --no-install-recommends xserver-xorg xinit xserver-xorg-video-fbdev xserver-xorg-legacy unclutter x11vnc
+
 header "Install Python libs"
-apt -y install --no-install-recommends "${PY_LIBS[@]}"
+apt -y install --no-install-recommends python3 python3-dev python3-pip python3-wheel \
+	python3-setuptools python3-pil python3-pyqt5 python3-numpy python3-pexpect \
+	python3-smbus python3-rpi.gpio python3-bs4 python3-semantic-version python3-websockets \
+	python3-opencv
 
 # DHCP client
 header "Setup DHCP client"
@@ -459,7 +449,7 @@ wget -N $GITROOT/etc/udev/rules.d/99-USBasp.rules
 
 # Download FTC firmware
 cd $INSTALL_DIR
-git clone --depth 1 $FTC_MASTER
+git clone --depth 1 https://github.com/ftCommunity/ftcommunity-TXT.git
 
 
 # get /opt/ftc
@@ -505,6 +495,7 @@ cp udev/fischertechnik.rules /etc/udev/rules.d/
 
 # and ftduino_direct
 header "Installing ftduino_direct.py"
+FTDDIRECT="ftduino_direct-1.0.8"
 cd $INSTALL_DIR
 wget -N https://github.com/PeterDHabermehl/ftduino_direct/raw/master/$FTDDIRECT.tar.gz
 tar -xzvf $FTDDIRECT.tar.gz 
@@ -516,7 +507,7 @@ rm -f /opt/ftc/ftduino_direct.py
 rm -rf /opt/ftc/apps/system/ftgui
 
 cd $INSTALL_DIR
-git clone --depth 1 $TOUCH_MASTER
+git clone --depth 1 https://github.com/harbaum/TouchUI.git
 mv ./TouchUI/touchui/apps/system/power /opt/ftc/apps/system/power
 
 # add power tool from touchui
