@@ -30,8 +30,8 @@ set -ue
 # See <https://calver.org/> for details
 TX_PI_VERSION='25.1.0-dev'
 
-DEBUG=false
-ENABLE_SPLASH=true
+DEBUG=true
+ENABLE_SPLASH=false
 
 function msg {
     echo -e "\033[93m$1\033[0m"
@@ -47,23 +47,22 @@ function error {
 }
 
 DEBIAN_VERSION=$(cat /etc/debian_version | head -c 2)
+DEBIAN_NAME=""
 IS_BOOKWORM=false
 IS_TRIXIE=false
 
 if [ "${DEBIAN_VERSION}" = "12" ]; then
     IS_BOOKWORM=true
+    DEBIAN_NAME="Bookworm"
 elif [ "${DEBIAN_VERSION}" = "13" ]; then
     IS_TRIXIE=true
+    DEBIAN_NAME="Trixie"
 else
     error "Unknown Raspbian version: '${DEBIAN_VERSION}'"
     exit 2
 fi
 
-if [ "$IS_BOOKWORM" = true ]; then
-    header "Setting up TX-Pi on Bookworm"
-elif [ "$IS_TRIXIE" = true ]; then
-    header "Setting up TX-Pi on Trixie"
-fi
+header "Setting up TX-Pi on ${DEBIAN_NAME}"
 
 GITBASE="https://raw.githubusercontent.com/ftCommunity/ftcommunity-TXT/master/"
 GITROOT=$GITBASE"board/fischertechnik/TXT/rootfs"
@@ -534,7 +533,6 @@ wget "${TXPIAPPS_URL}tscal.zip"
 unzip -o tscal.zip -d ffe0d8c4-be33-4f62-b25d-2fa7923daaa2
 chown -R ftc:ftc ffe0d8c4-be33-4f62-b25d-2fa7923daaa2
 chmod +x ffe0d8c4-be33-4f62-b25d-2fa7923daaa2/tscal.py
-rm -f ./tscal.zip
 
 
 #
@@ -555,7 +553,6 @@ chown -R ftc:ftc ${TXPICONFIG_DIR}
 chmod +x ${TXPICONFIG_DIR}/config.py
 chown root:root ${TXPICONFIG_DIR}/scripts/*
 chmod 744 ${TXPICONFIG_DIR}/scripts/*
-rm -f ./config.zip
 
 # add robolt support
 # robolt udev rules have already been installed from the main repository
@@ -647,8 +644,7 @@ EOF
 
 # fetch www pages
 header "Populating /var/www ..."
-cd /var
-rm -rf www
+rm -rf /var/www
 mv $FTC_ROOT"/var/www" /var/www
 touch /var/www/tx-pi
 
@@ -696,7 +692,6 @@ chown -R ftc:ftc /var/cache/lighttpd
 # systemd (tmpfiles.d) resets the permissions to www-data if the
 # system reboots. This ensures that the permissions are kept alive.
 sed -i "s/www-data/ftc/g" /usr/lib/tmpfiles.d/lighttpd.tmpfile.conf
-
 
 
 # disable the TXTs default touchscreen timeout as the waveshare isn't half
