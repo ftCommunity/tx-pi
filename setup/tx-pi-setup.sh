@@ -7,9 +7,8 @@
 # instructions.
 #
 # In short:
-# * Copy a supported Raspbian lite version onto SD card
-# * Either plug-in your display and a keyboard or enable SSH via /boot/ssh.
-#   Don't forget to change your password!
+# * Copy a supported Raspberry Pi OS Lite version onto SD card
+# * Either plug-in your display and a keyboard or enable SSH.
 #   Optionally, add your WLAN configuration via /boot/wpa_supplicant.conf, see
 #   <https://www.raspberrypi.org/documentation/configuration/wireless/headless.md>
 #   for details
@@ -41,7 +40,6 @@ function header {
     echo -e "\033[0;32m--- $1 ---\033[0m"
 }
 
-
 function error {
     echo -e "\033[0;31m$1\033[0m"
 }
@@ -64,9 +62,8 @@ fi
 
 header "Setting up TX-Pi on ${DEBIAN_NAME}"
 
-GITBASE="https://raw.githubusercontent.com/ftCommunity/ftcommunity-TXT/master/"
-GITROOT=$GITBASE"board/fischertechnik/TXT/rootfs"
-LOCALGIT="https://github.com/ftCommunity/tx-pi/raw/master/setup"
+GIT_FTC="https://raw.githubusercontent.com/ftCommunity/ftcommunity-TXT/master/board/fischertechnik/TXT/rootfs"
+GIT_TXPI="https://github.com/ftCommunity/tx-pi/raw/master/setup"
 
 INSTALL_DIR="/root/txpi_setup"
 FTC_ROOT=$INSTALL_DIR"/ftcommunity-TXT/board/fischertechnik/TXT/rootfs"
@@ -125,10 +122,12 @@ apt --fix-broken -y install
 apt -y --allow-downgrades dist-upgrade
 
 header "Install utility libs"
-apt -y install git mc neovim cmake lighttpd i2c-tools ntpdate avrdude bluez-tools mpg123 libraspberrypi-dev
+apt -y install git mc neovim cmake lighttpd i2c-tools ntpdate avrdude bluez-tools mpg123 \
+	libraspberrypi-dev network-manager
 
 header "Install X11 libs"
-apt -y install --no-install-recommends xserver-xorg xinit xserver-xorg-video-fbdev xserver-xorg-legacy unclutter x11vnc
+apt -y install --no-install-recommends xserver-xorg xinit xserver-xorg-video-fbdev xserver-xorg-legacy \
+	unclutter x11vnc
 
 header "Install Python libs"
 apt -y install --no-install-recommends python3 python3-dev python3-pip python3-wheel \
@@ -201,16 +200,8 @@ sed -i "s/dtparam=i2c_arm=on/dtparam=i2c_arm=on\ndtparam=i2c_vc=on/g" /boot/conf
 echo "dtoverlay=gpio-poweroff,gpiopin=4,active_low=1" >> /boot/config.txt
 
 
-#-- Enable WLAN iff it isn't enabled yet
-if [ "$(wpa_cli -i wlan0 get country)" == "FAIL" ]; then
-    msg "Enable WLAN"
-    rfkill unblock wifi
-    wpa_cli -i wlan0 set country DE
-    wpa_cli -i wlan0 save_config
-    ifconfig wlan0 up
-else
-    msg "WLAN already configured, don't touch it"
-fi
+#-- Enable WLAN
+nmcli radio wifi on
 
 
 # usbmount config
@@ -242,7 +233,7 @@ update-locale --no-checks LANG="de_DE.UTF-8"
 
 # fetch bluez hcitool with extended lescan patch
 cd $INSTALL_DIR
-wget -N $LOCALGIT/hcitool-xlescan.tgz
+wget -N $GIT_TXPI/hcitool-xlescan.tgz
 tar xvfz hcitool-xlescan.tgz -C /usr/bin
 
 header "Install zbar and zbarlight"
@@ -260,7 +251,7 @@ chown -R ftc:ftc /home/ftc/apps
 
 # special ftc permissions
 cd /etc/sudoers.d
-wget -N $GITROOT/etc/sudoers.d/shutdown
+wget -N $GIT_FTC/etc/sudoers.d/shutdown
 chmod 0440 /etc/sudoers.d/shutdown
 cat <<EOF > /etc/sudoers.d/bluetooth
 ## Permissions for ftc access to programs required
@@ -329,7 +320,7 @@ EOF
 # Splash screen
 if [ "$ENABLE_SPLASH" = true ]; then
     # a simple boot splash
-    wget -N $LOCALGIT/splash.png -O /etc/splash.png
+    wget -N $GIT_TXPI/splash.png -O /etc/splash.png
     apt install -y --no-install-recommends libjpeg-dev
     cd $INSTALL_DIR
     wget -N https://github.com/godspeed1989/fbv/archive/master.zip
@@ -376,7 +367,7 @@ sed -i 's,^\(allowed_users=\).*,\1'\anybody',' /etc/X11/Xwrapper.config
 
 # install framebuffer copy tool
 cd $INSTALL_DIR
-wget -N $LOCALGIT/fbc.tgz
+wget -N $GIT_TXPI/fbc.tgz
 tar xvfz fbc.tgz
 cd fbc
 make
@@ -435,15 +426,15 @@ dpkg-reconfigure -f noninteractive tzdata
 
 # set firmware version
 cd /etc
-wget -N $GITROOT/etc/fw-ver.txt
+wget -N $GIT_FTC/etc/fw-ver.txt
 
 # set various udev rules to give ftc user access to
 # hardware
 cd /etc/udev/rules.d
-wget -N $GITROOT/etc/udev/rules.d/40-fischertechnik_interfaces.rules
-wget -N $GITROOT/etc/udev/rules.d/40-lego_interfaces.rules
-wget -N $GITROOT/etc/udev/rules.d/60-i2c-tools.rules
-wget -N $GITROOT/etc/udev/rules.d/99-USBasp.rules
+wget -N $GIT_FTC/etc/udev/rules.d/40-fischertechnik_interfaces.rules
+wget -N $GIT_FTC/etc/udev/rules.d/40-lego_interfaces.rules
+wget -N $GIT_FTC/etc/udev/rules.d/60-i2c-tools.rules
+wget -N $GIT_FTC/etc/udev/rules.d/99-USBasp.rules
 
 
 # Download FTC firmware
@@ -456,6 +447,9 @@ header "Populating /opt/ftc ..."
 cd /opt
 rm -rf ftc
 mv $FTC_ROOT"/opt/ftc" /opt/ftc
+# remove useless ftgui
+rm -rf /opt/ftc/apps/system/ftgui
+
 cd /opt/ftc
 
 # just fetch a copy of ftrobopy to make some programs happy
@@ -491,19 +485,17 @@ make python
 # udev rules
 cp udev/fischertechnik.rules /etc/udev/rules.d/
 
-
 # and ftduino_direct
 header "Installing ftduino_direct.py"
+
+# Remove legacy ftduino_direct
+rm -f /opt/ftc/ftduino_direct.py
 FTDDIRECT="ftduino_direct-1.0.8"
 cd $INSTALL_DIR
 wget -N https://github.com/PeterDHabermehl/ftduino_direct/raw/master/$FTDDIRECT.tar.gz
 tar -xzvf $FTDDIRECT.tar.gz 
 cd $FTDDIRECT
 python3 ./setup.py install
-rm -f /opt/ftc/ftduino_direct.py
-
-# remove useless ftgui
-rm -rf /opt/ftc/apps/system/ftgui
 
 cd $INSTALL_DIR
 git clone --depth 1 https://github.com/harbaum/TouchUI.git
@@ -514,9 +506,7 @@ cd /opt/ftc/apps/system
 # Move power button to home screen
 sed -i "s/category: System/category: /g" /opt/ftc/apps/system/power/manifest
 
-#
-# - Add TX-Pi TS-Cal
-#
+# Add TX-Pi TS-Cal
 header "Install TS Cal"
 apt -y install --no-install-recommends xinput-calibrator
 touch /usr/share/X11/xorg.conf.d/99-calibration.conf
@@ -535,9 +525,7 @@ chown -R ftc:ftc ffe0d8c4-be33-4f62-b25d-2fa7923daaa2
 chmod +x ffe0d8c4-be33-4f62-b25d-2fa7923daaa2/tscal.py
 
 
-#
-# - Add TX-Pi config
-#
+# Add TX-Pi config
 header "Install TX-Pi config"
 # Remove legacy apps and configurations
 rm -rf /home/ftc/apps/430d692e-d285-4f05-82fd-a7b3ce9019e5
@@ -659,29 +647,24 @@ done
 sed -i 's#<center><a href="https://github.com/ftCommunity/ftcommunity-TXT" target="ft-community">community edition</a></center>#<center><a href="https://github.com/ftCommunity/ftcommunity-TXT" target="ft-community">ftcommunity</a> - <a href="https://www.tx-pi.de/" target="tx-pi">TX-Pi</a> - <a href="/remote">VNC</a></center>#' /var/www/index.py
 
 # Fav icon
-wget -N $LOCALGIT/favicon.ico
+wget -N $GIT_TXPI/favicon.ico
 
 # Install novnc ...
 cd /var/www
-wget -N $LOCALGIT/novnc.tgz
+wget -N $GIT_TXPI/novnc.tgz
 tar xvfz novnc.tgz
 rm novnc.tgz
 
 
 # ... and websockify for novnc
 cd /opt/ftc
-wget -N $LOCALGIT/websockify.tgz
+wget -N $GIT_TXPI/websockify.tgz
 tar xvfz websockify.tgz
 rm websockify.tgz
 
-# make sure fbgrab is there to take screenshots
-chown -R ftc:ftc /var/www
-
-# fbgrab needs netpbm to generate png files
-apt -y install netpbm
-
-apt -y install --no-install-recommends fbcat
-sed -i 's.fbgrab.fbgrab -d /dev/fb1.' /var/www/screenshot.py
+# systemd (tmpfiles.d) resets the permissions to www-data if the
+# system reboots. This ensures that the permissions are kept alive.
+sed -i "s/www-data/ftc/g" /usr/lib/tmpfiles.d/lighttpd.tmpfile.conf
 
 # adjust file ownership for changed www user name
 chown -R ftc:ftc /var/www
@@ -689,10 +672,13 @@ chown -R ftc:ftc /var/log/lighttpd
 chown -R ftc:ftc /var/run/lighttpd
 chown -R ftc:ftc /var/cache/lighttpd
 
-# systemd (tmpfiles.d) resets the permissions to www-data if the
-# system reboots. This ensures that the permissions are kept alive.
-sed -i "s/www-data/ftc/g" /usr/lib/tmpfiles.d/lighttpd.tmpfile.conf
 
+header "Install fb grab"
+# fbgrab needs netpbm to generate png files
+apt -y install netpbm
+
+apt -y install --no-install-recommends fbcat
+sed -i 's.fbgrab.fbgrab -d /dev/fb1.' /var/www/screenshot.py
 
 # disable the TXTs default touchscreen timeout as the waveshare isn't half
 # as bad as the TXTs one
