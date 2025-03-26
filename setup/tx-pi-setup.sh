@@ -117,20 +117,23 @@ mkdir $INSTALL_DIR
 # ----------------------- package installation ---------------------
 
 header "Update Debian"
+# Installed by default, we don't need them, saves some space, memory, and CPU cycles
+apt remove -y --purge modemmanager avahi-daemon firmware-nvidia-graphics firmware-intel-graphics
+# Update Debian
 apt update && apt --fix-broken -y install && apt -y dist-upgrade && apt autoremove -y
 
 header "Install utility libs"
 apt -y install git mc neovim cmake lighttpd i2c-tools chrony avrdude bluez-tools mpg123 \
-	libraspberrypi-dev network-manager
+        libraspberrypi-dev network-manager
 
 header "Install X11 libs"
 apt -y install --no-install-recommends xserver-xorg xinit xserver-xorg-video-fbdev xserver-xorg-legacy \
-	unclutter x11vnc
+        unclutter x11vnc
 
 header "Install Python libs"
 apt -y install --no-install-recommends python3 python3-dev python3-pip python3-wheel \
-	python3-setuptools python3-pil python3-pyqt5 python3-numpy python3-pexpect \
-	python3-smbus python3-rpi.gpio python3-gpiozero python3-bs4 python3-semantic-version \
+        python3-setuptools python3-pil python3-pyqt5 python3-numpy python3-pexpect \
+        python3-smbus python3-rpi.gpio python3-gpiozero python3-bs4 python3-semantic-version \
         python3-websockets python3-opencv
 
 # DHCP client
@@ -215,7 +218,7 @@ touch /etc/tx-pi
 echo "${TX_PI_VERSION}" > /etc/tx-pi-ver.txt
 
 
-# create locales
+header "Install default locales"
 cat <<EOF > /etc/locale.gen
 # locales supported by CFW 
 en_US.UTF-8 UTF-8
@@ -225,8 +228,6 @@ fr_FR.UTF-8 UTF-8
 EOF
 
 locale-gen
-
-#TODO: May fail if /etc/ssh/ssh_config contains "SendEnv LANG LC_*" (default) and the TX-Pi setup is run headless via SSH
 update-locale --no-checks LANG="de_DE.UTF-8"
 
 # fetch bluez hcitool with extended lescan patch
