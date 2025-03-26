@@ -117,9 +117,7 @@ mkdir $INSTALL_DIR
 # ----------------------- package installation ---------------------
 
 header "Update Debian"
-apt update
-apt --fix-broken -y install
-apt -y --allow-downgrades dist-upgrade
+apt update && apt --fix-broken -y install && apt -y dist-upgrade && apt autoremove -y
 
 header "Install utility libs"
 apt -y install git mc neovim cmake lighttpd i2c-tools chrony avrdude bluez-tools mpg123 \
@@ -177,13 +175,13 @@ fi
 
 # Driver installation changes "console=serial0,115200" to "console=ttyAMA0,115200"
 # Revert it here since /dev/ttyAMA0 is Bluetooth (Pi3, Pi3B+ ...)
-sed -i "s/=ttyAMA0,/=serial0,/g" /boot/cmdline.txt
+sed -i "s/=ttyAMA0,/=serial0,/g" /boot/firmware/cmdline.txt
 cmd_line=$( cat /boot/cmdline.txt )
 # Driver installation removes "fsck.repair=yes"; revert it
 if [[ $cmd_line != *"fsck.repair=yes"* ]]; then
     cmd_line="$cmd_line fsck.repair=yes"
 fi
-cat <<EOF > /boot/cmdline.txt
+cat <<EOF > /boot/firmware/cmdline.txt
 ${cmd_line}
 EOF
 
@@ -192,12 +190,12 @@ EOF
 # Enable I2c
 header "Enable I2C"
 raspi-config nonint do_i2c 0 dtparam=i2c_arm=on
-sed -i "s/dtparam=i2c_arm=on/dtparam=i2c_arm=on\ndtparam=i2c_vc=on/g" /boot/config.txt
+sed -i "s/dtparam=i2c_arm=on/dtparam=i2c_arm=on\ndtparam=i2c_vc=on/g" /boot/firmware/config.txt
 # Disable RTC
 #TODO: 2025-03-16 -- Bookworm has no rc.local anymore. Is this still necessary?
 #sed -i "s/exit 0/\# ack pending RTC wakeup\n\/usr\/sbin\/i2cset -y 0 0x68 0x0f 0x00\n\nexit 0/g" /etc/rc.local
 # Power control via GPIO4
-echo "dtoverlay=gpio-poweroff,gpiopin=4,active_low=1" >> /boot/config.txt
+echo "dtoverlay=gpio-poweroff,gpiopin=4,active_low=1" >> /boot/firmware/config.txt
 
 
 #-- Enable WLAN
@@ -244,7 +242,7 @@ pip3 install --break-system-packages zbarlight
 # create ftc user
 groupadd -f ftc
 useradd -g ftc -m ftc || true
-usermod -a -G video,audio,tty,dialout,input,gpio,i2c,ftc ftc
+usermod -a -G video,audio,tty,dialout,input,gpio,i2c,spi,ftc ftc
 echo "ftc:ftc" | chpasswd
 mkdir -p /home/ftc/apps
 chown -R ftc:ftc /home/ftc/apps
