@@ -62,7 +62,6 @@ fi
 
 header "Setting up TX-Pi on ${DEBIAN_NAME}"
 
-GIT_FTC="https://raw.githubusercontent.com/ftCommunity/ftcommunity-TXT/master/board/fischertechnik/TXT/rootfs"
 GIT_TXPI="https://github.com/ftCommunity/tx-pi/raw/master/setup"
 
 INSTALL_DIR="/root/txpi_setup"
@@ -248,9 +247,6 @@ mkdir -p /home/ftc/apps
 chown -R ftc:ftc /home/ftc/apps
 
 # special ftc permissions
-cd /etc/sudoers.d
-wget -N $GIT_FTC/etc/sudoers.d/shutdown
-chmod 0440 /etc/sudoers.d/shutdown
 cat <<EOF > /etc/sudoers.d/bluetooth
 ## Permissions for ftc access to programs required
 ## for bluetooth setup
@@ -433,8 +429,8 @@ mv $FTC_ROOT"/etc/udev/rules.d/40-fischertechnik_interfaces.rules" /etc/udev/rul
 mv $FTC_ROOT"/etc/udev/rules.d/40-lego_interfaces.rules" /etc/udev/rules.d/
 mv $FTC_ROOT"/etc/udev/rules.d/60-i2c-tools.rules" /etc/udev/rules.d/
 mv $FTC_ROOT"/etc/udev/rules.d/99-USBasp.rules" /etc/udev/rules.d/
-
-
+mv $FTC_ROOT"/etc/sudoers.d/shutdown" /etc/sudoers.d/
+chmod 0440 /etc/sudoers.d/shutdown
 
 # get /opt/ftc
 header "Populating /opt/ftc ..."
