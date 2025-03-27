@@ -438,8 +438,9 @@ rm -rf /opt/ftc
 mv $FTC_ROOT"/opt/ftc" /opt/ftc
 # remove useless ftgui
 rm -rf /opt/ftc/apps/system/ftgui
+# remove cfw display configuration app since it does not work here...
+rm -rf /opt/ftc/apps/system/display/
 
-cd /opt/ftc
 
 # adjust font sizes/styles from qtembedded to x11
 STYLE=/opt/ftc/themes/default/style.qss
@@ -452,9 +453,10 @@ for i in 24:23 28:24 32:24; do
     sed -i "s/^\(\s*font:\)\s*${from}px/\1 ${to}px/" $STYLE
 done
 
+
 header "Install ftrobopy"
 # just fetch a copy of ftrobopy to make some programs happy
-wget -N https://raw.githubusercontent.com/ftrobopy/ftrobopy/master/ftrobopy.py
+wget -N https://raw.githubusercontent.com/ftrobopy/ftrobopy/master/ftrobopy.py -P /opt/ftc
 
 cd $INSTALL_DIR
 
@@ -650,23 +652,18 @@ min_click_time = 0
 EOF
 chown ftc:ftc /home/ftc/.launcher.config 
 
-# remove cfw display configuration app since it does not work here...
-rm -fr /opt/ftc/apps/system/display/
 
-
-#-- Add useful TX-Pi stores
-shop_repositories="/home/ftc/.repositories.xml"
-if [ ! -f "$shop_repositories" ]; then
-  cat <<EOF > $shop_repositories
+header "Add default TX-Pi stores"
+cat <<EOF > /home/ftc/.repositories.xml
 <repositories>
   <repository name="TX-Pi Apps" repo="tx-pi-apps" user="ftCommunity"/>
   <repository name="Till&apos;s Apps" repo="cfw-apps" user="harbaum"/>
 </repositories>
 EOF
-fi
 
-# Clean up if necessary
+
 apt -y autoremove
+
 
 if [ "$DEBUG" = false ]; then
    msg "Cleaning up"
@@ -675,8 +672,7 @@ else
    msg "Running in debug mode, keeping ${INSTALL_DIR}"
 fi
 
-msg "rebooting ..."
-
+msg "rebooting in 30 sec..."
 sync
 sleep 30
 shutdown -r now
