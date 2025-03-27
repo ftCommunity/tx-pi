@@ -117,18 +117,20 @@ mkdir $INSTALL_DIR
 # ----------------------- package installation ---------------------
 
 header "Update Debian"
-# Installed by default, we don't need them, saves some space, memory, and CPU cycles
-apt remove -y --purge modemmanager avahi-daemon firmware-nvidia-graphics firmware-intel-graphics
 # Update Debian
-apt update && apt --fix-broken -y install && apt -y dist-upgrade && apt autoremove -y
+apt update && apt --fix-broken -y install && apt -y dist-upgrade
+# Installed by default, we don't need them, saves some space, memory, and CPU cycles
+apt remove -y --purge modemmanager avahi-daemon firmware-nvidia-graphics \
+    firmware-intel-graphics dhcpcd5
+apt autoremove -y
 
 header "Install utility libs"
-apt -y install git mc neovim cmake lighttpd i2c-tools chrony avrdude bluez-tools mpg123 \
-        libraspberrypi-dev network-manager
+apt -y install --no-install-recommends git mc neovim cmake lighttpd i2c-tools \
+        chrony avrdude bluez-tools mpg123 libraspberrypi-dev network-manager
 
 header "Install X11 libs"
-apt -y install --no-install-recommends xserver-xorg xinit xserver-xorg-video-fbdev xserver-xorg-legacy \
-        unclutter x11vnc
+apt -y install --no-install-recommends xserver-xorg xinit xserver-xorg-video-fbdev \
+        xserver-xorg-legacy unclutter x11vnc
 
 header "Install Python libs"
 apt -y install --no-install-recommends python3 python3-dev python3-pip python3-wheel \
@@ -138,8 +140,6 @@ apt -y install --no-install-recommends python3 python3-dev python3-pip python3-w
 
 # DHCP client
 header "Setup DHCP client"
-# Remove dhcpcd because it fails to start (isc-dhcp-client is available)
-apt -y purge dhcpcd5
 # Do not try too long to reach the DHCPD server (blocks booting)
 sed -i "s/#timeout 60;/timeout 10;/g" /etc/dhcp/dhclient.conf
 # By default, the client retries to contact the DHCP server after five min.
@@ -239,7 +239,7 @@ apt -y install --no-install-recommends libzbar0 libzbar-dev
 pip3 install --break-system-packages zbarlight
 
 # ----------------------- user setup ---------------------
-# create ftc user
+header "Create ftc user"
 groupadd -f ftc
 useradd -g ftc -m ftc || true
 usermod -a -G video,audio,tty,dialout,input,gpio,i2c,spi,ftc ftc
@@ -422,36 +422,28 @@ chmod 666 /etc/locale
 ln -fs /usr/share/zoneinfo/Europe/Berlin /etc/localtime
 dpkg-reconfigure -f noninteractive tzdata
 
-# set firmware version
-cd /etc
-wget -N $GIT_FTC/etc/fw-ver.txt
 
-# set various udev rules to give ftc user access to
-# hardware
-cd /etc/udev/rules.d
-wget -N $GIT_FTC/etc/udev/rules.d/40-fischertechnik_interfaces.rules
-wget -N $GIT_FTC/etc/udev/rules.d/40-lego_interfaces.rules
-wget -N $GIT_FTC/etc/udev/rules.d/60-i2c-tools.rules
-wget -N $GIT_FTC/etc/udev/rules.d/99-USBasp.rules
-
-
-# Download FTC firmware
+header "Download FTC firmware"
 cd $INSTALL_DIR
 git clone --depth 1 https://github.com/ftCommunity/ftcommunity-TXT.git
+# set firmware version
+mv $FTC_ROOT"/etc/fw-ver.txt" /etc/
+# set various udev rules to give ftc user access to hardware
+mv $FTC_ROOT"/etc/udev/rules.d/40-fischertechnik_interfaces.rules" /etc/udev/rules.d/
+mv $FTC_ROOT"/etc/udev/rules.d/40-lego_interfaces.rules" /etc/udev/rules.d/
+mv $FTC_ROOT"/etc/udev/rules.d/60-i2c-tools.rules" /etc/udev/rules.d/
+mv $FTC_ROOT"/etc/udev/rules.d/99-USBasp.rules" /etc/udev/rules.d/
+
 
 
 # get /opt/ftc
 header "Populating /opt/ftc ..."
-cd /opt
-rm -rf ftc
+rm -rf /opt/ftc
 mv $FTC_ROOT"/opt/ftc" /opt/ftc
 # remove useless ftgui
 rm -rf /opt/ftc/apps/system/ftgui
 
 cd /opt/ftc
-
-# just fetch a copy of ftrobopy to make some programs happy
-wget -N https://raw.githubusercontent.com/ftrobopy/ftrobopy/master/ftrobopy.py
 
 # adjust font sizes/styles from qtembedded to x11
 STYLE=/opt/ftc/themes/default/style.qss
@@ -463,6 +455,10 @@ for i in 24:23 28:24 32:24; do
     to=`echo $i | cut -d':' -f2`
     sed -i "s/^\(\s*font:\)\s*${from}px/\1 ${to}px/" $STYLE
 done
+
+header "Install ftrobopy"
+# just fetch a copy of ftrobopy to make some programs happy
+wget -N https://raw.githubusercontent.com/ftrobopy/ftrobopy/master/ftrobopy.py
 
 cd $INSTALL_DIR
 
