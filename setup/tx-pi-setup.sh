@@ -129,7 +129,7 @@ apt -y install --no-install-recommends git mc neovim cmake lighttpd i2c-tools \
 
 header "Install X11 libs"
 apt -y install --no-install-recommends xserver-xorg xinit xserver-xorg-video-fbdev \
-        xserver-xorg-legacy unclutter x11vnc
+        xserver-xorg-legacy unclutter x11vnc xinput-calibrator
 
 header "Install Python libs"
 apt -y install --no-install-recommends python3 python3-dev python3-pip python3-wheel \
@@ -498,16 +498,12 @@ sed -i "s/category: System/category: /g" /opt/ftc/apps/system/power/manifest
 
 # Add TX-Pi TS-Cal
 header "Install TS Cal"
-apt -y install --no-install-recommends xinput-calibrator
 touch /usr/share/X11/xorg.conf.d/99-calibration.conf
 chmod og+rw /usr/share/X11/xorg.conf.d/99-calibration.conf
-
 # Remove legacy app
 rm -rf /opt/ftc/apps/system/tscal
-
 # Remove any installed TS-Cal
 rm -rf /home/ftc/apps/ffe0d8c4-be33-4f62-b25d-2fa7923daaa2
-
 cd /home/ftc/apps
 wget "${TXPIAPPS_URL}tscal.zip"
 unzip -o tscal.zip -d ffe0d8c4-be33-4f62-b25d-2fa7923daaa2
