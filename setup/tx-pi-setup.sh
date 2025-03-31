@@ -129,7 +129,7 @@ apt -y install --no-install-recommends git mc neovim cmake lighttpd i2c-tools \
 
 header "Install X11 libs"
 apt -y install --no-install-recommends xserver-xorg xinit xserver-xorg-video-fbdev \
-        xserver-xorg-legacy unclutter x11vnc xinput-calibrator
+        xserver-xorg-legacy unclutter x11vnc xinput-calibrator xserver-xorg-input-evdev 
 
 header "Install Python libs"
 apt -y install --no-install-recommends python3 python3-dev python3-pip python3-wheel \
