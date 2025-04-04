@@ -29,8 +29,8 @@ set -ue
 # See <https://calver.org/> for details
 TX_PI_VERSION='25.1.0-dev'
 
-DEBUG=true
-ENABLE_SPLASH=false
+DEBUG=false
+ENABLE_SPLASH=true
 
 function msg {
     echo -e "\033[93m$1\033[0m"
@@ -47,14 +47,10 @@ function error {
 DEBIAN_VERSION=$(cat /etc/debian_version | head -c 2)
 DEBIAN_NAME=""
 IS_BOOKWORM=false
-IS_TRIXIE=false
 
 if [ "${DEBIAN_VERSION}" = "12" ]; then
     IS_BOOKWORM=true
     DEBIAN_NAME="Bookworm"
-elif [ "${DEBIAN_VERSION}" = "13" ]; then
-    IS_TRIXIE=true
-    DEBIAN_NAME="Trixie"
 else
     error "Unknown Raspbian version: '${DEBIAN_VERSION}'"
     exit 2
@@ -70,23 +66,31 @@ FTC_ROOT=$INSTALL_DIR"/ftcommunity-TXT/board/fischertechnik/TXT/rootfs"
 # TX-Pi app store
 TXPIAPPS_URL="https://github.com/ftCommunity/tx-pi-apps/raw/master/packages/"
 
-# TX-Pi config
-TXPICONFIG_DIR="/opt/ftc/apps/system/txpiconfig"
-
-
 # default lcd is 3.2 inch
 LCD=LCD32
-ORIENTATION=90
+# URL to download the touchscreen driver from 
+# May change if the user provided a different screen like LCD35 etc.
+# See section below
+TS_BASE_URL="https://files.waveshare.com/upload"
+TS_URL=${TS_BASE_URL}"/c/c3/Waveshare32b.zip"
+# Driver name for /boot/firmware/config.txt, may change as well
+TS_DRIVER=waveshare32
+TS_CALIB="300 3932 294 3801"
 # check if user gave a parameter
 if [ "$#" -gt 0 ]; then
-    # todo: Allow for other types as well
     LCD=$1
     if [ "$1" == "LCD35" ]; then
         header "Setup for Waveshare 3.5 inch (A) screen"
+        TS_URL=${TS_BASE_URL}"/1/1e/Waveshare35a.zip"
+        TS_DRIVER=waveshare35a
     elif [ "$1" == "LCD35B" ]; then
         header "Setup for Waveshare 3.5 inch (B) IPS screen"
+        TS_URL=${TS_BASE_URL}"/1/1e/Waveshare35b.zip"
+        TS_DRIVER=waveshare35a
     elif [ "$1" == "LCD35BV2" ]; then
         header "Setup for Waveshare 3.5 inch (B) IPS rev. 2 screen"
+        TS_URL=${TS_BASE_URL}"/1/1e/Waveshare35b-v2.zip"
+        TS_DRIVER=waveshare35b-v2
     elif [ "$1" == "NODISP" ]; then
         header "Setup without display driver installation"
     else
@@ -102,6 +106,7 @@ else
    header "Setup for Waveshare 3.2 inch screen"
 fi
 
+
 if [ "$HOSTNAME" == "raspberrypi" ]; then
     msg "Found default hostname, change it to 'tx-pi'"
     raspi-config nonint do_hostname tx-pi
@@ -110,7 +115,6 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 fi
 
 rm -rf $INSTALL_DIR
-
 mkdir $INSTALL_DIR
 
 # ----------------------- package installation ---------------------
@@ -119,25 +123,27 @@ header "Update Debian"
 # Update Debian
 apt update && apt --fix-broken -y install && apt -y dist-upgrade
 # Installed by default, we don't need them, saves some space, memory, and CPU cycles
-apt remove -y --purge modemmanager avahi-daemon firmware-nvidia-graphics \
-    firmware-intel-graphics dhcpcd5
+apt remove -y --purge modemmanager avahi-daemon dhcpcd5 \
+    firmware-atheros firmware-intel-graphics firmware-intel-misc \
+    firmware-libertas firmware-marvell-prestera firmware-mediatek \
+    firmware-nvidia-graphics
 apt autoremove -y
 
 header "Install utility libs"
 apt -y install --no-install-recommends git mc neovim cmake lighttpd i2c-tools \
-        chrony avrdude bluez-tools mpg123 libraspberrypi-dev network-manager
+    chrony avrdude bluez-tools mpg123 libraspberrypi-dev network-manager
 
 header "Install X11 libs"
 apt -y install --no-install-recommends xserver-xorg xinit xserver-xorg-video-fbdev \
-        xserver-xorg-legacy unclutter x11vnc xinput-calibrator xserver-xorg-input-evdev 
+    xserver-xorg-legacy unclutter x11vnc xinput-calibrator xserver-xorg-input-evdev 
 
 header "Install Python libs"
 apt -y install --no-install-recommends python3 python3-dev python3-pip python3-wheel \
-        python3-setuptools python3-pil python3-pyqt5 python3-numpy python3-pexpect \
-        python3-smbus python3-rpi.gpio python3-gpiozero python3-bs4 python3-semantic-version \
-        python3-websockets python3-opencv
+    python3-setuptools python3-pil python3-pyqt5 python3-numpy python3-pexpect \
+    python3-smbus python3-rpi.gpio python3-gpiozero python3-bs4 python3-semantic-version \
+    python3-websockets python3-opencv
 
-# DHCP client
+
 header "Setup DHCP client"
 # Do not try too long to reach the DHCPD server (blocks booting)
 sed -i "s/#timeout 60;/timeout 10;/g" /etc/dhcp/dhclient.conf
@@ -147,45 +153,76 @@ sed -i "s/#retry 60;/retry 20;/g" /etc/dhcp/dhclient.conf
 
 # ---------------------- display setup ----------------------
 header "Install screen driver"
-
+ROTATION=0
 if [ ${LCD} == "NODISP" ]; then
     header "  --> Skipped by user request <--"
 else
-    cd $INSTALL_DIR
-    wget -N https://www.waveshare.com/w/upload/0/00/LCD-show-170703.tar.gz
-    tar xvfz LCD-show-170703.tar.gz
-    if [ ${LCD} == "LCD35BV2" ]; then
-        # Support for Waveshare 3.5" "B" rev. 2.0
-        # This display is not supported by the LCD-show-170703 driver but by
-        # the Waveshare GH repository.
-        # We won't switch to the GH repository soon since it causes more problems
-        # than blessing (2019-04)
-        cp ./LCD-show/LCD35B-show ./LCD-show/$LCD-show
-        wget https://github.com/waveshare/LCD-show/raw/master/waveshare35b-v2-overlay.dtb -P ./LCD-show/
-        sed -i "s/waveshare35b/waveshare35b-v2/g" ./LCD-show/$LCD-show
-    fi
-    # supress automatic reboot after installation
-    sed -i "s/sudo reboot/#sudo reboot/g" LCD-show/$LCD-show
-    sed -i "s/\"reboot now\"/\"not rebooting yet\"/g" LCD-show/$LCD-show
-    cd LCD-show
-    ./$LCD-show $ORIENTATION
-    if [ $LCD == "LCD35BV2" ]; then
-        # Support for Waveshare 3.5" "B" rev. 2.0
-        sed -i "s/waveshare35b/waveshare35b-v2/g" /boot/config.txt
-    fi
+    wget -O $INSTALL_DIR"/lcd-driver.zip" $TS_URL
+    unzip -o $INSTALL_DIR"/lcd-driver.zip" -d /boot/overlays/
+    # Comment these lines out
+    sed -i \
+        -e "s/^dtoverlay=vc4-kms-v3d/#dtoverlay=vc4-kms-v3d/g" \
+        -e "s/^max_framebuffers=2/#max_framebuffers=2/g" /boot/firmware/config.txt
+    # Remove any modifications made by a previous run of this script
+    sed -i \
+        -e "/^dtparam=spi=.*\|^dtoverlay=waveshare3[25].*\|^hdmi_force_hotplug=.*/d" \
+        -e "/^max_usb_current=.*\|^hdmi_group=.*\|^hdmi_mode=.*\|^hdmi_cvt=.*/d" \
+        -e "/^hdmi_drive=.*\|^display_rotate=.*/d" /boot/firmware/config.txt
+    cp /usr/share/X11/xorg.conf.d/10-evdev.conf /usr/share/X11/xorg.conf.d/45-evdev.conf
+    cat <<EOF > /usr/share/X11/xorg.conf.d/99-calibration.conf
+Section "InputClass"
+        Identifier      "calibration"
+        MatchProduct    "ADS7846 Touchscreen"
+        Option  "Calibration"   "${TS_CALIB}"
+        Option  "SwapAxes"      "0"
+EndSection
+EOF
+    cat <<EOF > /usr/share/X11/xorg.conf.d/99-fbturbo.~
+Section "Device"
+        Identifier      "Allwinner A10/A13 FBDEV"
+        Driver          "fbturbo"
+        Option          "fbdev" "/dev/fb1"
+        Option          "SwapbuffersWait" "true"
+EndSection
+EOF
+    # Set driver name and rotation
+    tee -a /boot/firmware/config.txt > /dev/null <<EOF
+dtparam=spi=on
+dtoverlay=${TS_DRIVER}:rotate=${ROTATION}
+hdmi_force_hotplug=1
+max_usb_current=1
+hdmi_group=2
+hdmi_cvt=480 320 60 6 0 0 0
+hdmi_mode=87
+hdmi_drive=2
+EOF
 fi
 
-# Driver installation changes "console=serial0,115200" to "console=ttyAMA0,115200"
-# Revert it here since /dev/ttyAMA0 is Bluetooth (Pi3, Pi3B+ ...)
-sed -i "s/=ttyAMA0,/=serial0,/g" /boot/firmware/cmdline.txt
-cmd_line=$( cat /boot/firmware/cmdline.txt )
-# Driver installation removes "fsck.repair=yes"; revert it
-if [[ $cmd_line != *"fsck.repair=yes"* ]]; then
-    cmd_line="$cmd_line fsck.repair=yes"
-fi
-cat <<EOF > /boot/firmware/cmdline.txt
-${cmd_line}
+# Configure X.Org to use /dev/fb1
+cat <<EOF > "/usr/share/X11/xorg.conf.d/99-fbdev.conf"
+Section "Device"
+    Identifier      "FBDEV"
+    Driver          "fbdev"
+    Option          "fbdev" "/dev/fb1"
+    Option          "SwapbuffersWait" "true"
+EndSection
 EOF
+
+# X server/launcher start
+cat <<EOF > /etc/systemd/system/launcher.service
+[Unit]
+Description=Start Launcher
+
+[Service]
+ExecStart=/bin/su ftc -c "PYTHONPATH=/opt/ftc startx /opt/ftc/launcher.py"
+ExecStop=/usr/bin/killall xinit
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+systemctl daemon-reload
+systemctl enable launcher
 
 
 #-- Support for the TX-Pi HAT
@@ -228,14 +265,16 @@ EOF
 locale-gen
 update-locale --no-checks LANG="de_DE.UTF-8"
 
+# allow user to modify locale and network settings
+touch /etc/locale
+chmod 666 /etc/locale
+
+
 # fetch bluez hcitool with extended lescan patch
 cd $INSTALL_DIR
 wget -N $GIT_TXPI/hcitool-xlescan.tgz
 tar xvfz hcitool-xlescan.tgz -C /usr/bin
 
-header "Install zbar and zbarlight"
-apt -y install --no-install-recommends libzbar0 libzbar-dev
-pip3 install --break-system-packages zbarlight
 
 # ----------------------- user setup ---------------------
 header "Create ftc user"
@@ -275,47 +314,12 @@ ftc     ALL = NOPASSWD: /usr/bin/ft_bt_remote_start.sh, /usr/bin/ft_bt_remote_se
 EOF
 chmod 0440 /etc/sudoers.d/ft_bt_remote_server
 
-cat <<EOF > /etc/sudoers.d/txpiconfig
-## Permissions for ftc access to programs required
-## for the TX-Pi config app and the app store (install dependencies via apt-get)
-ftc     ALL = NOPASSWD: ${TXPICONFIG_DIR}/scripts/hostname, ${TXPICONFIG_DIR}/scripts/camera, ${TXPICONFIG_DIR}/scripts/ssh, ${TXPICONFIG_DIR}/scripts/x11vnc, ${TXPICONFIG_DIR}/scripts/display, ${TXPICONFIG_DIR}/scripts/i2cbus, /usr/bin/apt-get
-EOF
-chmod 0440 /etc/sudoers.d/txpiconfig
-
-
-# X server/launcher start
-cat <<EOF > /etc/systemd/system/launcher.service
-[Unit]
-Description=Start Launcher
-
-[Service]
-ExecStart=/bin/su ftc -c "PYTHONPATH=/opt/ftc startx /opt/ftc/launcher.py"
-ExecStop=/usr/bin/killall xinit
-
-[Install]
-WantedBy=multi-user.target
-EOF
-
-systemctl daemon-reload
-systemctl enable launcher
-
-
-# Configure X.Org to use /dev/fb1
-cat <<EOF > "/usr/share/X11/xorg.conf.d/99-fbdev.conf"
-Section "Device"
-    Identifier      "FBDEV"
-    Driver          "fbdev"
-    Option          "fbdev" "/dev/fb1"
-    Option          "SwapbuffersWait" "true"
-EndSection
-EOF
-
 
 # Splash screen
 if [ "$ENABLE_SPLASH" = true ]; then
     # a simple boot splash
-    wget -N $GIT_TXPI/splash.png -O /etc/splash.png
-    apt install -y --no-install-recommends libjpeg-dev
+    wget $GIT_TXPI/splash.png -O /etc/splash.png
+    apt install -y --no-install-recommends libjpeg-dev libpng-dev
     cd $INSTALL_DIR
     wget -N https://github.com/godspeed1989/fbv/archive/master.zip
     unzip -x master.zip
@@ -323,8 +327,7 @@ if [ "$ENABLE_SPLASH" = true ]; then
     FRAMEBUFFER=/dev/fb1 ./configure
     make
     make install
-    enable_default_dependencies="yes"
-    cmd_line=$( cat /boot/cmdline.txt )
+    cmd_line=$( cat /boot/firmware/cmdline.txt )
     # These params are needed to show the splash screen and to omit any text output on the LCD
     # Append them to the cmdline.txt without changing other params
     for param in "logo.nologo" "vt.global_cursor_default=0" "plymouth.ignore-serial-consoles" "splash" "quiet"
@@ -333,13 +336,12 @@ if [ "$ENABLE_SPLASH" = true ]; then
             cmd_line="$cmd_line $param"
         fi
     done
-    cat <<EOF > /boot/cmdline.txt
+    cat <<EOF > /boot/firmware/cmdline.txt
 ${cmd_line}
 EOF
-    # create a service to start fbv at startup
     cat <<EOF > /etc/systemd/system/splash.service
 [Unit]
-DefaultDependencies=${enable_default_dependencies}
+DefaultDependencies=yes
 After=local-fs.target
 
 [Service]
@@ -409,11 +411,6 @@ systemctl daemon-reload
 systemctl enable x11vnc
 
 
-# allow user to modify locale and network settings
-touch /etc/locale
-chmod 666 /etc/locale
-
-
 # set timezone to Germany
 ln -fs /usr/share/zoneinfo/Europe/Berlin /etc/localtime
 dpkg-reconfigure -f noninteractive tzdata
@@ -425,10 +422,10 @@ git clone --depth 1 https://github.com/ftCommunity/ftcommunity-TXT.git
 # set firmware version
 mv $FTC_ROOT"/etc/fw-ver.txt" /etc/
 # set various udev rules to give ftc user access to hardware
-mv $FTC_ROOT"/etc/udev/rules.d/40-fischertechnik_interfaces.rules" /etc/udev/rules.d/
-mv $FTC_ROOT"/etc/udev/rules.d/40-lego_interfaces.rules" /etc/udev/rules.d/
-mv $FTC_ROOT"/etc/udev/rules.d/60-i2c-tools.rules" /etc/udev/rules.d/
-mv $FTC_ROOT"/etc/udev/rules.d/99-USBasp.rules" /etc/udev/rules.d/
+cd $FTC_ROOT"/etc/udev/rules.d/"
+mv -t /etc/udev/rules.d/ 40-fischertechnik_interfaces.rules \
+    40-lego_interfaces.rules 60-i2c-tools.rules 99-USBasp.rules
+cd $INSTALL_DIR
 mv $FTC_ROOT"/etc/sudoers.d/shutdown" /etc/sudoers.d/
 chmod 0440 /etc/sudoers.d/shutdown
 
@@ -452,6 +449,11 @@ for i in 24:23 28:24 32:24; do
     to=`echo $i | cut -d':' -f2`
     sed -i "s/^\(\s*font:\)\s*${from}px/\1 ${to}px/" $STYLE
 done
+
+
+header "Install zbar and zbarlight"
+apt -y install --no-install-recommends libzbar0 libzbar-dev
+pip3 install --target /opt/ftc/ zbarlight
 
 
 header "Install ftrobopy"
@@ -505,16 +507,18 @@ chmod og+rw /usr/share/X11/xorg.conf.d/99-calibration.conf
 # Remove legacy app
 rm -rf /opt/ftc/apps/system/tscal
 # Remove any installed TS-Cal
-rm -rf /home/ftc/apps/ffe0d8c4-be33-4f62-b25d-2fa7923daaa2
-cd /home/ftc/apps
+TXCAL_DIR=/home/ftc/apps/ffe0d8c4-be33-4f62-b25d-2fa7923daaa2
+rm -rf ${TXCAL_DIR} 
+cd $INSTALL_DIR
 wget "${TXPIAPPS_URL}tscal.zip"
-unzip -o tscal.zip -d ffe0d8c4-be33-4f62-b25d-2fa7923daaa2
-chown -R ftc:ftc ffe0d8c4-be33-4f62-b25d-2fa7923daaa2
-chmod +x ffe0d8c4-be33-4f62-b25d-2fa7923daaa2/tscal.py
+unzip -o tscal.zip -d ${TXCAL_DIR} 
+chown -R ftc:ftc ${TXCAL_DIR}
+chmod +x ${TXCAL_DIR}"/tscal.py"
 
 
 # Add TX-Pi config
 header "Install TX-Pi config"
+TXPICONFIG_DIR="/opt/ftc/apps/system/txpiconfig"
 # Remove legacy apps and configurations
 rm -rf /home/ftc/apps/430d692e-d285-4f05-82fd-a7b3ce9019e5
 rm -rf /home/ftc/apps/e7b22a70-7366-4090-b251-5fead780c5a0
@@ -529,6 +533,14 @@ chown -R ftc:ftc ${TXPICONFIG_DIR}
 chmod +x ${TXPICONFIG_DIR}/config.py
 chown root:root ${TXPICONFIG_DIR}/scripts/*
 chmod 744 ${TXPICONFIG_DIR}/scripts/*
+
+cat <<EOF > /etc/sudoers.d/txpiconfig
+## Permissions for ftc access to programs required
+## for the TX-Pi config app and the app store (install dependencies via apt-get)
+ftc     ALL = NOPASSWD: ${TXPICONFIG_DIR}/scripts/hostname, ${TXPICONFIG_DIR}/scripts/camera, ${TXPICONFIG_DIR}/scripts/ssh, ${TXPICONFIG_DIR}/scripts/x11vnc, ${TXPICONFIG_DIR}/scripts/display, ${TXPICONFIG_DIR}/scripts/i2cbus, /usr/bin/apt-get
+EOF
+chmod 0440 /etc/sudoers.d/txpiconfig
+
 
 # add robolt support
 # robolt udev rules have already been installed from the main repository

@@ -1,8 +1,19 @@
 # Changes
 
+## 25.0.0 -- 2025-04-dd
+* Added support for Debian Bookworm (version 12)
+* Removed support for Debian versions older than Bookworm
+  Fixes <https://github.com/ftCommunity/tx-pi/issues/70>
+* Switched from (deprecated) `ntpdate` to `chrony` for time syncronisation
+* Complete removal of `netreq` support
+* Switched to more modern touchscreen drivers
+* Dropped support for Python 2
+
+
 ## 20.1.1 -- 2020-12-26
 * Change hostname to "tx-pi" if the host uses the default hostname "raspberrypi"
 * Remove obsolete packages automatically
+
 
 ## 20.1.0 -- 2020-07-21
 * Removed support for Debian Jessie (v8)
