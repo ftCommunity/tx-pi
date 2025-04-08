@@ -233,6 +233,7 @@ sed -i "s/dtparam=i2c_arm=on/dtparam=i2c_arm=on\ndtparam=i2c_vc=on/g" /boot/firm
 #TODO: 2025-03-16 -- Bookworm has no rc.local anymore. Is this still necessary?
 #sed -i "s/exit 0/\# ack pending RTC wakeup\n\/usr\/sbin\/i2cset -y 0 0x68 0x0f 0x00\n\nexit 0/g" /etc/rc.local
 # Power control via GPIO4
+sed -i "/^dtoverlay=gpio-poweroff.*/d" /boot/firmware/config.txt
 echo "dtoverlay=gpio-poweroff,gpiopin=4,active_low=1" >> /boot/firmware/config.txt
 
 
