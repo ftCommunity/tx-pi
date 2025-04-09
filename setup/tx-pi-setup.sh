@@ -237,10 +237,6 @@ sed -i "/^dtoverlay=gpio-poweroff.*/d" /boot/firmware/config.txt
 echo "dtoverlay=gpio-poweroff,gpiopin=4,active_low=1" >> /boot/firmware/config.txt
 
 
-header "Enable WLAN"
-nmcli radio wifi on
-
-
 # usbmount config
 #TODO 2025-03-16
 #cd /etc/usbmount
@@ -265,10 +261,15 @@ EOF
 
 locale-gen
 update-locale --no-checks LANG="de_DE.UTF-8"
-
 # allow user to modify locale and network settings
 touch /etc/locale
 chmod 666 /etc/locale
+
+
+header "Set timezone to Germany"
+ln -fs /usr/share/zoneinfo/Europe/Berlin /etc/localtime
+dpkg-reconfigure -f noninteractive tzdata
+
 
 
 # fetch bluez hcitool with extended lescan patch
@@ -316,9 +317,7 @@ EOF
 chmod 0440 /etc/sudoers.d/ft_bt_remote_server
 
 
-# Splash screen
 if [ "$ENABLE_SPLASH" = true ]; then
-    # a simple boot splash
     wget $GIT_TXPI/splash.png -O /etc/splash.png
     apt install -y --no-install-recommends libjpeg-dev libpng-dev
     cd $INSTALL_DIR
@@ -362,7 +361,8 @@ fi  # End ENABLE_SPLASH
 # allow any user to start xs
 sed -i 's,^\(allowed_users=\).*,\1'\anybody',' /etc/X11/Xwrapper.config
 
-# install framebuffer copy tool
+
+header "Install framebuffer copy tool"
 cd $INSTALL_DIR
 wget -N $GIT_TXPI/fbc.tgz
 tar xvfz fbc.tgz
@@ -394,7 +394,7 @@ done
 exec /usr/bin/X -s 0 dpms \$CUROPT -nolisten tcp "\$@"
 EOF
 
-msg "Setup VNC server"
+header "Setup VNC server"
 cat <<EOF > /etc/systemd/system/x11vnc.service
 [Unit]
 Description=X11 VNC service
@@ -412,11 +412,6 @@ systemctl daemon-reload
 systemctl enable x11vnc
 
 
-# set timezone to Germany
-ln -fs /usr/share/zoneinfo/Europe/Berlin /etc/localtime
-dpkg-reconfigure -f noninteractive tzdata
-
-
 header "Download FTC firmware"
 cd $INSTALL_DIR
 git clone --depth 1 https://github.com/ftCommunity/ftcommunity-TXT.git
@@ -430,7 +425,6 @@ cd $INSTALL_DIR
 mv $FTC_ROOT"/etc/sudoers.d/shutdown" /etc/sudoers.d/
 chmod 0440 /etc/sudoers.d/shutdown
 
-# get /opt/ftc
 header "Populating /opt/ftc ..."
 rm -rf /opt/ftc
 mv $FTC_ROOT"/opt/ftc" /opt/ftc
@@ -463,10 +457,8 @@ wget -N https://raw.githubusercontent.com/ftrobopy/ftrobopy/master/ftrobopy.py -
 
 cd $INSTALL_DIR
 
-# install libroboint
 header "Installing libroboint"
 rm -f /usr/local/lib/libroboint.so*
-# install libusb-dev
 apt -y install libusb-dev
 git clone --depth 1 https://gitlab.com/Humpelstilzchen/libroboint.git
 cd libroboint
@@ -479,6 +471,7 @@ ldconfig
 make python
 # udev rules
 cp udev/fischertechnik.rules /etc/udev/rules.d/
+
 
 # and ftduino_direct
 header "Installing ftduino_direct.py"
@@ -543,23 +536,22 @@ EOF
 chmod 0440 /etc/sudoers.d/txpiconfig
 
 
-# add robolt support
-# robolt udev rules have already been installed from the main repository
 header "Install robolt"
+# robolt udev rules have already been installed from the main repository
 cd $INSTALL_DIR
 git clone --depth 1 https://github.com/ftCommunity/python-robolt.git
 cd python-robolt
 python3 ./setup.py install
 
-# add wedo support
-# wedo udev rules have already been installed from the main repository
+
 header "Install WeDoMore"
+# wedo udev rules have already been installed from the main repository
 cd $INSTALL_DIR
 git clone --depth 1 https://github.com/gbin/WeDoMore.git
 cd WeDoMore
 python3 ./setup.py install
 
-# install the BT Control Set server
+
 header "Install BT Control Set server"
 apt -y install --no-install-recommends libbluetooth-dev
 cd $INSTALL_DIR
@@ -689,3 +681,4 @@ msg "rebooting in 30 sec..."
 sync
 sleep 30
 shutdown -r now
+
