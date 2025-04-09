@@ -462,6 +462,8 @@ rm -f /usr/local/lib/libroboint.so*
 apt -y install libusb-dev
 git clone --depth 1 https://gitlab.com/Humpelstilzchen/libroboint.git
 cd libroboint
+# libroboint still refers to Python 2
+sed -i "s/python2/python3/g" ./CMakeLists.txt
 cmake .
 make
 # install
