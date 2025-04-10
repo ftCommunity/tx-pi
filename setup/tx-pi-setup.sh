@@ -151,6 +151,49 @@ sed -i "s/#timeout 60;/timeout 10;/g" /etc/dhcp/dhclient.conf
 # Reduce this time to 20 sec.
 sed -i "s/#retry 60;/retry 20;/g" /etc/dhcp/dhclient.conf
 
+
+header "Enable rc.local"
+cat <<EOF > /etc/rc.local
+#!/bin/sh -e
+#
+# rc.local
+#
+# This script is executed at the end of each multiuser runlevel.
+# Make sure that the script will "exit 0" on success or any other
+# value on error.
+#
+# In order to enable or disable this script just change the execution
+# bits.
+#
+# By default this script does nothing.
+
+exit 0
+EOF
+
+chmod +x /etc/rc.local
+
+cat <<EOF > /etc/systemd/system/rc-local.service
+[Unit]
+Description=/etc/rc.local Compatibility
+ConditionPathExists=/etc/rc.local
+
+[Service]
+Type=forking
+ExecStart=/etc/rc.local start
+TimeoutSec=0
+StandardOutput=tty
+RemainAfterExit=yes
+SysVStartPriority=99
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+systemctl daemon-reload
+systemctl enable rc-local
+
+
+
 # ---------------------- display setup ----------------------
 header "Install screen driver"
 ROTATION=0
@@ -230,8 +273,7 @@ header "Enable I2C"
 raspi-config nonint do_i2c 0 dtparam=i2c_arm=on
 sed -i "s/dtparam=i2c_arm=on/dtparam=i2c_arm=on\ndtparam=i2c_vc=on/g" /boot/firmware/config.txt
 # Disable RTC
-#TODO: 2025-03-16 -- Bookworm has no rc.local anymore. Is this still necessary?
-#sed -i "s/exit 0/\# ack pending RTC wakeup\n\/usr\/sbin\/i2cset -y 0 0x68 0x0f 0x00\n\nexit 0/g" /etc/rc.local
+sed -i "s/exit 0/\# ack pending RTC wakeup\n\/usr\/sbin\/i2cset -y 0 0x68 0x0f 0x00\n\nexit 0/g" /etc/rc.local
 # Power control via GPIO4
 sed -i "/^dtoverlay=gpio-poweroff.*/d" /boot/firmware/config.txt
 echo "dtoverlay=gpio-poweroff,gpiopin=4,active_low=1" >> /boot/firmware/config.txt
