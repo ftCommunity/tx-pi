@@ -662,19 +662,6 @@ sed -i 's#<center><a href="https://github.com/ftCommunity/ftcommunity-TXT" targe
 # Fav icon
 wget -N $GIT_TXPI/favicon.ico
 
-# Install novnc ...
-cd /var/www
-wget -N $GIT_TXPI/novnc.tgz
-tar xvfz novnc.tgz
-rm novnc.tgz
-
-
-# ... and websockify for novnc
-cd /opt/ftc
-wget -N $GIT_TXPI/websockify.tgz
-tar xvfz websockify.tgz
-rm websockify.tgz
-
 # systemd (tmpfiles.d) resets the permissions to www-data if the
 # system reboots. This ensures that the permissions are kept alive.
 sed -i "s/www-data/ftc/g" /usr/lib/tmpfiles.d/lighttpd.tmpfile.conf
@@ -684,6 +671,28 @@ chown -R ftc:ftc /var/www
 chown -R ftc:ftc /var/log/lighttpd
 chown -R ftc:ftc /var/run/lighttpd
 chown -R ftc:ftc /var/cache/lighttpd
+
+header "Install web VNC client"
+apt install -y --no-install-recommends python3-websockify
+cd $INSTALL_DIR
+wget -N $GIT_TXPI/novnc.tgz
+tar xvfz novnc.tgz -C /var/www/
+cat <<EOF > /etc/systemd/system/websockify.service
+[Unit]
+Description=Websockify service used for noVNC
+After=network.target
+
+[Service]
+ExecStart=/bin/su ftc -c "websockify -D 6080 localhost:5900"
+ExecStop=/bin/su ftc -c "/usr/bin/killall websockify"
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+systemctl daemon-reload
+systemctl enable websockify
+
 
 
 header "Install fb grab"
