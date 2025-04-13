@@ -267,6 +267,9 @@ EOF
 systemctl daemon-reload
 systemctl enable launcher
 
+# allow any user to start X11
+sed -i 's,^\(allowed_users=\).*,\1'\anybody',' /etc/X11/Xwrapper.config
+
 
 #-- Support for the TX-Pi HAT
 header "Enable I2C"
@@ -368,7 +371,7 @@ if [ "$ENABLE_SPLASH" = true ]; then
     cd fbv-master/
     FRAMEBUFFER=/dev/fb1 ./configure
     make
-    make install
+make install
     cmd_line=$( cat /boot/firmware/cmdline.txt )
     # These params are needed to show the splash screen and to omit any text output on the LCD
     # Append them to the cmdline.txt without changing other params
@@ -399,9 +402,6 @@ EOF
     systemctl disable getty@tty1
     systemctl enable splash
 fi  # End ENABLE_SPLASH
-
-# allow any user to start xs
-sed -i 's,^\(allowed_users=\).*,\1'\anybody',' /etc/X11/Xwrapper.config
 
 
 header "Install framebuffer copy tool"
@@ -508,10 +508,8 @@ cd libroboint
 sed -i "s/python2/python3/g" ./CMakeLists.txt
 cmake .
 make
-# install
 make install
 ldconfig
-# install python
 make python
 # udev rules
 cp udev/fischertechnik.rules /etc/udev/rules.d/
@@ -538,14 +536,14 @@ cd /opt/ftc/apps/system
 # Move power button to home screen
 sed -i "s/category: System/category: /g" /opt/ftc/apps/system/power/manifest
 
-# Add TX-Pi TS-Cal
+
 header "Install TS Cal"
 touch /usr/share/X11/xorg.conf.d/99-calibration.conf
 chmod og+rw /usr/share/X11/xorg.conf.d/99-calibration.conf
 # Remove legacy app
 rm -rf /opt/ftc/apps/system/tscal
-# Remove any installed TS-Cal
 TXCAL_DIR=/home/ftc/apps/ffe0d8c4-be33-4f62-b25d-2fa7923daaa2
+# Remove any installed TS-Cal
 rm -rf ${TXCAL_DIR} 
 cd $INSTALL_DIR
 wget "${TXPIAPPS_URL}tscal.zip"
@@ -554,7 +552,6 @@ chown -R ftc:ftc ${TXCAL_DIR}
 chmod +x ${TXCAL_DIR}"/tscal.py"
 
 
-# Add TX-Pi config
 header "Install TX-Pi config"
 TXPICONFIG_DIR="/opt/ftc/apps/system/txpiconfig"
 # Remove legacy apps and configurations
@@ -620,14 +617,13 @@ server.username             = "ftc"
 server.groupname            = "ftc"
 server.port                 = 80
 
+# default listening port for IPv6 falls back to the IPv4 port
 include_shell "/usr/share/lighttpd/use-ipv6.pl " + server.port
 include_shell "/usr/share/lighttpd/create-mime.conf.pl"
 
 index-file.names            = ( "index.py", "index.php", "index.html")
 url.access-deny             = ( "~", ".inc" )
 static-file.exclude-extensions = ( ".php", ".pl", ".fcgi" )
-
-# default listening port for IPv6 falls back to the IPv4 port
 
 server.modules += ( "mod_ssi" )
 ssi.extension = ( ".html" )
@@ -692,7 +688,6 @@ EOF
 
 systemctl daemon-reload
 systemctl enable websockify
-
 
 
 header "Install fb grab"
