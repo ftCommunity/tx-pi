@@ -530,9 +530,6 @@ python3 ./setup.py install
 cd $INSTALL_DIR
 git clone --depth 1 https://github.com/harbaum/TouchUI.git
 mv ./TouchUI/touchui/apps/system/power /opt/ftc/apps/system/power
-
-# add power tool from touchui
-cd /opt/ftc/apps/system
 # Move power button to home screen
 sed -i "s/category: System/category: /g" /opt/ftc/apps/system/power/manifest
 
