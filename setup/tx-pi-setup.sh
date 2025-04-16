@@ -371,7 +371,7 @@ if [ "$ENABLE_SPLASH" = true ]; then
     cd fbv-master/
     FRAMEBUFFER=/dev/fb1 ./configure
     make
-make install
+    make install
     cmd_line=$( cat /boot/firmware/cmdline.txt )
     # These params are needed to show the splash screen and to omit any text output on the LCD
     # Append them to the cmdline.txt without changing other params
