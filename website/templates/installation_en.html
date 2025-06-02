@@ -90,5 +90,22 @@ The 3.5" display has a resolution of 320x480 pixel while the 3.2" display
 and the display of the fischertechnik TXT only provide 240x320 pixels. Thus
 some apps written for the TXT or the regular TX-Pi setup may look a little
 different. But due to the Qt framework most apps will just look fine.
+
+
+# Unsupported displays
+
+Due to various other touch displays available we decided to make them
+available for use with the Tx-Pi, too.
+
+This is how to proceed:
+ a. Install the most recent Raspberry OS "Lite" version and do the basic setup
+ b. install the display hardware
+ c. install the display drivers according to the manufacturer's instructions
+ d. execute the Tx-Pi-Setup script according to the instructions above with "NODISP" option
+```
+sudo bash ./tx-pi-setup.sh NODISP
+```
+Your Tx-Pi should be ready afterwards.
+
 {% endfilter %}
 {% endblock %}
