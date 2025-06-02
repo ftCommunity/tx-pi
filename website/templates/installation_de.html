@@ -91,5 +91,22 @@ Die 3,5" Displays haben eine Auflösung von 320x480 Pixel, während das 3,2"
 Display und das Display des fischertechnik TXT lediglich 240x320 Pixel bieten.
 Aus diesem Grunde könnten in Ausnahmefällen einige Apps etwas unterschiedlich
 dargestellt werden.
+
+
+# Nicht offiziell unterstützte Displays
+
+Angesichts der Vielzahl erhältlicher Displays/Touchscreens haben wir die
+Möglichkeit geschaffen, auch diese mit dem Tx-Pi zu nutzen.
+
+Das Vorgehen ist wie folgt:
+ a. Installation der aktuellen Raspberry OS "Lite" Version sowie Basis-Einrichtung
+ b. mechanische Installation des Touchscreens
+ c. Installation der Touchscreen-Treiber gemäß Hersteller-Anleitung
+ d. Ausführung des tx-pi-setup-Scripts analog der obigen Anweisungen mit Parameter "NODISP"
+```
+sudo bash ./tx-pi-setup.sh NODISP
+```
+Anschließend sollte der Tx-Pi einsatzbereit sein.
+
 {% endfilter %}
 {% endblock %}
